@@ -142,15 +142,14 @@
             </div>
         </div>
         
-        <!-- VAPI Widget with enhanced configuration -->
+        <!-- VAPI Widget with dynamic assistant assignment -->
         <div id="vapi-container" style="margin: 30px 0;">
-            <vapi-widget 
-                public-key="360c27df-9f83-4b80-bd33-e17dbcbf4971"
-                assistant-id="af397e88-c286-416f-9f74-e7665401bdb7"
-                show-public-key-invalid-message="false"
-                button-label="🎤 Start Natural Conversation"
-                show-widget-assistant-id="false">
-            </vapi-widget>
+            <div id="assistant-loading" style="text-align: center; padding: 20px;">
+                <p>🔄 Selecting your personalized assistant...</p>
+            </div>
+            <div id="vapi-widget-container" style="display: none;">
+                <!-- Widget will be dynamically created here -->
+            </div>
         </div>
         
         <div id="status" class="status">
@@ -158,11 +157,13 @@
         </div>
         
         <div style="margin-top: 30px; font-size: 0.9em; opacity: 0.8;">
-            <p><strong>Enhanced Features:</strong></p>
+            <p><strong>🚀 Hybrid Assistant System:</strong></p>
+            <p>• <strong>Basic/Trial:</strong> Shared assistant with your context</p>
+            <p>• <strong>Premium/Enterprise:</strong> Personal assistant with memory</p>
+            <p>• <strong>Admin:</strong> Special admin assistant with insights</p>
             <p>• Natural conversation flow (no push-to-talk)</p>
-            <p>• Remembers your User ID and Dream ID</p>
-            <p>• Context-aware responses</p>
-            <p>• Session continuity</p>
+            <p>• Full Supabase integration with roles & payment status</p>
+            <p>• Call progress tracking (4-call system)</p>
         </div>
         
         <div style="margin-top: 20px;">
@@ -172,6 +173,9 @@
 
     <!-- Supabase Client -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- VAPI Assistant Manager -->
+    <script src="/vapi-assistant-manager.js"></script>
     
     <!-- VAPI Widget Script -->
     <script src="https://unpkg.com/@vapi-ai/client-sdk-react/dist/embed/widget.umd.js" async type="text/javascript"></script>
@@ -208,14 +212,23 @@
             subscriptionType: '',
             callProgress: {},
             businessInfo: {},
-            sessionId: generateSessionId()
+            sessionId: generateSessionId(),
+            assignedAssistantId: null,
+            assistantType: 'shared'
         };
+        
+        let assistantManager = null;
+        let currentWidget = null;
         
         // Load saved context
         window.addEventListener('DOMContentLoaded', async function() {
             await initSupabase();
+            
+            // Initialize assistant manager
+            assistantManager = new VAPIAssistantManager('360c27df-9f83-4b80-bd33-e17dbcbf4971', supabase);
+            
             loadSavedEmail();
-            setupVapiWidget();
+            showAssistantStatus('Ready to load your personalized assistant');
         });
         
         function generateSessionId() {
@@ -330,8 +343,8 @@
                     displayUserProfile(user);
                     updateStatus(`✅ Profile loaded! Welcome back, ${user.customer_name || 'valued customer'}`);
                     
-                    // Setup VAPI with context
-                    setupVapiWidget();
+                    // Get appropriate assistant and setup VAPI
+                    await setupPersonalizedAssistant();
                     
                 } else {
                     updateStatus('❌ No profile found with that email. Please check your email or sign up first.');
@@ -347,10 +360,19 @@
             const profileDiv = document.getElementById('profileDetails');
             const callsCompleted = [user.call_1_completed, user.call_2_completed, user.call_3_completed, user.call_4_completed].filter(Boolean).length;
             
+            // Determine assistant type
+            let assistantType = 'Shared Assistant';
+            if (user.account_type === 'admin') {
+                assistantType = 'Admin Assistant 👑';
+            } else if (user.payment_status === 'paid' && (user.subscription_type === 'premium' || user.subscription_type === 'enterprise')) {
+                assistantType = 'Personal Assistant ⭐';
+            }
+            
             profileDiv.innerHTML = `
                 <p><strong>Name:</strong> ${user.customer_name || 'Not set'}</p>
                 <p><strong>Role:</strong> ${user.account_type} ${user.account_type === 'admin' ? '👑' : '👤'}</p>
                 <p><strong>Payment:</strong> ${user.payment_status} (${user.subscription_type || 'basic'})</p>
+                <p><strong>Assistant:</strong> ${assistantType}</p>
                 <p><strong>Business:</strong> ${user.business_name || 'Not set'} (${user.entity_type || 'LLC'})</p>
                 <p><strong>Call Progress:</strong> ${callsCompleted}/4 calls completed</p>
                 <p><strong>Current Stage:</strong> Call ${user.current_call_stage || 1}</p>
@@ -360,15 +382,98 @@
             document.getElementById('userProfile').style.display = 'block';
         }
         
-        function setupVapiWidget() {
-            const widget = document.querySelector('vapi-widget');
+        async function setupPersonalizedAssistant() {
+            if (!assistantManager || !userContext.email) {
+                showAssistantStatus('Please load your profile first');
+                return;
+            }
+            
+            showAssistantStatus('🔄 Getting your personalized assistant...');
+            
+            try {
+                // Get the appropriate assistant ID for this user
+                const assistantId = await assistantManager.getAssistantForUser(userContext.email);
+                userContext.assignedAssistantId = assistantId;
+                
+                // Determine assistant type for display
+                if (userContext.userRole === 'admin') {
+                    userContext.assistantType = 'admin';
+                    showAssistantStatus('✅ Admin assistant ready');
+                } else if (userContext.paymentStatus === 'paid' && (userContext.subscriptionType === 'premium' || userContext.subscriptionType === 'enterprise')) {
+                    userContext.assistantType = 'individual';
+                    showAssistantStatus('✅ Your personal assistant is ready!');
+                } else {
+                    userContext.assistantType = 'shared';
+                    showAssistantStatus('✅ Shared assistant ready');
+                }
+                
+                // Create the VAPI widget with the assigned assistant
+                createVAPIWidget(assistantId);
+                
+            } catch (error) {
+                console.error('Error setting up personalized assistant:', error);
+                showAssistantStatus('❌ Error setting up assistant, using default');
+                createVAPIWidget('af397e88-c286-416f-9f74-e7665401bdb7');
+            }
+        }
+        
+        function createVAPIWidget(assistantId) {
+            const container = document.getElementById('vapi-widget-container');
+            const loading = document.getElementById('assistant-loading');
+            
+            // Clear any existing widget
+            container.innerHTML = '';
+            
+            // Create new widget element
+            const widget = document.createElement('vapi-widget');
+            widget.setAttribute('public-key', '360c27df-9f83-4b80-bd33-e17dbcbf4971');
+            widget.setAttribute('assistant-id', assistantId);
+            widget.setAttribute('show-public-key-invalid-message', 'false');
+            widget.setAttribute('show-widget-assistant-id', 'false');
+            
+            // Set button label based on assistant type
+            let buttonLabel = '🎤 Start Natural Conversation';
+            if (userContext.assistantType === 'individual') {
+                buttonLabel = '🎤 Talk to Your Personal Assistant';
+            } else if (userContext.assistantType === 'admin') {
+                buttonLabel = '🎤 Admin Console';
+            }
+            widget.setAttribute('button-label', buttonLabel);
+            
+            container.appendChild(widget);
+            
+            // Show widget, hide loading
+            loading.style.display = 'none';
+            container.style.display = 'block';
+            
+            // Set up event listeners
+            setupVapiWidget(widget);
+            currentWidget = widget;
+            
+            console.log('VAPI widget created with assistant:', assistantId);
+        }
+        
+        function showAssistantStatus(message) {
+            const loading = document.getElementById('assistant-loading');
+            loading.innerHTML = `<p>${message}</p>`;
+            updateStatus(message);
+        }
+        
+        function setupVapiWidget(widget) {
             if (widget) {
                 // Configure widget with user context
                 widget.addEventListener('call-start', function() {
                     if (userContext.userId) {
-                        updateStatus(`🎤 Connected! Natural conversation active with ${userContext.name || 'AI assistant'}...`);
+                        let assistantName = 'AI assistant';
+                        if (userContext.assistantType === 'individual') {
+                            assistantName = 'your personal assistant';
+                        } else if (userContext.assistantType === 'admin') {
+                            assistantName = 'admin console';
+                        }
                         
-                        // Send context to VAPI assistant
+                        updateStatus(`🎤 Connected to ${assistantName}! Natural conversation active...`);
+                        
+                        // Send context to VAPI assistant (for individual assistants, this enhances the existing context)
                         setTimeout(() => {
                             sendContextToAssistant();
                         }, 1000);
@@ -378,7 +483,11 @@
                 });
                 
                 widget.addEventListener('call-end', function() {
-                    updateStatus('📞 Conversation ended. Your context is saved for next time.');
+                    let endMessage = '📞 Conversation ended. Your context is saved for next time.';
+                    if (userContext.assistantType === 'individual') {
+                        endMessage = '📞 Conversation ended. Your personal assistant remembers everything we discussed.';
+                    }
+                    updateStatus(endMessage);
                     
                     // Update call progress if this was a business formation call
                     if (userContext.userId && userContext.callProgress.currentStage) {
