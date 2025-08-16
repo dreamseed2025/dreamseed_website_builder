@@ -1,0 +1,198 @@
+{
+  "site_id": "05072d4b-ec03-4452-8fd5-24fd657817fe",
+  "slug": "dream-seed",
+  "profile_json": {
+    "pages": {
+      "home": true,
+      "about": true,
+      "legal": {
+        "terms": true,
+        "privacy": true
+      },
+      "contact": true,
+      "pricing": true,
+      "services": true,
+      "portfolio": false,
+      "testimonials": true
+    },
+    "design": {
+      "theme": {
+        "accent_color": "#56b978",
+        "font_primary": "Inter",
+        "primary_color": "#141416",
+        "font_secondary": "Poppins",
+        "secondary_color": "#3348a8"
+      },
+      "layout": {
+        "sidebar": false,
+        "footer_style": "full",
+        "header_style": "minimal"
+      },
+      "template": "modern-saas-01"
+    },
+    "content": {
+      "faq": [
+        {
+          "a": "Core assets are ready in days; official filings depend on state processing times.",
+          "q": "How fast can I launch?"
+        },
+        {
+          "a": "Our all-inclusive packages cover legal filings, branding, website, and operational setup—no hidden fees.",
+          "q": "What’s included in the price?"
+        }
+      ],
+      "seo": {
+        "title": "Dream Seed — One-Click Business Launch",
+        "keywords": [
+          "start a business fast",
+          "AI business setup",
+          "LLC formation",
+          "business branding"
+        ],
+        "og_image": "https://kxldodhrhqbwyvgyuqfd.supabase.co/storage/v1/object/public/webimages/dream_seed_2.png",
+        "description": "Form your LLC, create your brand kit, and launch a conversion-ready website with a transparent price—delivered in days."
+      },
+      "hero": {
+        "media": {
+          "background_image": "https://kxldodhrhqbwyvgyuqfd.supabase.co/storage/v1/object/public/webimages/dream_seed_1.png"
+        },
+        "cta_url": "/start",
+        "cta_text": "Get Started Now",
+        "headline": "Launch Your Dream Business With One Click",
+        "subheadline": "Skip the paperwork and get started today with our AI-powered business builder."
+      },
+      "about": {
+        "title": "About Us",
+        "description": "Dream Seed is the fastest, most transparent way to start your business. We take you from concept to fully operational in days, not months—covering legal filings, branding, and digital presence in one clear, all-inclusive price.",
+        "team_members": [
+          {
+            "bio": "Our AI Coach helps you answer key questions, generates your business plan, and guides you through every step until launch.",
+            "name": "Dream Seed Business Coach",
+            "role": "AI-Powered Launch Guide",
+            "image": "https://kxldodhrhqbwyvgyuqfd.supabase.co/storage/v1/object/public/webimages/dream_seed_4.png",
+            "social_links": {}
+          }
+        ]
+      },
+      "contact": {
+        "email": "hello@dreamseed.ai",
+        "phone": "+1-555-123-4567",
+        "address": "123 Dream Seed Lane, Startup City, USA",
+        "social_media": {
+          "twitter": "https://twitter.com/dreamseed",
+          "facebook": "https://facebook.com/dreamseed",
+          "linkedin": "https://linkedin.com/company/dreamseed"
+        },
+        "business_hours": {
+          "friday": "9am–5pm",
+          "monday": "9am–5pm",
+          "tuesday": "9am–5pm",
+          "thursday": "9am–5pm",
+          "wednesday": "9am–5pm"
+        }
+      },
+      "pricing": [
+        {
+          "name": "Launch Basic",
+          "price": 999,
+          "currency": "USD",
+          "description": "LLC formation, EIN, starter brand kit, and one-page site."
+        },
+        {
+          "name": "Launch Pro",
+          "price": 1799,
+          "currency": "USD",
+          "description": "Everything in Basic plus full brand kit, 5-page website, and premium integrations."
+        },
+        {
+          "name": "Launch Complete",
+          "price": 3499,
+          "currency": "USD",
+          "description": "Full turnkey launch with all features, priority filing, and ongoing compliance for 1 year."
+        }
+      ],
+      "features": [
+        "Form your LLC or corporation with ease",
+        "Professional website, logo, and brand kit included",
+        "Bank account, credit card, and payment setup",
+        "Transparent, all-inclusive pricing",
+        "Ongoing compliance monitoring"
+      ],
+      "services": [
+        {
+          "id": "formation",
+          "icon": "gavel",
+          "name": "Formation & Legal Setup",
+          "image": "https://kxldodhrhqbwyvgyuqfd.supabase.co/storage/v1/object/public/webimages/dream_seed_5.png",
+          "features": [
+            "LLC registration",
+            "EIN filing",
+            "Licenses and permits"
+          ],
+          "description": "LLC, S-Corp, or C-Corp registration, EIN, permits, and trademark assistance."
+        },
+        {
+          "id": "branding",
+          "icon": "palette",
+          "name": "Branding & Digital Presence",
+          "image": "https://kxldodhrhqbwyvgyuqfd.supabase.co/storage/v1/object/public/webimages/dream_seed_6.png",
+          "features": [
+            "Logo design",
+            "Website launch",
+            "Custom domain & email"
+          ],
+          "description": "Logo, domain, website, email, and social media setup."
+        },
+        {
+          "id": "financial",
+          "icon": "credit-card",
+          "name": "Financial & Operational Setup",
+          "image": "https://kxldodhrhqbwyvgyuqfd.supabase.co/storage/v1/object/public/webimages/dream_seed_7.png",
+          "features": [
+            "Bank account setup",
+            "Stripe/Square integration",
+            "QuickBooks/Xero configuration"
+          ],
+          "description": "Business bank account, credit card, accounting software, and payment processing."
+        }
+      ],
+      "portfolio": [],
+      "testimonials": [
+        {
+          "id": "customer1",
+          "name": "Ava R.",
+          "role": "Founder",
+          "image": "https://kxldodhrhqbwyvgyuqfd.supabase.co/storage/v1/object/public/webimages/dream_seed_8.png",
+          "quote": "I had a registered LLC, polished brand kit, and clean website in days. Dream Seed made it effortless.",
+          "rating": 5,
+          "company": "Kind Kettle",
+          "featured": true
+        }
+      ]
+    },
+    "page_seo": {
+      "home": {
+        "title": "Dream Seed — Launch Your Dream Business",
+        "og_image": "https://kxldodhrhqbwyvgyuqfd.supabase.co/storage/v1/object/public/webimages/dream_seed_1.png",
+        "description": "Skip the paperwork and get started today with our AI-powered business builder."
+      }
+    },
+    "integrations": {
+      "forms": {
+        "newsletter_endpoint": "https://forms.dreamseed.ai/newsletter",
+        "contact_form_endpoint": "https://forms.dreamseed.ai/contact"
+      },
+      "payments": {
+        "paypal_client_id": "XXXXXXX",
+        "stripe_public_key": "pk_test_XXXXXXX"
+      },
+      "analytics": {
+        "facebook_pixel": "XXXXXXXX",
+        "google_analytics": "G-XXXXXXX"
+      }
+    }
+  },
+  "images": [],
+  "company_name": "Dream Seed",
+  "status": "draft"
+}

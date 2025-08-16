@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VAPI Web Call Fix Guide</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-align: center;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .issue-section {
+            background: rgba(231, 76, 60, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 2px solid #e74c3c;
+        }
+        
+        .solution-section {
+            background: rgba(39, 174, 96, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 2px solid #27ae60;
+        }
+        
+        .warning-section {
+            background: rgba(243, 156, 18, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 2px solid #f39c12;
+        }
+        
+        .code-block {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        
+        .step {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #3498db;
+        }
+        
+        .step h3 {
+            color: #3498db;
+            margin-top: 0;
+        }
+        
+        button {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(238, 90, 36, 0.4);
+            font-weight: bold;
+            margin: 10px;
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(238, 90, 36, 0.6);
+        }
+        
+        .test-result {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-family: monospace;
+        }
+        
+        .success { color: #27ae60; }
+        .error { color: #e74c3c; }
+        .warning { color: #f39c12; }
+        .info { color: #3498db; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 VAPI Web Call Fix Guide</h1>
+        
+        <div class="issue-section">
+            <h2>❌ Current Issue Identified</h2>
+            <p><strong>The web call button is not working because:</strong></p>
+            <ul>
+                <li>❌ You're using a <strong>private API key</strong> instead of a <strong>public key</strong></li>
+                <li>❌ VAPI Web SDK requires a public key starting with "pk_"</li>
+                <li>❌ Current key: <code id="current-key">Loading...</code></li>
+            </ul>
+        </div>
+        
+        <div class="warning-section">
+            <h2>⚠️ Status Check</h2>
+            <button onclick="checkCurrentConfig()">Test Current Configuration</button>
+            <div id="test-results"></div>
+        </div>
+        
+        <div class="solution-section">
+            <h2>✅ How to Fix This</h2>
+            
+            <div class="step">
+                <h3>Step 1: Get Your VAPI Public Key</h3>
+                <p>You need to obtain a public key from your VAPI dashboard:</p>
+                <ol>
+                    <li>Go to <a href="https://dashboard.vapi.ai" target="_blank" style="color: #3498db;">https://dashboard.vapi.ai</a></li>
+                    <li>Navigate to your API Keys section</li>
+                    <li>Look for a <strong>Public Key</strong> or <strong>Web SDK Key</strong></li>
+                    <li>It should start with <code>pk_</code></li>
+                    <li>Copy this key (NOT your private key)</li>
+                </ol>
+            </div>
+            
+            <div class="step">
+                <h3>Step 2: Update Your Environment Variables</h3>
+                <p>Add the public key to your .env file:</p>
+                <div class="code-block">
+# Add this new line to your .env file
+VAPI_PUBLIC_KEY=pk_your_public_key_here
+
+# Keep your existing private key for server operations
+VAPI_API_KEY=3359a2eb-02e4-4f31-a5aa-37c2a020a395
+                </div>
+            </div>
+            
+            <div class="step">
+                <h3>Step 3: Update Server Configuration</h3>
+                <p>The server.js needs to return the public key for web calls:</p>
+                <div class="code-block">
+// In server.js, update the /api/vapi-config endpoint:
+app.get('/api/vapi-config', (req, res) => {
+    res.json({
+        publicKey: process.env.VAPI_PUBLIC_KEY, // Use public key here
+        assistantId: process.env.VAPI_AGENT_ID,
+        webhookUrl: `http://localhost:${process.env.PORT || 3002}`
+    });
+});
+                </div>
+            </div>
+            
+            <div class="step">
+                <h3>Step 4: Restart and Test</h3>
+                <ol>
+                    <li>Stop your server (Ctrl+C)</li>
+                    <li>Update your .env file with the public key</li>
+                    <li>Update server.js with the new endpoint</li>
+                    <li>Restart the server: <code>node server.js</code></li>
+                    <li>Test the web call button</li>
+                </ol>
+            </div>
+        </div>
+        
+        <div class="warning-section">
+            <h2>🔄 Alternative Solution</h2>
+            <p>If you can't find a public key in your VAPI dashboard:</p>
+            <ul>
+                <li>Contact VAPI support to request a public key</li>
+                <li>Check if your VAPI plan includes web SDK access</li>
+                <li>Verify your account has the necessary permissions</li>
+            </ul>
+        </div>
+        
+        <div class="solution-section">
+            <h2>✅ Good News</h2>
+            <p><strong>The server-side integration is working perfectly!</strong></p>
+            <ul>
+                <li>✅ Inbound call handling works</li>
+                <li>✅ Customer recognition works</li>
+                <li>✅ Stage progression works</li>
+                <li>✅ Database integration works</li>
+            </ul>
+            <p>You just need the correct public key for web calls.</p>
+        </div>
+        
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="/web-call-button.html" style="color: #3498db; font-size: 1.2em;">← Back to Web Call Button</a>
+            <span style="margin: 0 20px;">|</span>
+            <a href="/web-call-debug.html" style="color: #3498db; font-size: 1.2em;">Advanced Debug Tool →</a>
+        </div>
+    </div>
+
+    <script>
+        async function checkCurrentConfig() {
+            const resultsDiv = document.getElementById('test-results');
+            resultsDiv.innerHTML = '<div class="test-result info">Testing current configuration...</div>';
+            
+            try {
+                // Check VAPI config endpoint
+                const response = await fetch('/api/vapi-config');
+                if (response.ok) {
+                    const config = await response.json();
+                    
+                    document.getElementById('current-key').textContent = config.publicKey;
+                    
+                    let results = '<div class="test-result success">✅ Server configuration endpoint works</div>';
+                    results += `<div class="test-result info">Current key: ${config.publicKey}</div>`;
+                    
+                    // Check if it's a valid public key
+                    if (config.publicKey && config.publicKey.startsWith('pk_')) {
+                        results += '<div class="test-result success">✅ Key format looks correct (starts with pk_)</div>';
+                        results += '<div class="test-result info">🎉 Your configuration might be correct! Try the web call button now.</div>';
+                    } else {
+                        results += '<div class="test-result error">❌ This is NOT a public key (should start with pk_)</div>';
+                        results += '<div class="test-result warning">⚠️ You need to get a public key from VAPI dashboard</div>';
+                    }
+                    
+                    resultsDiv.innerHTML = results;
+                } else {
+                    resultsDiv.innerHTML = '<div class="test-result error">❌ Could not reach server configuration endpoint</div>';
+                }
+            } catch (error) {
+                resultsDiv.innerHTML = `<div class="test-result error">❌ Error: ${error.message}</div>`;
+            }
+        }
+        
+        // Auto-check on page load
+        checkCurrentConfig();
+    </script>
+</body>
+</html>

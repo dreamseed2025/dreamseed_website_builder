@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DreamSeed VAPI System - Home</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .stat-card h3 {
+            color: #3348a8;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #141416;
+        }
+        
+        .calls-list {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .calls-list h2 {
+            color: #3348a8;
+            margin-bottom: 1.5rem;
+        }
+        
+        .call-item {
+            border-bottom: 1px solid #e5e7eb;
+            padding: 1.5rem 0;
+        }
+        
+        .call-item:last-child {
+            border-bottom: none;
+        }
+        
+        .call-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .call-number {
+            background: #56b978;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .call-date {
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+        
+        .call-details {
+            color: #4b5563;
+            line-height: 1.6;
+        }
+        
+        .customer-info {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+        }
+        
+        .info-row {
+            display: flex;
+            margin-bottom: 0.5rem;
+        }
+        
+        .info-label {
+            font-weight: 600;
+            color: #3348a8;
+            min-width: 120px;
+        }
+        
+        .info-value {
+            color: #555;
+        }
+        
+        .refresh-btn {
+            background: #56b978;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: block;
+            margin: 2rem auto;
+            font-weight: 600;
+        }
+        
+        .refresh-btn:hover {
+            background: #4a9d66;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #9ca3af;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌱 DreamSeed Voice AI Dashboard</h1>
+        
+        <div class="stats">
+            <div class="stat-card">
+                <h3>Total Calls</h3>
+                <div class="stat-value" id="totalCalls">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Customers</h3>
+                <div class="stat-value" id="totalCustomers">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Completed</h3>
+                <div class="stat-value" id="completedCalls">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Revenue</h3>
+                <div class="stat-value" id="totalRevenue">$0</div>
+            </div>
+        </div>
+        
+        <div class="calls-list">
+            <h2>Recent Calls</h2>
+            <div id="callsList">
+                <div class="empty-state">
+                    <p>No calls yet. Waiting for voice AI conversations...</p>
+                </div>
+            </div>
+        </div>
+        
+        <button class="refresh-btn" onclick="loadCalls()">Refresh Data</button>
+    </div>
+    
+    <script>
+        async function loadCalls() {
+            try {
+                const response = await fetch('/calls-data.json');
+                const data = await response.json();
+                
+                // Update stats
+                document.getElementById('totalCalls').textContent = data.calls.length;
+                
+                const customers = new Set(data.calls.map(c => c.customer?.phone || c.customer?.email).filter(Boolean));
+                document.getElementById('totalCustomers').textContent = customers.size;
+                
+                const completed = data.calls.filter(c => c.status === 'ended').length;
+                document.getElementById('completedCalls').textContent = completed;
+                
+                const revenue = data.calls.reduce((sum, call) => {
+                    if (call.package === 'Launch Basic') return sum + 999;
+                    if (call.package === 'Launch Pro') return sum + 1799;
+                    if (call.package === 'Launch Complete') return sum + 3499;
+                    return sum;
+                }, 0);
+                document.getElementById('totalRevenue').textContent = '$' + revenue.toLocaleString();
+                
+                // Display calls
+                const callsList = document.getElementById('callsList');
+                if (data.calls.length === 0) {
+                    callsList.innerHTML = '<div class="empty-state"><p>No calls yet. Waiting for voice AI conversations...</p></div>';
+                } else {
+                    callsList.innerHTML = data.calls.map(call => `
+                        <div class="call-item">
+                            <div class="call-header">
+                                <span class="call-number">Call ${call.callNumber}</span>
+                                <span class="call-date">${new Date(call.timestamp).toLocaleString()}</span>
+                            </div>
+                            <div class="call-details">
+                                <div class="customer-info">
+                                    ${call.customer?.name ? `<div class="info-row"><span class="info-label">Name:</span><span class="info-value">${call.customer.name}</span></div>` : ''}
+                                    ${call.customer?.email ? `<div class="info-row"><span class="info-label">Email:</span><span class="info-value">${call.customer.email}</span></div>` : ''}
+                                    ${call.customer?.phone ? `<div class="info-row"><span class="info-label">Phone:</span><span class="info-value">${call.customer.phone}</span></div>` : ''}
+                                    ${call.businessName ? `<div class="info-row"><span class="info-label">Business:</span><span class="info-value">${call.businessName}</span></div>` : ''}
+                                    ${call.state ? `<div class="info-row"><span class="info-label">State:</span><span class="info-value">${call.state}</span></div>` : ''}
+                                    ${call.package ? `<div class="info-row"><span class="info-label">Package:</span><span class="info-value">${call.package}</span></div>` : ''}
+                                    <div class="info-row"><span class="info-label">Duration:</span><span class="info-value">${Math.floor(call.duration / 60)} minutes</span></div>
+                                </div>
+                                ${call.summary ? `<p style="margin-top: 1rem; font-style: italic;">"${call.summary}"</p>` : ''}
+                            </div>
+                        </div>
+                    `).reverse().join('');
+                }
+            } catch (error) {
+                console.error('Error loading calls:', error);
+                document.getElementById('callsList').innerHTML = '<div class="empty-state"><p>Error loading data. Make sure the webhook server is running.</p></div>';
+            }
+        }
+        
+        // Load calls on page load
+        loadCalls();
+        
+        // Auto-refresh every 30 seconds
+        setInterval(loadCalls, 30000);
+    </script>
+</body>
+</html>

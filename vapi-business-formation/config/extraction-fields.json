@@ -1,0 +1,565 @@
+// Flexible Data Extraction Configuration System
+// This allows you to easily add/remove/modify what data gets extracted
+
+// ==========================================
+// EXTRACTION CONFIGURATION (JSON FORMAT)
+// ==========================================
+
+// config/extraction-fields.json
+const EXTRACTION_CONFIG = {
+  "call_1": {
+    "fields": [
+      {
+        "field_name": "customer_name",
+        "display_name": "Customer Name",
+        "type": "text",
+        "required": true,
+        "extraction_patterns": [
+          "(?:my name is|i'm|i am)\\s+([A-Z][a-z]+\\s+[A-Z][a-z]+)",
+          "(?:this is|it's)\\s+([A-Z][a-z]+\\s+[A-Z][a-z]+)"
+        ],
+        "context_keywords": ["name", "called", "i'm"],
+        "validation": {
+          "min_length": 2,
+          "max_length": 50
+        }
+      },
+      {
+        "field_name": "customer_email",
+        "display_name": "Email Address",
+        "type": "email",
+        "required": true,
+        "extraction_patterns": [
+          "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}"
+        ],
+        "context_keywords": ["email", "contact", "reach"],
+        "validation": {
+          "format": "email"
+        }
+      },
+      {
+        "field_name": "business_name",
+        "display_name": "Business Name",
+        "type": "text",
+        "required": true,
+        "extraction_patterns": [
+          "(?:call it|named|business is called)\\s+([A-Za-z\\s&]+)",
+          "(?:it's called|we're calling it)\\s+([A-Za-z\\s&]+)"
+        ],
+        "context_keywords": ["business name", "call it", "named"],
+        "assistant_questions": [
+          "business name",
+          "name your business",
+          "what to call"
+        ]
+      },
+      {
+        "field_name": "business_description",
+        "display_name": "What the Business Does",
+        "type": "text",
+        "required": true,
+        "extraction_patterns": [
+          "(?:business will|company will|we will|it will|i will)\\s+(.+)",
+          "(?:specializes? in|focuses on|provides|offers)\\s+(.+)"
+        ],
+        "context_keywords": ["business does", "specializes", "provides"],
+        "assistant_questions": [
+          "what business",
+          "what kind of business",
+          "what does your business",
+          "what will your business"
+        ]
+      },
+      {
+        "field_name": "state_of_operation",
+        "display_name": "State of Operation",
+        "type": "select",
+        "required": true,
+        "options": [
+          "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado",
+          "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho",
+          "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana",
+          "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota",
+          "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada",
+          "New Hampshire", "New Jersey", "New Mexico", "New York",
+          "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon",
+          "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota",
+          "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington",
+          "West Virginia", "Wisconsin", "Wyoming"
+        ],
+        "context_keywords": ["state", "located", "operating"]
+      },
+      {
+        "field_name": "entity_type",
+        "display_name": "Business Entity Type",
+        "type": "select",
+        "required": false,
+        "default": "LLC",
+        "options": ["LLC", "S-Corp", "C-Corp", "Corporation", "Partnership"],
+        "extraction_patterns": [
+          "\\b(LLC|Limited Liability Company|Corporation|Corp|S-Corp|S Corporation|C-Corp|C Corporation)\\b"
+        ]
+      },
+      {
+        "field_name": "industry_category",
+        "display_name": "Industry Category",
+        "type": "select",
+        "required": false,
+        "options": [
+          "Food & Beverage", "Professional Services", "Real Estate",
+          "Construction", "Retail", "Technology", "Healthcare",
+          "Health & Fitness", "Education", "Services", "Manufacturing",
+          "Transportation", "Entertainment", "Finance", "Other"
+        ],
+        "keyword_mapping": {
+          "restaurant": "Food & Beverage",
+          "bakery": "Food & Beverage",
+          "cafe": "Food & Beverage",
+          "consulting": "Professional Services",
+          "marketing": "Professional Services",
+          "real estate": "Real Estate",
+          "construction": "Construction",
+          "retail": "Retail",
+          "software": "Technology",
+          "tech": "Technology",
+          "healthcare": "Healthcare",
+          "fitness": "Health & Fitness",
+          "education": "Education",
+          "cleaning": "Services",
+          "landscaping": "Services"
+        }
+      }
+    ]
+  },
+  "call_2": {
+    "fields": [
+      {
+        "field_name": "business_address_street",
+        "display_name": "Street Address",
+        "type": "text",
+        "required": true,
+        "extraction_patterns": [
+          "(\\d+\\s+[A-Za-z\\s]+(?:Street|St|Avenue|Ave|Road|Rd|Drive|Dr|Circle|Cir|Lane|Ln|Boulevard|Blvd|Way|Court|Ct|Place|Pl|Via))"
+        ],
+        "context_keywords": ["address", "street", "located"]
+      },
+      {
+        "field_name": "business_address_city",
+        "display_name": "City",
+        "type": "text",
+        "required": true,
+        "extraction_patterns": [
+          ",\\s*([A-Za-z\\s]+),\\s*[A-Z]{2}"
+        ]
+      },
+      {
+        "field_name": "business_address_zip",
+        "display_name": "ZIP Code",
+        "type": "text",
+        "required": true,
+        "extraction_patterns": [
+          "\\b(\\d{5}(?:-\\d{4})?)\\b"
+        ],
+        "validation": {
+          "format": "zip"
+        }
+      },
+      {
+        "field_name": "registered_agent_name",
+        "display_name": "Registered Agent Name",
+        "type": "text",
+        "required": true,
+        "extraction_patterns": [
+          "([A-Z][a-z]+\\s+[A-Z][a-z]+)"
+        ],
+        "context_keywords": ["registered agent", "agent"],
+        "special_values": {
+          "self": ["me", "myself", "i will", "i'll be"]
+        }
+      },
+      {
+        "field_name": "registered_agent_type",
+        "display_name": "Registered Agent Type",
+        "type": "select",
+        "required": true,
+        "options": ["self", "service", "third_party"],
+        "keyword_mapping": {
+          "me": "self",
+          "myself": "self",
+          "service": "service",
+          "company": "service"
+        }
+      },
+      {
+        "field_name": "expected_employees",
+        "display_name": "Expected Number of Employees",
+        "type": "number",
+        "required": false,
+        "default": 0,
+        "extraction_patterns": [
+          "(\\d+)\\s+employees?",
+          "hire\\s+(\\d+)",
+          "just me",
+          "no employees?"
+        ],
+        "special_values": {
+          "0": ["just me", "no employees", "by myself", "solo"]
+        }
+      }
+    ]
+  },
+  "call_3": {
+    "fields": [
+      {
+        "field_name": "preferred_bank",
+        "display_name": "Preferred Bank",
+        "type": "select",
+        "required": false,
+        "options": [
+          "Bank of America", "Wells Fargo", "Chase", "JPMorgan Chase",
+          "Citibank", "US Bank", "PNC", "Capital One", "TD Bank",
+          "Regions", "Fifth Third", "Local Bank", "Credit Union", "Other"
+        ],
+        "extraction_patterns": [
+          "\\b(Bank of America|Wells Fargo|Chase|JPMorgan Chase|Citibank|US Bank|PNC|Capital One|TD Bank|Regions|Fifth Third|local bank|credit union)\\b"
+        ]
+      },
+      {
+        "field_name": "initial_deposit_amount",
+        "display_name": "Initial Deposit Amount",
+        "type": "currency",
+        "required": false,
+        "extraction_patterns": [
+          "\\$([0-9,]+)",
+          "([0-9,]+)\\s*dollars?"
+        ],
+        "validation": {
+          "min": 25,
+          "max": 100000
+        }
+      },
+      {
+        "field_name": "business_phone",
+        "display_name": "Business Phone Number",
+        "type": "phone",
+        "required": true,
+        "extraction_patterns": [
+          "(\\(?\\d{3}\\)?[-\\.\\s]?\\d{3}[-\\.\\s]?\\d{4})"
+        ],
+        "validation": {
+          "format": "phone"
+        }
+      },
+      {
+        "field_name": "domain_name",
+        "display_name": "Domain Name",
+        "type": "text",
+        "required": true,
+        "extraction_patterns": [
+          "([a-zA-Z0-9-]+\\.(?:com|net|org|biz|info))"
+        ],
+        "auto_generate": true,
+        "generation_source": "business_name"
+      },
+      {
+        "field_name": "business_hours",
+        "display_name": "Business Hours",
+        "type": "text",
+        "required": false,
+        "extraction_patterns": [
+          "(\\d{1,2}(?::\\d{2})?\\s*(?:AM|PM|am|pm)\\s*(?:to|-|until)\\s*\\d{1,2}(?::\\d{2})?\\s*(?:AM|PM|am|pm))",
+          "(monday|tuesday|wednesday|thursday|friday|saturday|sunday).*(\\d{1,2})"
+        ]
+      }
+    ]
+  },
+  "call_4": {
+    "fields": [
+      {
+        "field_name": "brand_colors",
+        "display_name": "Brand Colors",
+        "type": "text",
+        "required": false,
+        "extraction_patterns": [
+          "\\b(red|blue|green|yellow|orange|purple|pink|black|white|gray|grey|brown|navy|teal|burgundy|gold|silver)\\b",
+          "#[0-9A-Fa-f]{6}",
+          "rgb\\(\\s*\\d+\\s*,\\s*\\d+\\s*,\\s*\\d+\\s*\\)"
+        ],
+        "context_keywords": ["color", "colors", "brand"]
+      },
+      {
+        "field_name": "website_style_preference",
+        "display_name": "Website Style",
+        "type": "select",
+        "required": false,
+        "options": [
+          "Professional", "Corporate", "Modern", "Clean & Modern",
+          "Creative", "Fun & Playful", "Traditional", "Minimalist",
+          "Simple & Clean"
+        ],
+        "keyword_mapping": {
+          "professional": "Professional",
+          "corporate": "Corporate",
+          "modern": "Modern",
+          "clean": "Clean & Modern",
+          "creative": "Creative",
+          "artistic": "Creative",
+          "fun": "Fun & Playful",
+          "playful": "Fun & Playful",
+          "traditional": "Traditional",
+          "classic": "Traditional",
+          "minimalist": "Minimalist",
+          "simple": "Simple & Clean"
+        }
+      },
+      {
+        "field_name": "logo_preference",
+        "display_name": "Logo Preference",
+        "type": "select",
+        "required": false,
+        "options": ["Have existing logo", "Need logo designed", "Text only", "Icon + text", "Not sure"],
+        "keyword_mapping": {
+          "have": "Have existing logo",
+          "existing": "Have existing logo",
+          "need": "Need logo designed",
+          "design": "Need logo designed",
+          "text": "Text only",
+          "simple": "Text only"
+        }
+      },
+      {
+        "field_name": "website_services_description",
+        "display_name": "Services/Products for Website",
+        "type": "text",
+        "required": false,
+        "assistant_questions": [
+          "services or products",
+          "what to highlight",
+          "main offerings"
+        ]
+      },
+      {
+        "field_name": "target_audience",
+        "display_name": "Target Audience",
+        "type": "text",
+        "required": false,
+        "assistant_questions": [
+          "ideal customer",
+          "target audience",
+          "who do you serve"
+        ]
+      }
+    ]
+  }
+}
+
+// ==========================================
+// DYNAMIC EXTRACTION ENGINE
+// ==========================================
+
+class DataExtractionEngine {
+  constructor(config) {
+    this.config = config;
+  }
+
+  // Extract data for a specific call
+  extractCallData(callNumber, vapiData) {
+    const callConfig = this.config[`call_${callNumber}`];
+    if (!callConfig) {
+      throw new Error(`No configuration found for call ${callNumber}`);
+    }
+
+    const messages = vapiData.call?.messages || [];
+    const transcript = vapiData.call?.transcript || '';
+    const extractedData = {};
+
+    // Process each field defined in config
+    for (const field of callConfig.fields) {
+      const value = this.extractField(field, messages, transcript);
+      if (value !== null && value !== undefined) {
+        extractedData[field.field_name] = value;
+      } else if (field.default) {
+        extractedData[field.field_name] = field.default;
+      }
+    }
+
+    return extractedData;
+  }
+
+  // Extract a single field based on its configuration
+  extractField(fieldConfig, messages, transcript) {
+    const { field_name, extraction_patterns, context_keywords, assistant_questions, type, special_values, keyword_mapping } = fieldConfig;
+
+    // 1. Try context-based extraction (look for assistant questions)
+    if (assistant_questions) {
+      const contextValue = this.extractByContext(messages, assistant_questions);
+      if (contextValue) return this.processValue(contextValue, fieldConfig);
+    }
+
+    // 2. Try pattern-based extraction
+    if (extraction_patterns) {
+      for (const pattern of extraction_patterns) {
+        const patternValue = this.extractByPattern(messages, transcript, pattern);
+        if (patternValue) return this.processValue(patternValue, fieldConfig);
+      }
+    }
+
+    // 3. Try special values (like "me" = "self")
+    if (special_values) {
+      const specialValue = this.extractSpecialValues(messages, special_values);
+      if (specialValue) return specialValue;
+    }
+
+    // 4. Try keyword mapping
+    if (keyword_mapping) {
+      const mappedValue = this.extractByKeywordMapping(messages, keyword_mapping);
+      if (mappedValue) return mappedValue;
+    }
+
+    return null;
+  }
+
+  extractByContext(messages, assistantQuestions) {
+    for (let i = 0; i < messages.length; i++) {
+      const msg = messages[i];
+      if (msg.role === 'user') {
+        const prevMsg = messages[i - 1];
+        if (prevMsg && prevMsg.role === 'assistant') {
+          // Check if previous assistant message contains any of the question keywords
+          for (const question of assistantQuestions) {
+            if (prevMsg.message.toLowerCase().includes(question.toLowerCase())) {
+              return msg.message.trim();
+            }
+          }
+        }
+      }
+    }
+    return null;
+  }
+
+  extractByPattern(messages, transcript, pattern) {
+    const regex = new RegExp(pattern, 'i');
+    
+    // Try messages first
+    for (const msg of messages) {
+      if (msg.role === 'user') {
+        const match = msg.message.match(regex);
+        if (match && match[1]) return match[1].trim();
+      }
+    }
+    
+    // Try full transcript
+    const match = transcript.match(regex);
+    return match && match[1] ? match[1].trim() : null;
+  }
+
+  extractSpecialValues(messages, specialValues) {
+    for (const [value, keywords] of Object.entries(specialValues)) {
+      for (const msg of messages) {
+        if (msg.role === 'user') {
+          for (const keyword of keywords) {
+            if (msg.message.toLowerCase().includes(keyword.toLowerCase())) {
+              return value;
+            }
+          }
+        }
+      }
+    }
+    return null;
+  }
+
+  extractByKeywordMapping(messages, keywordMapping) {
+    for (const msg of messages) {
+      if (msg.role === 'user') {
+        for (const [keyword, value] of Object.entries(keywordMapping)) {
+          if (msg.message.toLowerCase().includes(keyword.toLowerCase())) {
+            return value;
+          }
+        }
+      }
+    }
+    return null;
+  }
+
+  processValue(value, fieldConfig) {
+    if (!value) return null;
+
+    // Type-specific processing
+    switch (fieldConfig.type) {
+      case 'email':
+        return value.toLowerCase().trim();
+      case 'phone':
+        return value.replace(/\D/g, ''); // Remove non-digits
+      case 'currency':
+        return parseFloat(value.replace(/[,$]/g, ''));
+      case 'number':
+        return parseInt(value);
+      default:
+        return value.trim();
+    }
+  }
+
+  // Get all fields for a call (useful for generating forms)
+  getCallFields(callNumber) {
+    const callConfig = this.config[`call_${callNumber}`];
+    return callConfig ? callConfig.fields : [];
+  }
+
+  // Add a new field to extraction config
+  addField(callNumber, fieldConfig) {
+    if (!this.config[`call_${callNumber}`]) {
+      this.config[`call_${callNumber}`] = { fields: [] };
+    }
+    this.config[`call_${callNumber}`].fields.push(fieldConfig);
+  }
+
+  // Remove a field
+  removeField(callNumber, fieldName) {
+    const callConfig = this.config[`call_${callNumber}`];
+    if (callConfig) {
+      callConfig.fields = callConfig.fields.filter(f => f.field_name !== fieldName);
+    }
+  }
+
+  // Update a field
+  updateField(callNumber, fieldName, updates) {
+    const callConfig = this.config[`call_${callNumber}`];
+    if (callConfig) {
+      const field = callConfig.fields.find(f => f.field_name === fieldName);
+      if (field) {
+        Object.assign(field, updates);
+      }
+    }
+  }
+}
+
+// ==========================================
+// USAGE EXAMPLE
+// ==========================================
+
+/*
+// Initialize the extraction engine
+const extractor = new DataExtractionEngine(EXTRACTION_CONFIG);
+
+// Use in your webhook
+export async function handleCallWebhook(req, callNumber) {
+  const vapiData = await req.json();
+  
+  // Extract data using the configuration
+  const extractedData = extractor.extractCallData(callNumber, vapiData);
+  
+  // Add system fields
+  extractedData.call_transcript = vapiData.call?.transcript;
+  extractedData.call_completed_at = new Date().toISOString();
+  extractedData.status = `call_${callNumber}_complete`;
+  
+  // Save to database
+  const { data, error } = await supabase
+    .from('business_formations')
+    .insert([extractedData]);
+    
+  return new Response(JSON.stringify({ success: !error, data: extractedData }));
+}
+*/
+
+export { EXTRACTION_CONFIG, DataExtractionEngine };

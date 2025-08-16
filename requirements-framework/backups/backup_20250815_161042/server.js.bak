@@ -1,0 +1,24 @@
+require('dotenv').config();
+const express = require('express');
+const { createClient } = require('@supabase/supabase-js');
+
+const app = express();
+app.use(express.json());
+app.use(express.static(__dirname));
+
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_ROLE_KEY
+);
+
+console.log('🚀 Starting DreamSeed Server...');
+
+app.get('/api/all', async (req, res) => {
+  const { data } = await supabase.from('dream_dashboard').select('*').limit(10);
+  res.json(data || []);
+});
+
+app.listen(3002, () => {
+  console.log('✅ Server running on http://localhost:3002');
+  console.log('📊 Test API: http://localhost:3002/api/all');
+});

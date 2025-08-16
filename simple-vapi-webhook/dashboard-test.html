@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DreamSeed End-to-End Tester</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: #f5f7fa;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .test-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .test-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 8px;
+            font-size: 16px;
+        }
+        
+        .test-button:hover {
+            background: #5a6fd8;
+        }
+        
+        .results {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+            white-space: pre-wrap;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .success { color: #28a745; }
+        .error { color: #dc3545; }
+        .info { color: #17a2b8; }
+        
+        textarea {
+            width: 100%;
+            height: 120px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: inherit;
+            resize: vertical;
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+        
+        .quick-tests {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🧪 DreamSeed End-to-End Tester</h1>
+        <p>Test the complete requirements framework from transcript to customer tracking</p>
+    </div>
+
+    <div class="test-section">
+        <h2>🎤 Transcript Extraction Test</h2>
+        <p>Test AI extraction with custom transcripts:</p>
+        
+        <label>Call Stage:</label>
+        <select id="callStage" style="padding: 8px; margin-bottom: 1rem;">
+            <option value="1">Call 1 - Foundation & Vision (25%)</option>
+            <option value="2">Call 2 - Brand DNA & Market (50%)</option>
+            <option value="3">Call 3 - Operations & Implementation (75%)</option>
+            <option value="4">Call 4 - Launch Strategy & Support (100%)</option>
+        </select>
+        
+        <label>Customer Email (for existing data lookup):</label>
+        <input type="email" id="customerEmail" placeholder="customer@example.com">
+        
+        <label>Transcript:</label>
+        <textarea id="transcript" placeholder="Enter conversation transcript here...">Hi there! Thanks for calling DreamSeed. I am Sarah Johnson and I want to start a consulting business helping small restaurants improve their operations and profitability. I have been working in restaurant management for 15 years. I want to call this business Restaurant Success Solutions. I am in California, so I would like to file my LLC there. My email is sarah.johnson@email.com and my cell is 555-123-4567.</textarea>
+        
+        <button class="test-button" onclick="testExtraction()">🤖 Test AI Extraction</button>
+        <button class="test-button" onclick="loadSampleCall1()">📝 Load Call 1 Sample</button>
+        <button class="test-button" onclick="loadSampleCall2()">🎨 Load Call 2 Sample</button>
+        
+        <div id="extractionResults" class="results" style="display: none;"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>📊 Quick API Tests</h2>
+        <div class="quick-tests">
+            <div>
+                <h3>Customer Tracking</h3>
+                <input type="email" id="trackingEmail" value="sarah.johnson@email.com" placeholder="customer@example.com">
+                <button class="test-button" onclick="testCustomerCompleteness()">📈 Check Completeness</button>
+                <button class="test-button" onclick="testMissingInfo()">❓ Missing Info</button>
+                <button class="test-button" onclick="testNextQuestions()">🔮 Next Questions</button>
+            </div>
+            
+            <div>
+                <h3>System Health</h3>
+                <button class="test-button" onclick="testServerStatus()">🏥 Server Status</button>
+                <button class="test-button" onclick="testLegacyAPI()">📊 Legacy API</button>
+                <button class="test-button" onclick="openDashboard()">🌐 Open Dashboard</button>
+            </div>
+        </div>
+        
+        <div id="quickTestResults" class="results" style="display: none;"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>🔄 Full End-to-End Test</h2>
+        <p>Run complete testing sequence automatically:</p>
+        <button class="test-button" onclick="runFullTest()">🚀 Run Full E2E Test</button>
+        <div id="fullTestResults" class="results" style="display: none;"></div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:3002';
+
+        function log(message, type = 'info', targetId = 'extractionResults') {
+            const results = document.getElementById(targetId);
+            results.style.display = 'block';
+            const timestamp = new Date().toLocaleTimeString();
+            results.innerHTML += `<span class="${type}">[${timestamp}] ${message}</span>\n`;
+            results.scrollTop = results.scrollHeight;
+        }
+
+        function clearResults(targetId = 'extractionResults') {
+            document.getElementById(targetId).innerHTML = '';
+        }
+
+        async function testExtraction() {
+            clearResults('extractionResults');
+            log('🤖 Starting AI extraction test...', 'info', 'extractionResults');
+            
+            const callStage = document.getElementById('callStage').value;
+            const customerEmail = document.getElementById('customerEmail').value;
+            const transcript = document.getElementById('transcript').value;
+            
+            if (!transcript.trim()) {
+                log('❌ Error: Please enter a transcript', 'error', 'extractionResults');
+                return;
+            }
+            
+            try {
+                // Get existing data if email provided
+                let existingData = {};
+                if (customerEmail) {
+                    log(`📋 Looking up existing data for ${customerEmail}...`, 'info', 'extractionResults');
+                    try {
+                        const response = await fetch(`${API_BASE}/api/customer-completeness/${encodeURIComponent(customerEmail)}`);
+                        if (response.ok) {
+                            existingData = await response.json();
+                            log('✅ Found existing customer data', 'success', 'extractionResults');
+                        }
+                    } catch (e) {
+                        log('ℹ️ No existing data found (starting fresh)', 'info', 'extractionResults');
+                    }
+                }
+                
+                // Test extraction
+                log(`🔍 Extracting data for Call Stage ${callStage}...`, 'info', 'extractionResults');
+                const response = await fetch(`${API_BASE}/api/test-extraction`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        transcript: transcript,
+                        callStage: parseInt(callStage),
+                        existingData: existingData
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const result = await response.json();
+                log('✅ Extraction successful!', 'success', 'extractionResults');
+                log(`📊 Completion Score: ${result.result.validation?.completionScore || 'Unknown'}%`, 'success', 'extractionResults');
+                log('📄 Full Result:', 'info', 'extractionResults');
+                log(JSON.stringify(result, null, 2), 'info', 'extractionResults');
+                
+            } catch (error) {
+                log(`❌ Extraction failed: ${error.message}`, 'error', 'extractionResults');
+            }
+        }
+
+        async function testCustomerCompleteness() {
+            clearResults('quickTestResults');
+            const email = document.getElementById('trackingEmail').value;
+            if (!email) {
+                log('❌ Please enter customer email', 'error', 'quickTestResults');
+                return;
+            }
+            
+            log(`📈 Checking completeness for ${email}...`, 'info', 'quickTestResults');
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/customer-completeness/${encodeURIComponent(email)}`);
+                const result = await response.json();
+                
+                if (response.ok) {
+                    log('✅ Customer found!', 'success', 'quickTestResults');
+                    log(`📊 Completion: ${result.completionScore}%`, 'success', 'quickTestResults');
+                    log(`📞 Call Stage: ${result.currentCallStage}`, 'info', 'quickTestResults');
+                    log(JSON.stringify(result, null, 2), 'info', 'quickTestResults');
+                } else {
+                    log('❌ Customer not found', 'error', 'quickTestResults');
+                }
+            } catch (error) {
+                log(`❌ Error: ${error.message}`, 'error', 'quickTestResults');
+            }
+        }
+
+        async function testMissingInfo() {
+            const email = document.getElementById('trackingEmail').value;
+            if (!email) return;
+            
+            log(`❓ Getting missing info for ${email}...`, 'info', 'quickTestResults');
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/missing-info/${encodeURIComponent(email)}?callStage=1`);
+                const result = await response.json();
+                
+                if (response.ok) {
+                    log('✅ Missing info report generated', 'success', 'quickTestResults');
+                    log(JSON.stringify(result, null, 2), 'info', 'quickTestResults');
+                } else {
+                    log('❌ Failed to get missing info', 'error', 'quickTestResults');
+                }
+            } catch (error) {
+                log(`❌ Error: ${error.message}`, 'error', 'quickTestResults');
+            }
+        }
+
+        async function testNextQuestions() {
+            const email = document.getElementById('trackingEmail').value;
+            if (!email) return;
+            
+            log(`🔮 Getting next questions for ${email}...`, 'info', 'quickTestResults');
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/next-questions/${encodeURIComponent(email)}`);
+                const result = await response.json();
+                
+                if (response.ok) {
+                    log('✅ Next questions generated', 'success', 'quickTestResults');
+                    log(JSON.stringify(result, null, 2), 'info', 'quickTestResults');
+                } else {
+                    log('❌ Failed to get next questions', 'error', 'quickTestResults');
+                }
+            } catch (error) {
+                log(`❌ Error: ${error.message}`, 'error', 'quickTestResults');
+            }
+        }
+
+        async function testServerStatus() {
+            clearResults('quickTestResults');
+            log('🏥 Checking server status...', 'info', 'quickTestResults');
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/all`);
+                if (response.ok) {
+                    log('✅ Server is running and responding', 'success', 'quickTestResults');
+                } else {
+                    log('⚠️ Server responding but with errors', 'error', 'quickTestResults');
+                }
+            } catch (error) {
+                log('❌ Server not responding', 'error', 'quickTestResults');
+            }
+        }
+
+        async function testLegacyAPI() {
+            log('📊 Testing legacy API...', 'info', 'quickTestResults');
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/all`);
+                const result = await response.json();
+                log('✅ Legacy API working', 'success', 'quickTestResults');
+                log(JSON.stringify(result, null, 2), 'info', 'quickTestResults');
+            } catch (error) {
+                log(`❌ Legacy API error: ${error.message}`, 'error', 'quickTestResults');
+            }
+        }
+
+        function openDashboard() {
+            window.open(`${API_BASE}/info-tracker.html`, '_blank');
+        }
+
+        function loadSampleCall1() {
+            document.getElementById('callStage').value = '1';
+            document.getElementById('customerEmail').value = 'sarah.johnson@email.com';
+            document.getElementById('transcript').value = 'Hi there! Thanks for calling DreamSeed. I am Sarah Johnson and I want to start a consulting business helping small restaurants improve their operations and profitability. I have been working in restaurant management for 15 years and I see so many places struggling with inefficient processes. I want to call this business Restaurant Success Solutions. I am in California, so I would like to file my LLC there. My email is sarah.johnson@email.com and my cell is 555-123-4567. I have about $25,000 saved up to get started and I am hoping to launch within the next 3 months.';
+        }
+
+        function loadSampleCall2() {
+            document.getElementById('callStage').value = '2';
+            document.getElementById('customerEmail').value = 'sarah.johnson@email.com';
+            document.getElementById('transcript').value = 'Hi Sarah! Great to continue our conversation about Restaurant Success Solutions. Let me ask about your brand identity. I want to come across as professional but approachable, knowledgeable but not intimidating. I want restaurant owners to feel like I understand their struggles. For colors, I am drawn to warm, earthy tones - maybe deep greens and warm grays. I want it to feel stable and trustworthy but also fresh and modern. For my logo, I think I would like an icon with the text, maybe something that suggests growth or efficiency. My main competitors are big consulting firms that work with restaurant chains, but they are expensive and impersonal. What makes me different is my 15 years of hands-on restaurant management experience.';
+        }
+
+        async function runFullTest() {
+            clearResults('fullTestResults');
+            log('🚀 Starting full end-to-end test sequence...', 'info', 'fullTestResults');
+            
+            const tests = [
+                { name: 'Server Status', fn: () => testServerWithTarget('fullTestResults') },
+                { name: 'Call 1 Extraction', fn: () => testCall1WithTarget('fullTestResults') },
+                { name: 'Call 2 Extraction', fn: () => testCall2WithTarget('fullTestResults') },
+                { name: 'Customer Tracking', fn: () => testCustomerWithTarget('fullTestResults') }
+            ];
+            
+            for (const test of tests) {
+                log(`\n🧪 Running ${test.name}...`, 'info', 'fullTestResults');
+                try {
+                    await test.fn();
+                    log(`✅ ${test.name} completed`, 'success', 'fullTestResults');
+                } catch (error) {
+                    log(`❌ ${test.name} failed: ${error.message}`, 'error', 'fullTestResults');
+                }
+                await new Promise(resolve => setTimeout(resolve, 1000)); // Wait between tests
+            }
+            
+            log('\n🎉 Full end-to-end test completed!', 'success', 'fullTestResults');
+            log('🌐 Open dashboard to view results: http://localhost:3002/info-tracker.html', 'info', 'fullTestResults');
+        }
+
+        async function testServerWithTarget(targetId) {
+            const response = await fetch(`${API_BASE}/api/all`);
+            if (!response.ok) throw new Error('Server not responding');
+            log('✅ Server online', 'success', targetId);
+        }
+
+        async function testCall1WithTarget(targetId) {
+            const response = await fetch(`${API_BASE}/api/test-extraction`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    transcript: 'Hi there! I am Sarah Johnson and I want to start Restaurant Success Solutions, a consulting business in California. My email is sarah.johnson@email.com.',
+                    callStage: 1,
+                    existingData: {}
+                })
+            });
+            
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            const result = await response.json();
+            log(`📊 Call 1 completion: ${result.result.validation?.completionScore}%`, 'success', targetId);
+        }
+
+        async function testCall2WithTarget(targetId) {
+            const response = await fetch(`${API_BASE}/api/test-extraction`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    transcript: 'For my brand, I want professional but approachable, with deep greens and warm grays. I want an icon with text logo.',
+                    callStage: 2,
+                    existingData: { customer_name: 'Sarah Johnson', business_name: 'Restaurant Success Solutions' }
+                })
+            });
+            
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            const result = await response.json();
+            log(`🎨 Call 2 completion: ${result.result.validation?.completionScore}%`, 'success', targetId);
+        }
+
+        async function testCustomerWithTarget(targetId) {
+            const response = await fetch(`${API_BASE}/api/customer-completeness/sarah.johnson@email.com`);
+            if (response.ok) {
+                const result = await response.json();
+                log(`👤 Customer tracked: ${result.completionScore}% complete`, 'success', targetId);
+            } else {
+                log('ℹ️ Customer data will be available after first extraction', 'info', targetId);
+            }
+        }
+    </script>
+</body>
+</html>

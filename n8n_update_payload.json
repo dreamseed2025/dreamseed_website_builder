@@ -1,0 +1,191 @@
+{
+  "slug": "dream-seed-1723647600",
+  "company_name": "Dream Seed",
+  "profile_json": {
+    "site": {
+      "company_name": "Dream Seed",
+      "tagline": "Your dream. One conversation. One price.",
+      "description": "AI-powered business launch platform that takes users from idea to operational business in days",
+      "domain": "dreamseed.ai",
+      "founded": "2024",
+      "industry": "Business Automation & AI Services"
+    },
+    "brand": {
+      "primary_hex": "#0E0E10",
+      "secondary_hex": "#F59E0B",
+      "accent_hex": "#10B981",
+      "logo_url": "",
+      "font_primary": "Inter",
+      "font_secondary": "Space Grotesk"
+    },
+    "services": [
+      {
+        "name": "AI Business Planning",
+        "description": "Complete business plan generation through conversational AI",
+        "icon": "brain",
+        "features": [
+          "Market analysis",
+          "Financial projections",
+          "Competitive research",
+          "Business model design"
+        ]
+      },
+      {
+        "name": "Automated Website Creation",
+        "description": "Professional website deployed in minutes, not weeks",
+        "icon": "globe",
+        "features": [
+          "Custom design generation",
+          "SEO optimization",
+          "Mobile responsiveness",
+          "Content management system"
+        ]
+      },
+      {
+        "name": "Business Registration",
+        "description": "Complete legal entity setup and compliance handling",
+        "icon": "document",
+        "features": [
+          "LLC/Corporation formation",
+          "EIN registration",
+          "State compliance",
+          "Operating agreements"
+        ]
+      },
+      {
+        "name": "Marketing Automation",
+        "description": "Launch-ready marketing campaigns and lead generation",
+        "icon": "megaphone",
+        "features": [
+          "Social media setup",
+          "Email campaigns",
+          "SEO strategy",
+          "Analytics tracking"
+        ]
+      }
+    ],
+    "testimonials": [
+      {
+        "name": "Sarah Chen",
+        "company": "TechStart Solutions",
+        "role": "Founder",
+        "quote": "Dream Seed took my SaaS idea and had me live with customers in 3 days. The automation is incredible.",
+        "rating": 5,
+        "avatar_url": ""
+      },
+      {
+        "name": "Marcus Rodriguez",
+        "company": "Local Fitness Pro",
+        "role": "Owner",
+        "quote": "I went from gym trainer to business owner overnight. The whole process was seamless and professional.",
+        "rating": 5,
+        "avatar_url": ""
+      },
+      {
+        "name": "Emily Johnson",
+        "company": "Craft & Co",
+        "role": "CEO",
+        "quote": "The AI understood my vision perfectly. My e-commerce store was profitable within the first week.",
+        "rating": 5,
+        "avatar_url": ""
+      }
+    ],
+    "plans": [
+      {
+        "name": "Starter",
+        "price": 2997,
+        "currency": "USD",
+        "billing": "one-time",
+        "description": "Perfect for testing your business idea",
+        "features": [
+          "AI business plan generation",
+          "Professional website creation",
+          "Basic legal entity setup",
+          "30-day support"
+        ],
+        "cta": "Launch Your Dream",
+        "popular": false
+      },
+      {
+        "name": "Pro",
+        "price": 4997,
+        "currency": "USD",
+        "billing": "one-time",
+        "description": "Complete business launch solution",
+        "features": [
+          "Everything in Starter",
+          "Advanced marketing automation",
+          "Custom branding package",
+          "90-day support",
+          "Financial projections",
+          "Investor pitch deck"
+        ],
+        "cta": "Go Pro Today",
+        "popular": true
+      },
+      {
+        "name": "Enterprise",
+        "price": 9997,
+        "currency": "USD",
+        "billing": "one-time",
+        "description": "White-glove business launch experience",
+        "features": [
+          "Everything in Pro",
+          "Dedicated success manager",
+          "Custom integrations",
+          "1-year support",
+          "Legal compliance review",
+          "Marketing strategy consultation"
+        ],
+        "cta": "Get Enterprise",
+        "popular": false
+      }
+    ],
+    "contact": {
+      "email": "hello@dreamseed.ai",
+      "phone": "+1-555-DREAM-01",
+      "address": {
+        "street": "",
+        "city": "San Francisco",
+        "state": "CA",
+        "zip": "",
+        "country": "USA"
+      },
+      "social": {
+        "twitter": "@dreamseedai",
+        "linkedin": "company/dreamseed",
+        "instagram": "@dreamseed.ai"
+      }
+    },
+    "seo": {
+      "title": "Dream Seed - AI-Powered Business Launch Platform",
+      "description": "Transform your business idea into reality in days, not months. Complete automation from concept to operational business.",
+      "keywords": [
+        "AI business launch",
+        "automated business setup",
+        "startup automation",
+        "business plan generator",
+        "website creation",
+        "business registration"
+      ]
+    },
+    "analytics": {
+      "google_analytics": "",
+      "facebook_pixel": "",
+      "hotjar": ""
+    },
+    "features": {
+      "blog_enabled": true,
+      "ecommerce_enabled": false,
+      "booking_enabled": true,
+      "newsletter_enabled": true,
+      "chat_widget": true
+    },
+    "metadata": {
+      "created_at": "2024-08-14T00:00:00Z",
+      "updated_at": "2024-08-14T00:00:00Z",
+      "version": "2.0",
+      "status": "active"
+    }
+  }
+}

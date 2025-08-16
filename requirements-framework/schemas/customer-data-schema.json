@@ -1,0 +1,229 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "DreamSeed Customer Data Schema",
+  "description": "Complete data schema for DreamSeed voice AI business formation system",
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string",
+      "description": "Unique customer identifier"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "completion_percentage": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "call_stage": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 4
+    },
+    
+    "contact_info": {
+      "type": "object",
+      "properties": {
+        "first_name": {"type": "string", "required": true},
+        "last_name": {"type": "string", "required": true},
+        "email": {"type": "string", "format": "email", "required": true},
+        "phone": {"type": "string", "required": true},
+        "address": {"type": "string"},
+        "city": {"type": "string"},
+        "state": {"type": "string"},
+        "zip": {"type": "string"},
+        "preferred_contact_method": {"type": "string", "enum": ["email", "phone", "text"]}
+      }
+    },
+
+    "llc_filing": {
+      "type": "object",
+      "properties": {
+        "business_name": {"type": "string", "required": true},
+        "entity_type": {"type": "string", "enum": ["LLC", "Corporation", "Partnership", "Sole Proprietorship"], "required": true},
+        "state_of_formation": {"type": "string", "required": true},
+        "registered_agent": {"type": "string"},
+        "registered_address": {"type": "string"},
+        "principal_business_address": {"type": "string"},
+        "business_purpose": {"type": "string"},
+        "duration": {"type": "string", "default": "perpetual"},
+        "member_names": {"type": "array", "items": {"type": "string"}},
+        "member_addresses": {"type": "array", "items": {"type": "string"}},
+        "ownership_percentages": {"type": "array", "items": {"type": "number"}},
+        "management_structure": {"type": "string", "enum": ["member-managed", "manager-managed"]},
+        "ein_info": {"type": "string"},
+        "naics_code": {"type": "string"},
+        "professional_licenses": {"type": "array", "items": {"type": "string"}},
+        "special_permits": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+
+    "brand_identity": {
+      "type": "object",
+      "properties": {
+        "business_name": {"type": "string", "required": true},
+        "industry_sector": {"type": "string", "required": true},
+        "brand_personality": {"type": "string", "required": true},
+        "target_audience": {"type": "string"},
+        "brand_values": {"type": "array", "items": {"type": "string"}},
+        "color_preferences": {"type": "string", "required": true},
+        "style_direction": {"type": "string"},
+        "logo_type_preference": {"type": "string", "enum": ["text-only", "icon+text", "icon-only"]},
+        "inspiration_references": {"type": "array", "items": {"type": "string"}},
+        "usage_requirements": {"type": "array", "items": {"type": "string"}},
+        "file_format_needs": {"type": "array", "items": {"type": "string"}},
+        "color_variations": {"type": "array", "items": {"type": "string"}},
+        "size_considerations": {"type": "string"}
+      }
+    },
+
+    "domain_requirements": {
+      "type": "object",
+      "properties": {
+        "primary_business_name": {"type": "string", "required": true},
+        "alternative_names": {"type": "array", "items": {"type": "string"}},
+        "domain_extension_preference": {"type": "string", "default": ".com"},
+        "geographic_considerations": {"type": "string"},
+        "brand_protection": {"type": "boolean", "default": false},
+        "dns_management": {"type": "string"},
+        "email_hosting": {"type": "string"},
+        "subdomain_strategy": {"type": "string"},
+        "domain_privacy": {"type": "boolean", "default": true}
+      }
+    },
+
+    "website_content": {
+      "type": "object",
+      "properties": {
+        "business_name_tagline": {"type": "string", "required": true},
+        "business_description": {"type": "string", "required": true},
+        "problem_solved": {"type": "string", "required": true},
+        "target_customers": {"type": "string", "required": true},
+        "unique_value_proposition": {"type": "string", "required": true},
+        "primary_services_products": {"type": "array", "items": {"type": "string"}, "required": true},
+        "founder_story": {"type": "string"},
+        "business_mission": {"type": "string"},
+        "core_values": {"type": "array", "items": {"type": "string"}},
+        "team_information": {"type": "string"},
+        "company_history": {"type": "string"},
+        "business_address": {"type": "string"},
+        "business_phone": {"type": "string", "required": true},
+        "business_email": {"type": "string", "format": "email", "required": true},
+        "hours_of_operation": {"type": "string"},
+        "service_areas": {"type": "string"},
+        "service_descriptions": {"type": "array", "items": {"type": "string"}},
+        "pricing_information": {"type": "string"},
+        "process_methodology": {"type": "string"},
+        "benefits_outcomes": {"type": "array", "items": {"type": "string"}},
+        "testimonials_reviews": {"type": "array", "items": {"type": "object"}},
+        "professional_photos": {"type": "array", "items": {"type": "string"}},
+        "product_images": {"type": "array", "items": {"type": "string"}},
+        "hero_images": {"type": "array", "items": {"type": "string"}},
+        "brand_colors": {"type": "object"},
+        "typography_preferences": {"type": "string"},
+        "contact_form_requirements": {"type": "array", "items": {"type": "string"}},
+        "social_media_links": {"type": "object"},
+        "analytics_tracking": {"type": "string"},
+        "seo_keywords": {"type": "array", "items": {"type": "string"}},
+        "mobile_optimization": {"type": "boolean", "default": true}
+      }
+    },
+
+    "financial_operational": {
+      "type": "object",
+      "properties": {
+        "business_banking": {"type": "string"},
+        "accounting_software": {"type": "string"},
+        "financial_projections": {"type": "object"},
+        "funding_requirements": {"type": "string"},
+        "payment_processing": {"type": "array", "items": {"type": "string"}},
+        "business_location_type": {"type": "string"},
+        "equipment_needs": {"type": "array", "items": {"type": "string"}},
+        "software_requirements": {"type": "array", "items": {"type": "string"}},
+        "vendor_supplier_relationships": {"type": "array", "items": {"type": "string"}},
+        "inventory_management": {"type": "string"},
+        "business_insurance": {"type": "array", "items": {"type": "string"}},
+        "industry_regulations": {"type": "array", "items": {"type": "string"}},
+        "employment_law": {"type": "string"},
+        "tax_obligations": {"type": "array", "items": {"type": "string"}},
+        "contract_templates": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+
+    "launch_marketing": {
+      "type": "object",
+      "properties": {
+        "target_market_definition": {"type": "string"},
+        "marketing_channels": {"type": "array", "items": {"type": "string"}},
+        "content_strategy": {"type": "string"},
+        "launch_timeline": {"type": "string"},
+        "marketing_budget": {"type": "number"},
+        "attorney": {"type": "string"},
+        "accountant": {"type": "string"},
+        "insurance_agent": {"type": "string"},
+        "marketing_consultant": {"type": "string"},
+        "technology_support": {"type": "string"},
+        "customer_service": {"type": "string"},
+        "quality_control": {"type": "string"},
+        "growth_planning": {"type": "string"},
+        "exit_strategy": {"type": "string"},
+        "succession_planning": {"type": "string"}
+      }
+    },
+
+    "data_quality": {
+      "type": "object",
+      "properties": {
+        "completeness_score": {"type": "number", "minimum": 0, "maximum": 100},
+        "accuracy_score": {"type": "number", "minimum": 0, "maximum": 100},
+        "consistency_score": {"type": "number", "minimum": 0, "maximum": 100},
+        "depth_score": {"type": "number", "minimum": 0, "maximum": 100},
+        "overall_quality_score": {"type": "number", "minimum": 0, "maximum": 100},
+        "ready_for_llc_filing": {"type": "boolean"},
+        "ready_for_logo_design": {"type": "boolean"},
+        "ready_for_domain_purchase": {"type": "boolean"},
+        "ready_for_website_build": {"type": "boolean"},
+        "ready_for_launch": {"type": "boolean"}
+      }
+    },
+
+    "call_history": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "call_number": {"type": "integer"},
+          "call_date": {"type": "string", "format": "date-time"},
+          "duration": {"type": "integer"},
+          "completion_before": {"type": "number"},
+          "completion_after": {"type": "number"},
+          "data_points_collected": {"type": "integer"},
+          "quality_score": {"type": "number"},
+          "notes": {"type": "string"},
+          "follow_up_required": {"type": "boolean"},
+          "transcript": {"type": "string"}
+        }
+      }
+    },
+
+    "missing_information": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "field_name": {"type": "string"},
+          "category": {"type": "string"},
+          "priority": {"type": "string", "enum": ["critical", "high", "medium", "low"]},
+          "required_by_call": {"type": "integer"},
+          "question_suggestion": {"type": "string"}
+        }
+      }
+    }
+  }
+}

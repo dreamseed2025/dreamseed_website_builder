@@ -1,0 +1,14 @@
+{
+  "slug": "clean-1755190344-7d98f03d",
+  "company_name": "Simple Test Company",
+  "profile_json": {
+    "site": {
+      "company_name": "Simple Test Company",
+      "domain": "test.com"
+    },
+    "brand": {
+      "primary_hex": "#0E0E10",
+      "secondary_hex": "#F59E0B"
+    }
+  }
+}

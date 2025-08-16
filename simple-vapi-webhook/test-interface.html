@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DreamSeed Intelligent Call System - Testing Interface</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 40px;
+            font-size: 1.2em;
+        }
+        
+        .test-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border-left: 5px solid #3498db;
+        }
+        
+        .test-section h2 {
+            color: #2c3e50;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .test-controls {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        
+        input, select, button {
+            padding: 12px 20px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: inherit;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+        
+        button {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+        
+        button:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .results {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #ecf0f1;
+            margin-top: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .results pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-family: 'SF Mono', Monaco, monospace;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .status {
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-weight: 600;
+        }
+        
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        
+        .flow-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .call-stage {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            border: 2px solid #ecf0f1;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .call-stage:hover {
+            border-color: #3498db;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .call-stage h3 {
+            color: #2c3e50;
+            margin-top: 0;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #ecf0f1;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3498db, #2980b9);
+            transition: width 0.5s ease;
+        }
+        
+        .api-endpoint {
+            font-family: 'SF Mono', Monaco, monospace;
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9em;
+        }
+        
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .feature {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #27ae60;
+        }
+        
+        .feature h4 {
+            margin: 0 0 10px 0;
+            color: #2c3e50;
+        }
+        
+        .feature p {
+            margin: 0;
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+        
+        @media (max-width: 768px) {
+            .test-controls {
+                flex-direction: column;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧠 Intelligent Call System</h1>
+        <p class="subtitle">Test the complete 4-call progression with smart information carryover</p>
+        
+        <!-- Customer Journey Testing -->
+        <div class="test-section">
+            <h2>🗺️ Customer Journey Testing</h2>
+            <div class="test-controls">
+                <input type="email" id="customerEmail" placeholder="Customer Email" value="sarah@example.com">
+                <button onclick="getCustomerJourney()">Get Journey</button>
+                <button onclick="getProgressDashboard()">Progress Dashboard</button>
+            </div>
+            <div id="journeyResults" class="results" style="display: none;"></div>
+        </div>
+        
+        <!-- Personalized Prompt Testing -->
+        <div class="test-section">
+            <h2>🎨 Personalized Prompt Testing</h2>
+            <div class="test-controls">
+                <input type="email" id="promptEmail" placeholder="Customer Email" value="sarah@example.com">
+                <select id="targetStage">
+                    <option value="1">Call 1 - Foundation</option>
+                    <option value="2">Call 2 - Brand DNA</option>
+                    <option value="3">Call 3 - Operations</option>
+                    <option value="4">Call 4 - Launch</option>
+                </select>
+                <button onclick="generatePersonalizedPrompt()">Generate Prompt</button>
+            </div>
+            <div id="promptResults" class="results" style="display: none;"></div>
+        </div>
+        
+        <!-- Intelligent Call Initiation -->
+        <div class="test-section">
+            <h2>📞 Intelligent Call Testing</h2>
+            <div class="test-controls">
+                <input type="email" id="callEmail" placeholder="Customer Email" value="sarah@example.com">
+                <input type="text" id="customerName" placeholder="Customer Name" value="Sarah Johnson">
+                <input type="tel" id="customerPhone" placeholder="Phone Number" value="+15551234567">
+                <button onclick="startIntelligentCall()">Start Intelligent Call</button>
+            </div>
+            <div id="callResults" class="results" style="display: none;"></div>
+        </div>
+        
+        <!-- Flow Demonstration -->
+        <div class="test-section">
+            <h2>🚀 How the 4-Call Flow Works</h2>
+            <div class="flow-demo">
+                <div class="call-stage">
+                    <h3>📋 Call 1</h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 25%;"></div>
+                    </div>
+                    <p><strong>Foundation & Vision</strong></p>
+                    <p>Basic business info, LLC requirements, target market</p>
+                    <small>25% Complete</small>
+                </div>
+                
+                <div class="call-stage">
+                    <h3>🎨 Call 2</h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 50%;"></div>
+                    </div>
+                    <p><strong>Brand DNA</strong></p>
+                    <p>Logo requirements, brand personality, competitive positioning</p>
+                    <small>50% Complete</small>
+                </div>
+                
+                <div class="call-stage">
+                    <h3>⚙️ Call 3</h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 75%;"></div>
+                    </div>
+                    <p><strong>Operations</strong></p>
+                    <p>Business setup, compliance, financial planning</p>
+                    <small>75% Complete</small>
+                </div>
+                
+                <div class="call-stage">
+                    <h3>🚀 Call 4</h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 100%;"></div>
+                    </div>
+                    <p><strong>Launch Strategy</strong></p>
+                    <p>Marketing plan, team building, growth strategy</p>
+                    <small>100% Complete</small>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Key Features -->
+        <div class="test-section">
+            <h2>✨ Key Features</h2>
+            <div class="feature-list">
+                <div class="feature">
+                    <h4>🧠 Smart Context</h4>
+                    <p>Information from previous calls automatically carries forward</p>
+                </div>
+                <div class="feature">
+                    <h4>🎯 Dynamic Prompts</h4>
+                    <p>Each call is personalized with customer's name and business</p>
+                </div>
+                <div class="feature">
+                    <h4>📈 Progressive Building</h4>
+                    <p>25% → 50% → 75% → 100% systematic completion</p>
+                </div>
+                <div class="feature">
+                    <h4>🔄 No Repetition</h4>
+                    <p>System knows what questions were already answered</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- API Endpoints -->
+        <div class="test-section">
+            <h2>🛠️ Available API Endpoints</h2>
+            <p><strong>Customer Journey:</strong> <span class="api-endpoint">GET /api/customer-journey/:email</span></p>
+            <p><strong>Personalized Prompt:</strong> <span class="api-endpoint">POST /api/personalized-prompt</span></p>
+            <p><strong>Intelligent Call:</strong> <span class="api-endpoint">POST /api/intelligent-call</span></p>
+            <p><strong>Progress Dashboard:</strong> <span class="api-endpoint">GET /api/progress-dashboard/:email</span></p>
+        </div>
+    </div>
+
+    <script>
+        async function apiCall(endpoint, method = 'GET', data = null) {
+            try {
+                const options = {
+                    method,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                };
+                
+                if (data) {
+                    options.body = JSON.stringify(data);
+                }
+                
+                const response = await fetch(endpoint, options);
+                const result = await response.json();
+                
+                return { success: response.ok, data: result };
+            } catch (error) {
+                return { success: false, error: error.message };
+            }
+        }
+        
+        function showResults(elementId, result) {
+            const element = document.getElementById(elementId);
+            element.style.display = 'block';
+            
+            if (result.success) {
+                element.innerHTML = `
+                    <div class="status success">✅ Success</div>
+                    <pre>${JSON.stringify(result.data, null, 2)}</pre>
+                `;
+            } else {
+                element.innerHTML = `
+                    <div class="status error">❌ Error</div>
+                    <pre>${result.error || JSON.stringify(result.data, null, 2)}</pre>
+                `;
+            }
+        }
+        
+        async function getCustomerJourney() {
+            const email = document.getElementById('customerEmail').value;
+            if (!email) {
+                alert('Please enter a customer email');
+                return;
+            }
+            
+            const result = await apiCall(`/api/customer-journey/${encodeURIComponent(email)}`);
+            showResults('journeyResults', result);
+        }
+        
+        async function getProgressDashboard() {
+            const email = document.getElementById('customerEmail').value;
+            if (!email) {
+                alert('Please enter a customer email');
+                return;
+            }
+            
+            const result = await apiCall(`/api/progress-dashboard/${encodeURIComponent(email)}`);
+            showResults('journeyResults', result);
+        }
+        
+        async function generatePersonalizedPrompt() {
+            const email = document.getElementById('promptEmail').value;
+            const stage = document.getElementById('targetStage').value;
+            
+            if (!email) {
+                alert('Please enter a customer email');
+                return;
+            }
+            
+            const result = await apiCall('/api/personalized-prompt', 'POST', {
+                customerEmail: email,
+                targetCallStage: parseInt(stage)
+            });
+            showResults('promptResults', result);
+        }
+        
+        async function startIntelligentCall() {
+            const email = document.getElementById('callEmail').value;
+            const name = document.getElementById('customerName').value;
+            const phone = document.getElementById('customerPhone').value;
+            
+            if (!email || !name || !phone) {
+                alert('Please fill in all customer details');
+                return;
+            }
+            
+            const result = await apiCall('/api/intelligent-call', 'POST', {
+                customerEmail: email,
+                customerData: {
+                    name: name,
+                    phone: phone
+                }
+            });
+            showResults('callResults', result);
+        }
+        
+        // Auto-focus first input
+        document.getElementById('customerEmail').focus();
+    </script>
+</body>
+</html>

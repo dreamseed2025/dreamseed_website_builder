@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DreamSeed - Talk to a Business Formation Expert</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.2em;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+        
+        #start-call {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            font-size: 1.3em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(238, 90, 36, 0.4);
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        #start-call:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(238, 90, 36, 0.6);
+        }
+        
+        #start-call:active {
+            transform: translateY(-1px);
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+        
+        .feature {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+        }
+        
+        .feature h3 {
+            margin-top: 0;
+            color: #ffd700;
+        }
+        
+        .status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            font-weight: bold;
+        }
+        
+        .customer-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+        
+        .customer-info h3 {
+            margin-top: 0;
+            color: #ffd700;
+            text-align: center;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .info-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .info-label {
+            font-size: 0.8em;
+            opacity: 0.8;
+            margin-bottom: 5px;
+        }
+        
+        .info-value {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌱 DreamSeed Business Formation</h1>
+        <p class="subtitle">Expert guidance for starting your business - from LLC filing to launch strategy</p>
+        
+        <!-- Customer Info Panel -->
+        <div class="customer-info">
+            <h3>👤 Your Information</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-label">Name</div>
+                    <div class="info-value" id="customer-name">Loading...</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Business</div>
+                    <div class="info-value" id="business-name">Loading...</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Progress</div>
+                    <div class="info-value" id="call-progress">Loading...</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Next Step</div>
+                    <div class="info-value" id="next-call">Loading...</div>
+                </div>
+            </div>
+        </div>
+        
+        <button id="start-call">🎤 Talk to an Expert</button>
+        
+        <div class="status" id="call-status">
+            Ready to start your business formation call
+        </div>
+        
+        <div class="features">
+            <div class="feature">
+                <h3>📋 Call 1: Foundation</h3>
+                <p>Business concept, LLC requirements, timeline</p>
+            </div>
+            <div class="feature">
+                <h3>🎨 Call 2: Brand DNA</h3>
+                <p>Logo, colors, website style, messaging</p>
+            </div>
+            <div class="feature">
+                <h3>⚙️ Call 3: Operations</h3>
+                <p>Systems, compliance, vendor relationships</p>
+            </div>
+            <div class="feature">
+                <h3>🚀 Call 4: Launch</h3>
+                <p>Marketing strategy, growth plan, ongoing support</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load customer configuration from URL parameters or use defaults
+        function getCustomerConfig() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return {
+                email: urlParams.get('email') || "alberto@ching.com",
+                phone: urlParams.get('phone') || "+17279006911", 
+                name: urlParams.get('name') || "Alberto Chang",
+                business: urlParams.get('business') || "Alberto's Apples"
+            };
+        }
+        
+        const customerConfig = getCustomerConfig();
+
+        // Webhook server URL
+        const WEBHOOK_SERVER = "http://localhost:3002";
+        
+        // VAPI Configuration - Loaded from server environment variables
+        let VAPI_CONFIG = null;
+
+        // Update customer info display
+        function updateCustomerInfo(customerData) {
+            document.getElementById('customer-name').textContent = customerData.customer_name || customerConfig.name;
+            document.getElementById('business-name').textContent = customerData.business_name || customerConfig.business || 'TBD';
+            
+            // Calculate progress
+            const calls = [
+                customerData.call_1_completed,
+                customerData.call_2_completed, 
+                customerData.call_3_completed,
+                customerData.call_4_completed
+            ];
+            const completed = calls.filter(Boolean).length;
+            document.getElementById('call-progress').textContent = `${completed}/4 Calls`;
+            
+            // Determine next step
+            let nextStep = "Call 1: Foundation";
+            if (customerData.call_4_completed) {
+                nextStep = "🎉 Completed!";
+            } else if (customerData.call_3_completed) {
+                nextStep = "Call 4: Launch";
+            } else if (customerData.call_2_completed) {
+                nextStep = "Call 3: Operations";
+            } else if (customerData.call_1_completed) {
+                nextStep = "Call 2: Brand DNA";
+            }
+            document.getElementById('next-call').textContent = nextStep;
+        }
+
+        // Load VAPI configuration from server
+        async function loadVAPIConfig() {
+            try {
+                const response = await fetch(`${WEBHOOK_SERVER}/api/vapi-config`);
+                if (response.ok) {
+                    VAPI_CONFIG = await response.json();
+                    console.log('🎤 VAPI config loaded from server');
+                } else {
+                    throw new Error('Failed to load VAPI config');
+                }
+            } catch (error) {
+                console.error('❌ Could not load VAPI configuration:', error);
+                updateStatus("Configuration error. Please contact support.", true);
+            }
+        }
+
+        // Load customer data from server
+        async function loadCustomerData() {
+            try {
+                const response = await fetch(`${WEBHOOK_SERVER}/api/customer-journey/${encodeURIComponent(customerConfig.email)}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    updateCustomerInfo(data.customer || {});
+                } else {
+                    // Use default values if customer not found
+                    updateCustomerInfo({});
+                }
+            } catch (error) {
+                console.log('Using default customer info');
+                updateCustomerInfo({});
+            }
+        }
+
+        // Update call status
+        function updateStatus(message, isError = false) {
+            const statusEl = document.getElementById('call-status');
+            statusEl.textContent = message;
+            statusEl.style.background = isError ? 'rgba(255, 0, 0, 0.3)' : 'rgba(0, 255, 0, 0.3)';
+        }
+
+        // Initialize data on page load
+        async function initializePage() {
+            await loadVAPIConfig();
+            await loadCustomerData();
+        }
+        
+        initializePage();
+
+        // Global VAPI instance
+        let vapiInstance = null;
+        let isCallActive = false;
+
+        // Load the Vapi web client using the correct SDK
+        function loadVAPISDK() {
+            return new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.src = 'https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js';
+                script.async = true;
+                script.defer = true;
+                
+                script.onload = () => {
+                    console.log('🎤 VAPI SDK script loaded');
+                    
+                    // Wait a moment for the SDK to initialize
+                    setTimeout(() => {
+                        if (window.Vapi) {
+                            console.log('✅ VAPI constructor available');
+                            resolve(window.Vapi);
+                        } else if (window.vapiSDK) {
+                            console.log('✅ VAPI SDK available');
+                            resolve(window.vapiSDK);
+                        } else {
+                            console.error('❌ VAPI not found on window object');
+                            console.log('Available globals:', Object.keys(window).filter(k => k.toLowerCase().includes('vapi')));
+                            reject(new Error('VAPI SDK not found'));
+                        }
+                    }, 100);
+                };
+                
+                script.onerror = () => {
+                    console.error('❌ Failed to load VAPI SDK script');
+                    reject(new Error('Failed to load VAPI SDK'));
+                };
+                
+                document.head.appendChild(script);
+            });
+        }
+
+        // Initialize VAPI and setup event handlers
+        async function initializeVAPI() {
+            try {
+                if (!VAPI_CONFIG) {
+                    await loadVAPIConfig();
+                    if (!VAPI_CONFIG) {
+                        throw new Error('Could not load VAPI configuration');
+                    }
+                }
+
+                const VapiClass = await loadVAPISDK();
+                
+                if (window.Vapi) {
+                    // Use the Vapi constructor pattern
+                    vapiInstance = new window.Vapi(VAPI_CONFIG.publicKey);
+                    console.log('🎤 VAPI instance created with constructor');
+                    
+                    // Setup event listeners
+                    vapiInstance.on('call-start', () => {
+                        console.log('📞 Call started');
+                        isCallActive = true;
+                        updateStatus("✅ Call started! Speak now...");
+                        updateCallButton('active');
+                    });
+                    
+                    vapiInstance.on('call-end', () => {
+                        console.log('📞 Call ended');
+                        isCallActive = false;
+                        updateStatus("Call ended. Thank you for speaking with us!");
+                        updateCallButton('idle');
+                        // Reload customer data to show updated progress
+                        setTimeout(loadCustomerData, 2000);
+                    });
+                    
+                    vapiInstance.on('error', (error) => {
+                        console.error('❌ VAPI error:', error);
+                        isCallActive = false;
+                        updateStatus(`Call error: ${error.message || 'Unknown error'}`, true);
+                        updateCallButton('error');
+                    });
+                    
+                    vapiInstance.on('speech-start', () => {
+                        console.log('🗣️ User started speaking');
+                        updateStatus("Listening... (you're speaking)");
+                    });
+                    
+                    vapiInstance.on('speech-end', () => {
+                        console.log('🔇 User stopped speaking');
+                        updateStatus("Processing your response...");
+                    });
+                    
+                } else {
+                    throw new Error('VAPI constructor not available');
+                }
+                
+            } catch (error) {
+                console.error('❌ Failed to initialize VAPI:', error);
+                updateStatus(`Failed to initialize call system: ${error.message}`, true);
+            }
+        }
+
+        // Update call button appearance based on state
+        function updateCallButton(state) {
+            const button = document.getElementById('start-call');
+            
+            switch (state) {
+                case 'idle':
+                    button.textContent = '🎤 Talk to an Expert';
+                    button.disabled = false;
+                    button.style.background = 'linear-gradient(45deg, #ff6b6b, #ee5a24)';
+                    break;
+                case 'loading':
+                    button.textContent = '⏳ Starting Call...';
+                    button.disabled = true;
+                    button.style.background = 'linear-gradient(45deg, #3498db, #2980b9)';
+                    break;
+                case 'active':
+                    button.textContent = '📞 Call Active - Hang Up';
+                    button.disabled = false;
+                    button.style.background = 'linear-gradient(45deg, #e74c3c, #c0392b)';
+                    break;
+                case 'error':
+                    button.textContent = '❌ Try Again';
+                    button.disabled = false;
+                    button.style.background = 'linear-gradient(45deg, #e67e22, #d35400)';
+                    break;
+            }
+        }
+
+        // Call button click handler
+        async function handleCallButtonClick() {
+            try {
+                if (isCallActive && vapiInstance) {
+                    // End the call if it's active
+                    console.log('🔚 Ending active call');
+                    vapiInstance.stop();
+                    return;
+                }
+                
+                updateCallButton('loading');
+                updateStatus("Preparing to start call...");
+                
+                // Ensure VAPI is initialized
+                if (!vapiInstance) {
+                    await initializeVAPI();
+                    if (!vapiInstance) {
+                        throw new Error('Could not initialize VAPI');
+                    }
+                }
+                
+                // Customer context to pass to the call
+                const userContext = {
+                    email: customerConfig.email,
+                    phone: customerConfig.phone,
+                    name: customerConfig.name,
+                    business: customerConfig.business,
+                    sessionTag: "website-call",
+                    source: "web-button",
+                    timestamp: new Date().toISOString()
+                };
+                
+                console.log('🎤 Starting VAPI call with context:', userContext);
+                
+                // Notify server about web call start (for inbound call handler)
+                const callId = "web-call-" + Date.now();
+                try {
+                    const notifyResponse = await fetch(`${WEBHOOK_SERVER}/api/vapi-webhook`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            type: "call-start",
+                            callId: callId,
+                            call: {
+                                id: callId,
+                                type: "inbound",
+                                customer: {
+                                    number: customerConfig.phone
+                                }
+                            }
+                        })
+                    });
+                    
+                    if (notifyResponse.ok) {
+                        console.log('✅ Server notified of web call start');
+                    }
+                } catch (notifyError) {
+                    console.log('⚠️ Could not notify server, but continuing with call:', notifyError);
+                }
+                
+                // Start the VAPI call
+                await vapiInstance.start({
+                    assistantId: VAPI_CONFIG.assistantId,
+                    metadata: userContext
+                });
+                
+                console.log('🎤 VAPI call start command sent');
+                
+            } catch (error) {
+                console.error('❌ Failed to start call:', error);
+                updateStatus(`Could not start call: ${error.message}`, true);
+                updateCallButton('error');
+                isCallActive = false;
+            }
+        }
+
+        // Setup button click handler
+        document.getElementById('start-call').addEventListener('click', handleCallButtonClick);
+        
+        // Initialize VAPI when page loads
+        initializeVAPI().then(() => {
+            console.log('🎤 VAPI initialization complete');
+            updateStatus("Ready to start your business formation call");
+        }).catch(error => {
+            console.error('❌ VAPI initialization failed:', error);
+            updateStatus("Call system failed to load. Please refresh the page.", true);
+        });
+    </script>
+</body>
+</html>

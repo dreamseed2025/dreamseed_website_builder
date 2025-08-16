@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DreamSeed - Working Web Call</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .debug-section {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            text-align: left;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        #start-call {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            font-size: 1.3em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(238, 90, 36, 0.4);
+            font-weight: bold;
+            margin: 20px;
+        }
+        
+        #start-call:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(238, 90, 36, 0.6);
+        }
+        
+        #start-call:disabled {
+            background: rgba(255, 255, 255, 0.3);
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .status {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            font-weight: bold;
+        }
+        
+        .status.success {
+            background: rgba(39, 174, 96, 0.3);
+            border: 1px solid #27ae60;
+        }
+        
+        .status.error {
+            background: rgba(231, 76, 60, 0.3);
+            border: 1px solid #e74c3c;
+        }
+        
+        .status.loading {
+            background: rgba(52, 152, 219, 0.3);
+            border: 1px solid #3498db;
+        }
+        
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .alternative {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .alternative a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .alternative a:hover {
+            color: #ffd700;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌱 DreamSeed Web Call</h1>
+        <p style="font-size: 1.2em; opacity: 0.9;">Talk to our AI business formation expert</p>
+        
+        <button id="start-call" onclick="initiateCall()">
+            🎤 Start Web Call
+        </button>
+        
+        <div class="status" id="call-status">
+            Initializing web call system...
+        </div>
+        
+        <div class="debug-section">
+            <div style="color: #ffd700; font-weight: bold; margin-bottom: 10px;">Debug Output:</div>
+            <div id="debug-output"></div>
+        </div>
+        
+        <div class="alternative">
+            <h3>Alternative Options:</h3>
+            <p><a href="/web-call-proxy.html">📞 Phone Call Back</a> - Get a call on your phone (guaranteed to work)</p>
+            <p><a href="/web-call-debug.html">🔧 Advanced Debug Tool</a> - Detailed troubleshooting</p>
+        </div>
+    </div>
+
+    <!-- Load the latest VAPI Web SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@vapi-ai/web@latest/dist/index.js"></script>
+    
+    <script>
+        let vapi = null;
+        let isCallActive = false;
+        let config = null;
+        
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const debugOutput = document.getElementById('debug-output');
+            const entry = document.createElement('div');
+            entry.style.color = type === 'error' ? '#e74c3c' : type === 'success' ? '#27ae60' : '#ffffff';
+            entry.textContent = `[${timestamp}] ${message}`;
+            debugOutput.appendChild(entry);
+            debugOutput.scrollTop = debugOutput.scrollHeight;
+            
+            console.log(`[VAPI Debug] ${message}`);
+        }
+        
+        function updateStatus(message, type = 'info') {
+            const statusEl = document.getElementById('call-status');
+            statusEl.className = 'status ' + type;
+            
+            if (type === 'loading') {
+                statusEl.innerHTML = '<span class="loading-spinner"></span>' + message;
+            } else {
+                statusEl.textContent = message;
+            }
+        }
+        
+        function updateButton(state) {
+            const button = document.getElementById('start-call');
+            
+            switch (state) {
+                case 'idle':
+                    button.textContent = '🎤 Start Web Call';
+                    button.disabled = false;
+                    break;
+                case 'loading':
+                    button.textContent = '⏳ Starting...';
+                    button.disabled = true;
+                    break;
+                case 'active':
+                    button.textContent = '📞 End Call';
+                    button.disabled = false;
+                    break;
+            }
+        }
+        
+        async function loadConfig() {
+            try {
+                log('Loading VAPI configuration from server...');
+                const response = await fetch('/api/vapi-config');
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                config = await response.json();
+                log(`✅ Configuration loaded: ${config.publicKey}`, 'success');
+                
+                if (config.warning) {
+                    log(`⚠️ Warning: ${config.warning}`, 'error');
+                }
+                
+                return true;
+            } catch (error) {
+                log(`❌ Failed to load configuration: ${error.message}`, 'error');
+                return false;
+            }
+        }
+        
+        async function initializeVAPI() {
+            try {
+                log('Checking VAPI SDK availability...');
+                
+                // Check if VAPI SDK is loaded
+                if (typeof window.Vapi === 'undefined') {
+                    throw new Error('VAPI SDK not loaded. Check your internet connection.');
+                }
+                
+                log('✅ VAPI SDK detected', 'success');
+                
+                // Load configuration
+                if (!config) {
+                    const configLoaded = await loadConfig();
+                    if (!configLoaded) {
+                        throw new Error('Could not load VAPI configuration');
+                    }
+                }
+                
+                // Initialize VAPI with public key
+                log(`Initializing VAPI with key: ${config.publicKey.substring(0, 8)}...`);
+                vapi = new window.Vapi(config.publicKey);
+                
+                // Set up event listeners
+                vapi.on('call-start', () => {
+                    log('📞 Call started!', 'success');
+                    isCallActive = true;
+                    updateStatus('Call is active - speak now!', 'success');
+                    updateButton('active');
+                });
+                
+                vapi.on('call-end', () => {
+                    log('📞 Call ended', 'success');
+                    isCallActive = false;
+                    updateStatus('Call ended. Thank you!', 'success');
+                    updateButton('idle');
+                });
+                
+                vapi.on('speech-start', () => {
+                    log('🎤 User started speaking');
+                    updateStatus('Listening... (you are speaking)', 'success');
+                });
+                
+                vapi.on('speech-end', () => {
+                    log('🔇 User stopped speaking');
+                    updateStatus('Processing your response...', 'loading');
+                });
+                
+                vapi.on('error', (error) => {
+                    log(`❌ VAPI Error: ${JSON.stringify(error)}`, 'error');
+                    isCallActive = false;
+                    updateStatus(`Call error: ${error.message || 'Unknown error'}`, 'error');
+                    updateButton('idle');
+                });
+                
+                vapi.on('message', (message) => {
+                    log(`💬 Message: ${JSON.stringify(message)}`);
+                });
+                
+                log('✅ VAPI initialized successfully', 'success');
+                updateStatus('Ready to start your call');
+                return true;
+                
+            } catch (error) {
+                log(`❌ VAPI initialization failed: ${error.message}`, 'error');
+                updateStatus(`Initialization failed: ${error.message}`, 'error');
+                return false;
+            }
+        }
+        
+        async function initiateCall() {
+            try {
+                if (isCallActive && vapi) {
+                    log('Ending active call...');
+                    vapi.stop();
+                    return;
+                }
+                
+                updateButton('loading');
+                updateStatus('Starting call...', 'loading');
+                
+                if (!vapi) {
+                    log('VAPI not initialized, initializing now...');
+                    const initialized = await initializeVAPI();
+                    if (!initialized) {
+                        throw new Error('Could not initialize VAPI');
+                    }
+                }
+                
+                // Get customer info from URL params
+                const urlParams = new URLSearchParams(window.location.search);
+                const customerInfo = {
+                    email: urlParams.get('email') || 'web-user@dreamseed.com',
+                    phone: urlParams.get('phone') || '+17279006911',
+                    name: urlParams.get('name') || 'Web User',
+                    business: urlParams.get('business') || 'New Business'
+                };
+                
+                log(`Starting call for: ${customerInfo.name} (${customerInfo.email})`);
+                
+                // Notify server about the web call start (for proper routing)
+                try {
+                    const callId = 'web-call-' + Date.now();
+                    await fetch('/api/vapi-webhook', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            type: 'call-start',
+                            callId: callId,
+                            call: {
+                                id: callId,
+                                type: 'inbound',
+                                customer: {
+                                    number: customerInfo.phone
+                                }
+                            }
+                        })
+                    });
+                    log('✅ Server notified of web call start');
+                } catch (notifyError) {
+                    log(`⚠️ Could not notify server: ${notifyError.message}`);
+                }
+                
+                // Start the call
+                log('Calling vapi.start()...');
+                await vapi.start({
+                    assistantId: config.assistantId,
+                    metadata: {
+                        ...customerInfo,
+                        source: 'web-call-fixed',
+                        timestamp: new Date().toISOString()
+                    }
+                });
+                
+                log('✅ Call start command sent', 'success');
+                
+            } catch (error) {
+                log(`❌ Call failed: ${error.message}`, 'error');
+                updateStatus(`Call failed: ${error.message}`, 'error');
+                updateButton('idle');
+                isCallActive = false;
+            }
+        }
+        
+        // Initialize when page loads
+        window.addEventListener('DOMContentLoaded', async () => {
+            log('Page loaded, initializing VAPI...');
+            
+            // Wait a moment for the SDK to load
+            setTimeout(async () => {
+                await initializeVAPI();
+            }, 1000);
+        });
+        
+        // Add some helpful debugging
+        window.addEventListener('error', (error) => {
+            log(`❌ JavaScript Error: ${error.message}`, 'error');
+        });
+        
+        // Check for microphone permissions
+        navigator.mediaDevices?.getUserMedia({ audio: true })
+            .then(() => {
+                log('✅ Microphone access granted', 'success');
+            })
+            .catch((error) => {
+                log(`⚠️ Microphone access denied: ${error.message}`, 'error');
+                updateStatus('Please allow microphone access for web calls to work', 'error');
+            });
+    </script>
+</body>
+</html>

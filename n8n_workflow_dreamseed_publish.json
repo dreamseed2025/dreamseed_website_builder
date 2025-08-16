@@ -1,0 +1,393 @@
+{
+  "name": "DreamSeed",
+  "nodes": [
+    {
+      "parameters": {
+        "jsCode": "const b = items[0].json;\nreturn [{ json: {\n  slug: b.slug || \"dream-seed\",\n  company_name: b.company_name || \"Dream Seed\",\n  profile_json: b.profile_json || {},\n  images: Array.isArray(b.images) ? b.images : [],\n  status: b.status || \"draft\"\n}}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -432,
+        192
+      ],
+      "id": "9fd56e60-03ce-4a08-8a1f-b95eda17a7c3",
+      "name": "Normalize Payload"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get data from previous node\nconst data = items[0].json;\n\nconst result = {\n  site_id: data.id || data.site_id,\n  slug: data.slug,\n  profile_json: data.profile_json,\n  images: data.images || [],\n  company_name: data.company_name,\n  status: data.status\n};\n\nconsole.log(\"Building site.json:\", JSON.stringify(result, null, 2));\nreturn [{ json: result }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        128,
+        192
+      ],
+      "id": "eb4f5269-c65f-4954-a037-acb8ad476aba",
+      "name": "Build site.json"
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "https://api.github.com/repos/dreamseed2025/dreamseed_website_builder/contents/site.json",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "githubOAuth2Api",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"message\": \"chore: update site.json via N8n\",\n  \"content\": \"={{ Buffer.from(JSON.stringify($json)).toString('base64') }}\",\n  \"branch\": \"main\"\n}",
+        "options": {}
+      },
+      "id": "025a5da4-b919-4037-b4c1-dbe3e0bfc1ea",
+      "name": "GitHub: PUT site.json",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        480,
+        608
+      ],
+      "credentials": {
+        "githubOAuth2Api": {
+          "id": "Ybp31w9jYLyWDRfm",
+          "name": "GitHub account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.vercel.com/v1/integrations/deploy/prj_dSB2N6HNUUc3tJwYZKJxfSNtyIM6/TgFqpeEPQj",
+        "options": {}
+      },
+      "id": "e191ee91-28c2-41a2-be91-af81fedc263e",
+      "name": "Vercel: Deploy Hook",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        512,
+        192
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\"status\":\"ok\",\"message\":\"Queued deploy\",\"slug\":\"={{$items('Build site.json',0,0).json.slug}}\"}",
+        "options": {}
+      },
+      "id": "5ce55b87-aee0-460c-ad8f-75add441e360",
+      "name": "Respond",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        688,
+        192
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "dreamseed/publish",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "49535434-a9be-40cc-ab96-03b882a48ba0",
+      "name": "Webhook (POST profile_json)1",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        -624,
+        192
+      ],
+      "webhookId": "d0752106-cd9c-45bc-b320-372574c3340f"
+    },
+    {
+      "parameters": {
+        "useCustomSchema": true,
+        "tableId": "sites",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "slug",
+              "fieldValue": "={{$json.slug}}"
+            },
+            {
+              "fieldId": "company_name",
+              "fieldValue": "={{$json.company_name}}"
+            },
+            {
+              "fieldId": "profile_json",
+              "fieldValue": "={{$json.profile_json}}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -224,
+        192
+      ],
+      "id": "8a0deb49-6334-4ba0-88ca-31189dc8d361",
+      "name": "Supabase: Upsert Site1",
+      "credentials": {
+        "supabaseApi": {
+          "id": "MKb8d8JBCOxbIBJI",
+          "name": "Supabase account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "sites",
+        "returnAll": true,
+        "filterType": "none"
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -32,
+        192
+      ],
+      "id": "27c08f93-2855-401b-8eff-55648feb8de9",
+      "name": "Supabase: Get Site ID1",
+      "credentials": {
+        "supabaseApi": {
+          "id": "MKb8d8JBCOxbIBJI",
+          "name": "Supabase account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "  const data = items[0].json;\n  const jsonString = JSON.stringify(data, null, 2);\n  const base64Content = Buffer.from(jsonString).toString('base64');\n\n  return [{\n    json: {\n      ...data,\n      base64_content: base64Content\n    }\n  }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        304,
+        608
+      ],
+      "id": "c8172e80-ad03-43bc-a6a6-957cfcd60445",
+      "name": "Encode Base64"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "file",
+        "operation": "edit",
+        "owner": {
+          "__rl": true,
+          "value": "dreamseed2025",
+          "mode": "name"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "dreamseed_website_builder",
+          "mode": "list",
+          "cachedResultName": "dreamseed_website_builder",
+          "cachedResultUrl": "https://github.com/dreamseed2025/dreamseed_website_builder"
+        },
+        "filePath": "site.json",
+        "fileContent": "={{ JSON.stringify($json, null, 2) }}",
+        "commitMessage": "chore: update site.json via N8n"
+      },
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1.1,
+      "position": [
+        320,
+        192
+      ],
+      "id": "34ff8ce7-eed2-4869-b573-230ebbdf931b",
+      "name": "Edit a file",
+      "webhookId": "25f05e95-b4bb-4813-9c48-0097eb5c5067",
+      "credentials": {
+        "githubOAuth2Api": {
+          "id": "Ybp31w9jYLyWDRfm",
+          "name": "GitHub account"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "Webhook (POST profile_json)1": [
+      {
+        "json": {
+          "headers": {
+            "host": "xxyyzzyy.app.n8n.cloud",
+            "user-agent": "curl/8.7.1",
+            "content-length": "772",
+            "accept": "*/*",
+            "accept-encoding": "gzip, br",
+            "cdn-loop": "cloudflare; loops=1; subreqs=1",
+            "cf-connecting-ip": "2603:900b:9d40:1194:9d9e:d6de:e8e7:c272",
+            "cf-ew-via": "15",
+            "cf-ipcountry": "US",
+            "cf-ray": "96f2a6d0052a845f-MIA",
+            "cf-visitor": "{\"scheme\":\"https\"}",
+            "cf-worker": "n8n.cloud",
+            "content-type": "application/json",
+            "x-forwarded-for": "2603:900b:9d40:1194:9d9e:d6de:e8e7:c272, 172.70.83.11",
+            "x-forwarded-host": "xxyyzzyy.app.n8n.cloud",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "traefik-prod-users-gwc-30-6d57d45df-2npxl",
+            "x-is-trusted": "yes",
+            "x-real-ip": "2603:900b:9d40:1194:9d9e:d6de:e8e7:c272"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "slug": "test-1755197570-5e05ecc8",
+            "company_name": "Dream Seed Test",
+            "profile_json": {
+              "site": {
+                "company_name": "Dream Seed Test",
+                "domain": "test.dreamseed.ai"
+              },
+              "brand": {
+                "primary_hex": "#0E0E10",
+                "secondary_hex": "#F59E0B",
+                "accent_hex": "#10B981"
+              },
+              "services": [
+                {
+                  "name": "Test Service",
+                  "description": "Test service for validation",
+                  "icon": "test"
+                }
+              ],
+              "testimonials": [
+                {
+                  "name": "Test User",
+                  "company": "Test Company",
+                  "quote": "This is a test testimonial",
+                  "rating": 5
+                }
+              ],
+              "plans": [
+                {
+                  "name": "Test Plan",
+                  "price": 999,
+                  "currency": "USD",
+                  "description": "Test plan for validation"
+                }
+              ]
+            }
+          },
+          "webhookUrl": "https://xxyyzzyy.app.n8n.cloud/webhook/dreamseed/publish",
+          "executionMode": "production"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Normalize Payload": {
+      "main": [
+        [
+          {
+            "node": "Supabase: Upsert Site1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build site.json": {
+      "main": [
+        [
+          {
+            "node": "Edit a file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GitHub: PUT site.json": {
+      "main": [
+        []
+      ]
+    },
+    "Vercel: Deploy Hook": {
+      "main": [
+        [
+          {
+            "node": "Respond",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook (POST profile_json)1": {
+      "main": [
+        [
+          {
+            "node": "Normalize Payload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase: Upsert Site1": {
+      "main": [
+        [
+          {
+            "node": "Supabase: Get Site ID1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase: Get Site ID1": {
+      "main": [
+        [
+          {
+            "node": "Build site.json",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Encode Base64": {
+      "main": [
+        []
+      ]
+    },
+    "Edit a file": {
+      "main": [
+        [
+          {
+            "node": "Vercel: Deploy Hook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "a30036a6-40ee-492c-ba80-e94b9f558b76",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ba5c44a1eb2ab253b5a9795a9aca63a77c3a62add72b5780d23ce191c4e198e7"
+  },
+  "id": "3KeeE4qg9iP2ZbyE",
+  "tags": []
+}

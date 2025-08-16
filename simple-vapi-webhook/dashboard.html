@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DreamSeed - Unified Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f5f5f5; margin: 0; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header { background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; }
+        .dreams-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px; }
+        .dream-card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .dream-name { font-size: 18px; font-weight: bold; color: #333; margin-bottom: 10px; }
+        .customer-name { color: #666; margin-bottom: 15px; }
+        .progress-bar { width: 100%; height: 6px; background: #eee; border-radius: 3px; margin: 10px 0; }
+        .progress-fill { height: 100%; background: #4CAF50; border-radius: 3px; }
+        .details { font-size: 14px; color: #666; }
+        .next-action { background: #e8f5e8; padding: 10px; border-radius: 5px; margin-top: 10px; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌱 DreamSeed - Unified Dashboard</h1>
+            <p>Complete view of customer dreams from voice AI to launched business</p>
+        </div>
+        <div id="dreams-grid" class="dreams-grid">Loading dreams...</div>
+    </div>
+
+    <script>
+        async function loadDreams() {
+            try {
+                const response = await fetch('/api/all');
+                const dreams = await response.json();
+                
+                const container = document.getElementById('dreams-grid');
+                container.innerHTML = dreams.map(dream => `
+                    <div class="dream-card">
+                        <div class="dream-name">${dream.dream_name || 'Untitled Dream'}</div>
+                        <div class="customer-name">👤 ${dream.customer_name || 'Unknown Customer'}</div>
+                        
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${dream.completion_percentage || 0}%"></div>
+                        </div>
+                        <div style="text-align: center; font-size: 12px; margin: 5px 0;">
+                            ${dream.completion_percentage || 0}% Complete
+                        </div>
+                        
+                        <div class="details">
+                            📧 ${dream.customer_email || 'No email'}<br>
+                            🏢 ${dream.entity_type || 'LLC'} in ${dream.state_of_operation || 'Unknown'}<br>
+                            📅 Started: ${new Date(dream.created_at).toLocaleDateString()}
+                        </div>
+                        
+                        <div class="next-action">
+                            <strong>Next:</strong> ${dream.next_action || 'Contact customer'}
+                        </div>
+                    </div>
+                `).join('');
+                
+            } catch (error) {
+                document.getElementById('dreams-grid').innerHTML = `<p>Error loading dreams: ${error.message}</p>`;
+            }
+        }
+        
+        loadDreams();
+    </script>
+</body>
+</html>

@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DreamSeed Admin - Customer Dashboard Links</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            min-height: 100vh;
+            color: white;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .search-section {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            margin-bottom: 30px;
+        }
+        
+        .search-form {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .search-form input {
+            flex: 1;
+            min-width: 250px;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        
+        .search-form button {
+            padding: 12px 25px;
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .search-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+        }
+        
+        .customers-section {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .customer-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .customer-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .customer-info {
+            flex: 1;
+        }
+        
+        .customer-name {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #ffd700;
+        }
+        
+        .customer-details {
+            margin-top: 5px;
+            opacity: 0.9;
+        }
+        
+        .progress-badge {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+        
+        .progress-badge.completed {
+            background: linear-gradient(45deg, #f39c12, #e67e22);
+        }
+        
+        .links-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .link-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .link-title {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #ffd700;
+        }
+        
+        .link-url {
+            font-size: 0.85em;
+            word-break: break-all;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 8px;
+            border-radius: 5px;
+            margin-bottom: 8px;
+        }
+        
+        .copy-button {
+            background: linear-gradient(45px, #9b59b6, #8e44ad);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.85em;
+            width: 100%;
+        }
+        
+        .copy-button:hover {
+            opacity: 0.9;
+        }
+        
+        .status-message {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .success {
+            background: rgba(39, 174, 96, 0.3);
+            border: 1px solid #27ae60;
+        }
+        
+        .error {
+            background: rgba(231, 76, 60, 0.3);
+            border: 1px solid #e74c3c;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            font-size: 1.1em;
+        }
+        
+        .quick-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .quick-link {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .quick-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔧 DreamSeed Admin</h1>
+            <p>Generate personalized dashboard and call links for customers</p>
+        </div>
+        
+        <div class="search-section">
+            <h3>Generate Customer Links</h3>
+            <div class="search-form">
+                <input type="email" id="customer-email" placeholder="Enter customer email (e.g., alberto@ching.com)" />
+                <button onclick="generateLinks()">Generate Links</button>
+                <button onclick="loadAllCustomers()">Load All Customers</button>
+            </div>
+        </div>
+        
+        <div class="customers-section">
+            <h3>Customer Dashboard Links</h3>
+            <div id="customers-list">
+                <div class="loading">
+                    Enter a customer email above or click "Load All Customers" to get started
+                </div>
+            </div>
+            
+            <div class="quick-links">
+                <a href="/stage-monitor.html" class="quick-link">
+                    📊 Stage Monitor
+                </a>
+                <a href="/call-dashboard.html" class="quick-link">
+                    📞 Call Dashboard
+                </a>
+                <a href="/web-call-button.html" class="quick-link">
+                    🎤 Web Call Button
+                </a>
+                <a href="/customer-dashboard.html" class="quick-link">
+                    👤 Customer Dashboard
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const SERVER_URL = 'http://localhost:3002';
+
+        // Generate links for specific customer
+        async function generateLinks() {
+            const email = document.getElementById('customer-email').value.trim();
+            if (!email) {
+                showStatus('Please enter a customer email', 'error');
+                return;
+            }
+            
+            try {
+                showStatus('Generating links...', 'loading');
+                
+                // Get dashboard URL
+                const dashboardResponse = await fetch(`${SERVER_URL}/api/customer-dashboard-url/${encodeURIComponent(email)}`);
+                
+                if (!dashboardResponse.ok) {
+                    throw new Error('Customer not found');
+                }
+                
+                const dashboardData = await dashboardResponse.json();
+                
+                // Get call URL  
+                const callResponse = await fetch(`${SERVER_URL}/api/customer-call-url/${encodeURIComponent(email)}`);
+                const callData = await callResponse.json();
+                
+                // Display customer
+                displayCustomer(dashboardData.customer, dashboardData.dashboardUrl, callData.callUrl);
+                showStatus(`Links generated for ${dashboardData.customer.name}`, 'success');
+                
+            } catch (error) {
+                console.error('Error generating links:', error);
+                showStatus('Error: ' + error.message, 'error');
+            }
+        }
+
+        // Load all customers
+        async function loadAllCustomers() {
+            try {
+                showStatus('Loading all customers...', 'loading');
+                
+                // For now, we'll load known customers
+                // In a real system, you'd have an endpoint that lists all customers
+                const knownCustomers = [
+                    'alberto@ching.com',
+                    'test.customer@example.com'
+                ];
+                
+                const customersData = [];
+                
+                for (const email of knownCustomers) {
+                    try {
+                        const dashboardResponse = await fetch(`${SERVER_URL}/api/customer-dashboard-url/${encodeURIComponent(email)}`);
+                        if (dashboardResponse.ok) {
+                            const dashboardData = await dashboardResponse.json();
+                            const callResponse = await fetch(`${SERVER_URL}/api/customer-call-url/${encodeURIComponent(email)}`);
+                            const callData = await callResponse.json();
+                            
+                            customersData.push({
+                                customer: dashboardData.customer,
+                                dashboardUrl: dashboardData.dashboardUrl,
+                                callUrl: callData.callUrl
+                            });
+                        }
+                    } catch (error) {
+                        console.log(`Could not load ${email}:`, error);
+                    }
+                }
+                
+                displayAllCustomers(customersData);
+                showStatus(`Loaded ${customersData.length} customers`, 'success');
+                
+            } catch (error) {
+                console.error('Error loading customers:', error);
+                showStatus('Error loading customers: ' + error.message, 'error');
+            }
+        }
+
+        // Display single customer
+        function displayCustomer(customer, dashboardUrl, callUrl) {
+            const customersList = document.getElementById('customers-list');
+            customersList.innerHTML = '';
+            
+            const customerCard = createCustomerCard(customer, dashboardUrl, callUrl);
+            customersList.appendChild(customerCard);
+        }
+
+        // Display all customers
+        function displayAllCustomers(customersData) {
+            const customersList = document.getElementById('customers-list');
+            customersList.innerHTML = '';
+            
+            if (customersData.length === 0) {
+                customersList.innerHTML = '<div class="loading">No customers found</div>';
+                return;
+            }
+            
+            customersData.forEach(data => {
+                const customerCard = createCustomerCard(data.customer, data.dashboardUrl, data.callUrl);
+                customersList.appendChild(customerCard);
+            });
+        }
+
+        // Create customer card element
+        function createCustomerCard(customer, dashboardUrl, callUrl) {
+            const card = document.createElement('div');
+            card.className = 'customer-card';
+            
+            const progressClass = customer.progressPercent === 100 ? 'completed' : '';
+            
+            card.innerHTML = `
+                <div class="customer-header">
+                    <div class="customer-info">
+                        <div class="customer-name">${customer.name}</div>
+                        <div class="customer-details">
+                            ${customer.business} • ${customer.email}
+                        </div>
+                    </div>
+                    <div class="progress-badge ${progressClass}">
+                        ${customer.progress} (${customer.progressPercent}%)
+                    </div>
+                </div>
+                
+                <div class="links-section">
+                    <div class="link-card">
+                        <div class="link-title">📊 Customer Dashboard</div>
+                        <div class="link-url">${dashboardUrl}</div>
+                        <button class="copy-button" onclick="copyToClipboard('${dashboardUrl}')">
+                            Copy Dashboard Link
+                        </button>
+                    </div>
+                    
+                    <div class="link-card">
+                        <div class="link-title">🎤 Quick Call Button</div>
+                        <div class="link-url">${callUrl}</div>
+                        <button class="copy-button" onclick="copyToClipboard('${callUrl}')">
+                            Copy Call Link
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            return card;
+        }
+
+        // Copy to clipboard
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showStatus('Link copied to clipboard!', 'success');
+            }).catch(err => {
+                console.error('Copy failed:', err);
+                showStatus('Copy failed - please copy manually', 'error');
+            });
+        }
+
+        // Show status message
+        function showStatus(message, type) {
+            let existingStatus = document.querySelector('.status-message');
+            if (existingStatus) {
+                existingStatus.remove();
+            }
+            
+            const status = document.createElement('div');
+            status.className = `status-message ${type}`;
+            status.textContent = message;
+            
+            document.querySelector('.customers-section').appendChild(status);
+            
+            if (type !== 'loading') {
+                setTimeout(() => {
+                    status.remove();
+                }, 3000);
+            }
+        }
+
+        // Handle Enter key in email input
+        document.getElementById('customer-email').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                generateLinks();
+            }
+        });
+    </script>
+</body>
+</html>

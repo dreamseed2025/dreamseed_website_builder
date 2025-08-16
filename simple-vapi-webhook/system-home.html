@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DreamSeed VAPI System - Complete Directory</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .section {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            margin-bottom: 30px;
+        }
+        
+        .section h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #ffd700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: white;
+            display: block;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .card-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #ffd700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .card-description {
+            font-size: 0.95em;
+            line-height: 1.5;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+        
+        .card-features {
+            font-size: 0.85em;
+            opacity: 0.8;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .card-features li {
+            margin-left: 20px;
+            margin-bottom: 3px;
+        }
+        
+        .api-table {
+            width: 100%;
+            margin-top: 20px;
+        }
+        
+        .api-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .api-table th {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 12px;
+            text-align: left;
+            font-weight: bold;
+            color: #ffd700;
+        }
+        
+        .api-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .api-table tr:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .method {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.85em;
+        }
+        
+        .method.get {
+            background: #27ae60;
+        }
+        
+        .method.post {
+            background: #3498db;
+        }
+        
+        .endpoint {
+            font-family: 'Courier New', monospace;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+        
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .quick-action {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .quick-action:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(238, 90, 36, 0.4);
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+        
+        .status-badge.active {
+            background: #27ae60;
+        }
+        
+        .status-badge.deprecated {
+            background: #e74c3c;
+        }
+        
+        .status-badge.testing {
+            background: #f39c12;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 30px;
+            opacity: 0.8;
+            margin-top: 50px;
+        }
+        
+        .env-vars {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.6;
+        }
+        
+        .copy-button {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.85em;
+            margin-left: 10px;
+        }
+        
+        .copy-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🌱 DreamSeed VAPI System</h1>
+        <p>Complete Business Formation Platform with AI Voice Calls</p>
+    </div>
+    
+    <div class="container">
+        <!-- Customer Pages Section -->
+        <div class="section">
+            <h2>🎯 Customer-Facing Pages</h2>
+            <div class="cards-grid">
+                <a href="/customer-dashboard.html?email=alberto@ching.com&phone=%2B17279006911&name=Alberto+Chang&business=Alberto%27s+Apples" class="card">
+                    <div class="card-title">👤 Customer Dashboard</div>
+                    <div class="card-description">Personalized customer portal showing business formation progress</div>
+                    <div class="card-features">
+                        <li>Progress tracking</li>
+                        <li>Integrated web call button</li>
+                        <li>Next steps display</li>
+                    </div>
+                </a>
+                
+                <a href="/web-call-button.html" class="card">
+                    <div class="card-title">🎤 Web Call Button</div>
+                    <div class="card-description">Simple one-button interface for web-based VAPI calls</div>
+                    <div class="card-features">
+                        <li>One-click calling</li>
+                        <li>Customer info display</li>
+                        <li>VAPI integration</li>
+                    </div>
+                </a>
+                
+                <a href="/customer-onboarding-form.html" class="card">
+                    <div class="card-title">📝 Customer Onboarding</div>
+                    <div class="card-description">Initial signup form for new customers</div>
+                    <div class="card-features">
+                        <li>Business info collection</li>
+                        <li>Auto-triggers Call 1</li>
+                        <li>Database integration</li>
+                    </div>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Admin Pages Section -->
+        <div class="section">
+            <h2>🔧 Admin & Monitoring</h2>
+            <div class="cards-grid">
+                <a href="/admin-dashboard.html" class="card">
+                    <div class="card-title">🔧 Admin Dashboard</div>
+                    <div class="card-description">Generate personalized customer links and manage users</div>
+                    <div class="card-features">
+                        <li>Generate dashboard URLs</li>
+                        <li>View all customers</li>
+                        <li>Copy links to clipboard</li>
+                    </div>
+                </a>
+                
+                <a href="/stage-monitor.html" class="card">
+                    <div class="card-title">📊 Stage Monitor</div>
+                    <div class="card-description">Real-time monitoring of all active calls and stages</div>
+                    <div class="card-features">
+                        <li>Live call tracking</li>
+                        <li>Auto-refresh every 5s</li>
+                        <li>Stage progression</li>
+                    </div>
+                </a>
+                
+                <a href="/call-dashboard.html" class="card">
+                    <div class="card-title">📞 Call Dashboard</div>
+                    <div class="card-description">Comprehensive call history and analytics</div>
+                    <div class="card-features">
+                        <li>Call records</li>
+                        <li>Completion rates</li>
+                        <li>Export capabilities</li>
+                    </div>
+                </a>
+                
+                <a href="/web-call-dashboard.html" class="card">
+                    <div class="card-title">🌐 Web Call Dashboard</div>
+                    <div class="card-description">Monitor web-initiated calls specifically</div>
+                    <div class="card-features">
+                        <li>Web call metrics</li>
+                        <li>Browser analytics</li>
+                        <li>Session tracking</li>
+                    </div>
+                </a>
+                
+                <a href="/info-tracker.html" class="card">
+                    <div class="card-title">📋 Info Tracker</div>
+                    <div class="card-description">View extracted business information and completion</div>
+                    <div class="card-features">
+                        <li>Data extraction view</li>
+                        <li>Missing info tracking</li>
+                        <li>Completion percentages</li>
+                    </div>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Testing Pages Section -->
+        <div class="section">
+            <h2>🧪 Testing & Development</h2>
+            <div class="cards-grid">
+                <a href="/test-interface.html" class="card">
+                    <div class="card-title">🔬 Test Interface <span class="status-badge testing">Testing</span></div>
+                    <div class="card-description">API testing tool for development</div>
+                    <div class="card-features">
+                        <li>Test all endpoints</li>
+                        <li>Simulate webhooks</li>
+                        <li>Debug responses</li>
+                    </div>
+                </a>
+                
+                <a href="/inbound-call-tester.html" class="card">
+                    <div class="card-title">📱 Inbound Call Tester <span class="status-badge testing">Testing</span></div>
+                    <div class="card-description">Test inbound call handling and routing</div>
+                    <div class="card-features">
+                        <li>Simulate inbound calls</li>
+                        <li>Test recognition</li>
+                        <li>Debug routing</li>
+                    </div>
+                </a>
+                
+                <a href="/dashboard-test.html" class="card">
+                    <div class="card-title">🔍 Dashboard Test <span class="status-badge deprecated">Legacy</span></div>
+                    <div class="card-description">Test dashboard components</div>
+                    <div class="card-features">
+                        <li>Component testing</li>
+                        <li>Data loading debug</li>
+                    </div>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Quick Actions -->
+        <div class="section">
+            <h2>⚡ Quick Actions</h2>
+            <div class="quick-actions">
+                <a href="/admin-dashboard.html" class="quick-action">
+                    🔧 Generate Customer Links
+                </a>
+                <a href="/stage-monitor.html" class="quick-action">
+                    📊 Monitor Active Calls
+                </a>
+                <a href="/customer-onboarding-form.html" class="quick-action">
+                    📝 Add New Customer
+                </a>
+                <a href="/customer-dashboard.html?email=alberto@ching.com&phone=%2B17279006911&name=Alberto+Chang&business=Alberto%27s+Apples" class="quick-action">
+                    👤 View Alberto's Dashboard
+                </a>
+            </div>
+        </div>
+        
+        <!-- API Endpoints Section -->
+        <div class="section">
+            <h2>🔌 API Endpoints</h2>
+            <div class="api-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Method</th>
+                            <th>Endpoint</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="method post">POST</span></td>
+                            <td><span class="endpoint">/api/start-call</span></td>
+                            <td>Initiate outbound call</td>
+                        </tr>
+                        <tr>
+                            <td><span class="method post">POST</span></td>
+                            <td><span class="endpoint">/api/vapi-webhook</span></td>
+                            <td>VAPI webhook receiver</td>
+                        </tr>
+                        <tr>
+                            <td><span class="method get">GET</span></td>
+                            <td><span class="endpoint">/api/customer-journey/:email</span></td>
+                            <td>Full customer journey data</td>
+                        </tr>
+                        <tr>
+                            <td><span class="method get">GET</span></td>
+                            <td><span class="endpoint">/api/vapi-config</span></td>
+                            <td>VAPI configuration (from .env)</td>
+                        </tr>
+                        <tr>
+                            <td><span class="method get">GET</span></td>
+                            <td><span class="endpoint">/api/customer-dashboard-url/:email</span></td>
+                            <td>Generate personalized dashboard URL</td>
+                        </tr>
+                        <tr>
+                            <td><span class="method get">GET</span></td>
+                            <td><span class="endpoint">/api/customer-call-url/:email</span></td>
+                            <td>Generate web call button URL</td>
+                        </tr>
+                        <tr>
+                            <td><span class="method get">GET</span></td>
+                            <td><span class="endpoint">/api/monitor/status</span></td>
+                            <td>System monitoring status</td>
+                        </tr>
+                        <tr>
+                            <td><span class="method get">GET</span></td>
+                            <td><span class="endpoint">/api/monitor/customer/:email</span></td>
+                            <td>Customer call history</td>
+                        </tr>
+                        <tr>
+                            <td><span class="method post">POST</span></td>
+                            <td><span class="endpoint">/api/test-extraction</span></td>
+                            <td>Test data extraction</td>
+                        </tr>
+                        <tr>
+                            <td><span class="method get">GET</span></td>
+                            <td><span class="endpoint">/api/next-call-stage/:email</span></td>
+                            <td>Get next call stage for customer</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p style="margin-top: 15px; opacity: 0.8; font-size: 0.9em;">
+                Showing 10 of 23 total API endpoints
+            </p>
+        </div>
+        
+        <!-- Environment Setup Section -->
+        <div class="section">
+            <h2>⚙️ Environment Setup</h2>
+            <p style="margin-bottom: 15px;">Required environment variables in <code>.env</code> file:</p>
+            <div class="env-vars">
+SUPABASE_URL=your_supabase_url<br>
+SUPABASE_SERVICE_ROLE_KEY=your_supabase_key<br>
+OPENAI_API_KEY=your_openai_key<br>
+VAPI_API_KEY=your_vapi_key<br>
+VAPI_AGENT_ID=your_agent_id<br>
+PORT=3002
+            </div>
+            <button class="copy-button" onclick="copyEnvTemplate()">Copy Template</button>
+        </div>
+        
+        <!-- Status Section -->
+        <div class="section">
+            <h2>📊 System Status</h2>
+            <div id="system-status">
+                <p>Loading system status...</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>🌱 DreamSeed VAPI System v1.0</p>
+        <p>Complete Business Formation Platform</p>
+        <p style="margin-top: 10px; opacity: 0.7;">
+            <a href="/TABLE_OF_CONTENTS.md" style="color: #ffd700;">View Documentation</a>
+        </p>
+    </div>
+
+    <script>
+        // Copy environment template
+        function copyEnvTemplate() {
+            const template = `SUPABASE_URL=your_supabase_url
+SUPABASE_SERVICE_ROLE_KEY=your_supabase_key
+OPENAI_API_KEY=your_openai_key
+VAPI_API_KEY=your_vapi_key
+VAPI_AGENT_ID=your_agent_id
+PORT=3002`;
+            
+            navigator.clipboard.writeText(template).then(() => {
+                alert('Environment template copied to clipboard!');
+            });
+        }
+        
+        // Load system status
+        async function loadSystemStatus() {
+            try {
+                const response = await fetch('/api/monitor/status');
+                if (response.ok) {
+                    const status = await response.json();
+                    const statusDiv = document.getElementById('system-status');
+                    
+                    statusDiv.innerHTML = `
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px;">
+                            <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; text-align: center;">
+                                <div style="font-size: 2em; color: #ffd700;">${status.totalCalls || 0}</div>
+                                <div style="opacity: 0.8;">Total Calls</div>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; text-align: center;">
+                                <div style="font-size: 2em; color: #27ae60;">${status.activeCalls || 0}</div>
+                                <div style="opacity: 0.8;">Active Calls</div>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; text-align: center;">
+                                <div style="font-size: 2em; color: #3498db;">${status.completedCalls || 0}</div>
+                                <div style="opacity: 0.8;">Completed</div>
+                            </div>
+                            <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px; text-align: center;">
+                                <div style="font-size: 2em; color: #e74c3c;">${status.failedCalls || 0}</div>
+                                <div style="opacity: 0.8;">Failed</div>
+                            </div>
+                        </div>
+                        <p style="margin-top: 15px; opacity: 0.8;">
+                            Server Status: <span style="color: #27ae60; font-weight: bold;">✅ Online</span>
+                        </p>
+                    `;
+                } else {
+                    throw new Error('API not responding');
+                }
+            } catch (error) {
+                document.getElementById('system-status').innerHTML = `
+                    <p style="color: #e74c3c;">
+                        ⚠️ Could not connect to server. Make sure the server is running on port 3002.
+                    </p>
+                `;
+            }
+        }
+        
+        // Load status on page load
+        loadSystemStatus();
+        
+        // Refresh status every 10 seconds
+        setInterval(loadSystemStatus, 10000);
+    </script>
+</body>
+</html>
