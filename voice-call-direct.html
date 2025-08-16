@@ -111,16 +111,12 @@
         </div>
     </div>
 
-    <!-- VAPI Web SDK with fallback -->
-    <script src="https://cdn.jsdelivr.net/npm/@vapi-ai/web@latest/dist/index.umd.js"></script>
-    <script>
-        // Fallback if CDN fails
-        if (!window.Vapi) {
-            const script = document.createElement('script');
-            script.src = 'https://unpkg.com/@vapi-ai/web@1.0.0/dist/index.umd.js';
-            document.head.appendChild(script);
-        }
+    <!-- Try VAPI via different method -->
+    <script type="module">
+        import Vapi from 'https://cdn.skypack.dev/@vapi-ai/web';
+        window.VapiClient = Vapi;
     </script>
+    <script src="https://unpkg.com/@vapi-ai/web@0.6.0/dist/index.umd.js"></script>
     
     <script>
         let vapi = null;
@@ -129,34 +125,38 @@
         // Initialize VAPI client with retry
         function initializeVapi() {
             try {
-                console.log('Checking for VAPI...', window.Vapi);
-                if (window.Vapi) {
-                    vapi = new window.Vapi("360c27df-9f83-4b80-bd33-e17dbcbf4971");
-                    updateStatus("✅ Voice system ready");
+                console.log('Checking for VAPI...', window.Vapi, window.VapiClient);
+                
+                // Try different VAPI client sources
+                const VapiClass = window.VapiClient || window.Vapi;
+                
+                if (VapiClass) {
+                    vapi = new VapiClass("360c27df-9f83-4b80-bd33-e17dbcbf4971");
+                    updateStatus("✅ Voice system ready - connected to your VAPI assistant");
                     
                     // Event listeners
                     vapi.on('call-start', () => {
-                        updateStatus("🎤 Voice call active - speak now!");
+                        updateStatus("🎤 Voice call active with your VAPI assistant - speak now!");
                         isCallActive = true;
                         updateButton();
                     });
                     
                     vapi.on('call-end', () => {
-                        updateStatus("📞 Call ended");
+                        updateStatus("📞 Call with VAPI assistant ended");
                         isCallActive = false;
                         updateButton();
                     });
                     
                     vapi.on('speech-start', () => {
-                        updateStatus("🎤 You're speaking...");
+                        updateStatus("🎤 You're speaking to VAPI assistant...");
                     });
                     
                     vapi.on('speech-end', () => {
-                        updateStatus("🤖 AI is responding...");
+                        updateStatus("🤖 VAPI assistant is responding...");
                     });
                     
                     vapi.on('error', (error) => {
-                        updateStatus("❌ Error: " + error.message);
+                        updateStatus("❌ VAPI Error: " + error.message);
                         isCallActive = false;
                         updateButton();
                     });
@@ -167,7 +167,7 @@
                 }
             } catch (error) {
                 console.error('VAPI initialization error:', error);
-                updateStatus("❌ Failed to initialize voice system: " + error.message);
+                updateStatus("❌ Failed to initialize VAPI system: " + error.message);
                 return false;
             }
         }
