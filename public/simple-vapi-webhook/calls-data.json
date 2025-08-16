@@ -1,0 +1,1438 @@
+{
+  "calls": [
+    {
+      "id": "test-123",
+      "callNumber": 1,
+      "assistantId": "5ef9abf6-66b4-4457-9848-ee5436d6191f",
+      "timestamp": "2025-08-15T06:51:59.623Z",
+      "duration": 300,
+      "status": "ended",
+      "customer": {
+        "phone": "+15551234567",
+        "name": "john smith",
+        "email": "john@test.com"
+      },
+      "businessName": null,
+      "state": "california",
+      "package": null,
+      "summary": "Customer wants to start food delivery business",
+      "transcript": "Hi, my name is John Smith and my email is john@test.com. I want to start a food delivery business in California."
+    },
+    {
+      "id": "test-456",
+      "callNumber": 2,
+      "assistantId": "eb760659-21ba-4f94-a291-04f0897f0328",
+      "timestamp": "2025-08-15T06:52:10.143Z",
+      "duration": 400,
+      "status": "ended",
+      "customer": {
+        "phone": "+15551234567",
+        "name": null,
+        "email": null
+      },
+      "businessName": "freshbite delivery llc and form it in delaware",
+      "state": "delaware",
+      "package": null,
+      "summary": "Legal formation details",
+      "transcript": "I want to call it FreshBite Delivery LLC and form it in Delaware."
+    },
+    {
+      "id": "test-789",
+      "callNumber": 3,
+      "assistantId": "65ddc60b-b813-49b6-9986-38ee2974cfc9",
+      "timestamp": "2025-08-15T06:52:21.230Z",
+      "duration": 350,
+      "status": "ended",
+      "customer": {
+        "phone": "+15551234567",
+        "name": null,
+        "email": null
+      },
+      "businessName": null,
+      "state": null,
+      "package": null,
+      "summary": "Banking setup preferences",
+      "transcript": "I want to use Chase Bank and Stripe for payments. QuickBooks for accounting."
+    },
+    {
+      "id": "test-999",
+      "callNumber": 4,
+      "assistantId": "af397e88-c286-416f-9f74-e7665401bdb7",
+      "timestamp": "2025-08-15T06:52:38.711Z",
+      "duration": 450,
+      "status": "ended",
+      "customer": {
+        "phone": "+15551234567",
+        "name": null,
+        "email": null
+      },
+      "businessName": null,
+      "state": null,
+      "package": "Launch Pro",
+      "summary": "Website and package selection",
+      "transcript": "I want a mobile website with online ordering. I choose the Launch Pro package for $1799."
+    },
+    {
+      "id": "dream-test-1",
+      "callNumber": 1,
+      "assistantId": "5ef9abf6-66b4-4457-9848-ee5436d6191f",
+      "timestamp": "2025-08-15T06:56:43.533Z",
+      "duration": 420,
+      "status": "ended",
+      "customer": {
+        "phone": "+15559876543",
+        "name": "maria lopez",
+        "email": "maria@healthyeats.com"
+      },
+      "businessName": null,
+      "state": "texas",
+      "package": null,
+      "summary": "Maria wants to start healthy meal delivery for families in Austin",
+      "transcript": "Hi Sarah, my name is Maria Lopez and my email is maria@healthyeats.com. I want to start a healthy meal delivery business because I am passionate about helping busy parents feed their families nutritious food. The problem is that most meal delivery services focus on convenience over health. I want to create something different - a service that delivers fresh, organic, family-sized meals that kids will actually eat. My target customers are working parents who care about nutrition but dont have time to meal plan and shop. I think I can make $50,000 per month serving families in Austin, Texas. I need about $75,000 to start with the commercial kitchen and initial marketing.",
+      "dreamDNA": {
+        "identity": {
+          "name": "maria lopez and my email is maria@healthyeats",
+          "email": "maria@healthyeats.com",
+          "phone": null,
+          "location": "austin"
+        },
+        "dreamEssence": {
+          "vision": "start a healthy meal delivery business",
+          "purpose": "i am passionate about helping busy parents feed their families nutritious food",
+          "impact": null,
+          "legacy": null,
+          "passion": null,
+          "problem": "that most meal delivery services focus on convenience over health",
+          "mission": null
+        },
+        "businessDNA": {
+          "concept": "healthy meal delivery bus",
+          "industry": null,
+          "model": null,
+          "customers": "customers are working parents who care about nutrition but dont have time to meal plan and shop. i think i can make $50,000 per month serving families in austin, texas. i need about $75,000 to start with the commercial kitchen and initial",
+          "uniqueness": null,
+          "scalability": null,
+          "timeline": null
+        },
+        "execution": {
+          "structure": null,
+          "state": null,
+          "funding": 75000,
+          "team": null,
+          "experience": null,
+          "resources": null,
+          "challenges": null
+        },
+        "successVision": {
+          "revenue": 50000,
+          "lifestyle": null,
+          "freedom": null,
+          "growth": null,
+          "exit": null,
+          "timeframe": null
+        },
+        "packageDNA": {
+          "urgency": null,
+          "support": null,
+          "budget": null,
+          "complexity": null,
+          "confidence": null,
+          "package": null
+        },
+        "analysis": {
+          "completeness": null,
+          "strengths": [
+            "Clear vision",
+            "Strong purpose",
+            "Defined target market",
+            "Financial clarity"
+          ],
+          "gaps": [],
+          "recommendations": [],
+          "packageFit": "Launch Basic",
+          "readiness": "Needs more discovery"
+        }
+      }
+    },
+    {
+      "id": "test-component-1755272852173",
+      "callNumber": 1,
+      "timestamp": "2025-08-15T15:47:32.410Z",
+      "duration": 180,
+      "customer": {
+        "phone": "+15551234567",
+        "name": "john smith",
+        "email": "john@testbusiness.com"
+      },
+      "businessName": null,
+      "state": "california",
+      "package": null,
+      "summary": "Customer wants to start a bakery business",
+      "transcript": "Hi Alex! My name is John Smith, email john@testbusiness.com, phone 555-123-4567. I want to start a bakery called Sweet Dreams Bakery in California. Please save this information to your system.",
+      "dreamDNA": {
+        "identity": {
+          "name": "john smith, email john@testbusiness",
+          "email": "john@testbusiness.com",
+          "phone": null,
+          "location": "california"
+        },
+        "dreamEssence": {
+          "vision": "start a bakery called sweet dreams bakery in california",
+          "purpose": null,
+          "impact": null,
+          "legacy": null,
+          "passion": null,
+          "problem": null,
+          "mission": null
+        },
+        "businessDNA": {
+          "concept": "bakery called sweet dreams bakery",
+          "industry": null,
+          "model": null,
+          "customers": null,
+          "uniqueness": null,
+          "scalability": null,
+          "timeline": null
+        },
+        "execution": {
+          "structure": null,
+          "state": null,
+          "funding": null,
+          "team": null,
+          "experience": null,
+          "resources": null,
+          "challenges": null
+        },
+        "successVision": {
+          "revenue": null,
+          "lifestyle": null,
+          "freedom": null,
+          "growth": null,
+          "exit": null,
+          "timeframe": null
+        },
+        "packageDNA": {
+          "urgency": null,
+          "support": null,
+          "budget": null,
+          "complexity": null,
+          "confidence": null,
+          "package": null
+        },
+        "analysis": {
+          "completeness": null,
+          "strengths": [
+            "Clear vision"
+          ],
+          "gaps": [
+            "Target market unclear",
+            "Funding requirements undefined"
+          ],
+          "recommendations": [],
+          "packageFit": "Launch Basic",
+          "readiness": "Needs more discovery"
+        }
+      }
+    },
+    {
+      "id": "test-component-1755273152065",
+      "callNumber": 1,
+      "timestamp": "2025-08-15T15:52:32.285Z",
+      "duration": 180,
+      "customer": {
+        "phone": "+15551234567",
+        "name": "john smith",
+        "email": "john@testbusiness.com"
+      },
+      "businessName": null,
+      "state": "california",
+      "package": null,
+      "summary": "Customer wants to start a bakery business",
+      "transcript": "Hi Alex! My name is John Smith, email john@testbusiness.com, phone 555-123-4567. I want to start a bakery called Sweet Dreams Bakery in California. Please save this information to your system.",
+      "dreamDNA": {
+        "identity": {
+          "name": "john smith, email john@testbusiness",
+          "email": "john@testbusiness.com",
+          "phone": null,
+          "location": "california"
+        },
+        "dreamEssence": {
+          "vision": "start a bakery called sweet dreams bakery in california",
+          "purpose": null,
+          "impact": null,
+          "legacy": null,
+          "passion": null,
+          "problem": null,
+          "mission": null
+        },
+        "businessDNA": {
+          "concept": "bakery called sweet dreams bakery",
+          "industry": null,
+          "model": null,
+          "customers": null,
+          "uniqueness": null,
+          "scalability": null,
+          "timeline": null
+        },
+        "execution": {
+          "structure": null,
+          "state": null,
+          "funding": null,
+          "team": null,
+          "experience": null,
+          "resources": null,
+          "challenges": null
+        },
+        "successVision": {
+          "revenue": null,
+          "lifestyle": null,
+          "freedom": null,
+          "growth": null,
+          "exit": null,
+          "timeframe": null
+        },
+        "packageDNA": {
+          "urgency": null,
+          "support": null,
+          "budget": null,
+          "complexity": null,
+          "confidence": null,
+          "package": null
+        }
+      }
+    },
+    {
+      "id": "test-call-123",
+      "callNumber": 1,
+      "assistantId": "5ef9abf6-66b4-4457-9848-ee5436d6191f",
+      "timestamp": "2025-08-15T17:04:29.461Z",
+      "duration": 0,
+      "customer": {
+        "phone": "+15551234567",
+        "name": "test user",
+        "email": "test@example.com"
+      },
+      "businessName": null,
+      "state": "california",
+      "package": null,
+      "summary": "",
+      "transcript": "Hi, my name is Test User, email test@example.com, phone 555-123-4567. I want to start a test business called Test LLC in California.",
+      "dreamDNA": {
+        "identity": {
+          "name": "test user, email test@example",
+          "email": "test@example.com",
+          "phone": null,
+          "location": "california"
+        },
+        "dreamEssence": {
+          "vision": "start a test business called test llc in california",
+          "purpose": null,
+          "impact": null,
+          "legacy": null,
+          "passion": null,
+          "problem": null,
+          "mission": null
+        },
+        "businessDNA": {
+          "concept": "test bus",
+          "industry": null,
+          "model": null,
+          "customers": null,
+          "uniqueness": null,
+          "scalability": null,
+          "timeline": null
+        },
+        "execution": {
+          "structure": null,
+          "state": null,
+          "funding": null,
+          "team": null,
+          "experience": null,
+          "resources": null,
+          "challenges": null
+        },
+        "successVision": {
+          "revenue": null,
+          "lifestyle": null,
+          "freedom": null,
+          "growth": null,
+          "exit": null,
+          "timeframe": null
+        },
+        "packageDNA": {
+          "urgency": null,
+          "support": null,
+          "budget": null,
+          "complexity": null,
+          "confidence": null,
+          "package": null
+        }
+      }
+    },
+    {
+      "id": "auto-test-456",
+      "callNumber": 1,
+      "assistantId": "5ef9abf6-66b4-4457-9848-ee5436d6191f",
+      "timestamp": "2025-08-15T17:06:41.476Z",
+      "duration": 0,
+      "customer": {
+        "phone": "+15559998888",
+        "name": "auto test",
+        "email": "autotest@example.com"
+      },
+      "businessName": null,
+      "state": "florida",
+      "package": "Launch Basic",
+      "summary": "",
+      "transcript": "Hi, my name is Auto Test User, email autotest@example.com, phone 555-999-8888. I want to start an auto-extraction test business called AutoTest LLC in Florida.",
+      "dreamDNA": {
+        "identity": {
+          "name": "auto test user, email autotest@example",
+          "email": "autotest@example.com",
+          "phone": null,
+          "location": "florida"
+        },
+        "dreamEssence": {
+          "vision": "start an auto-extraction test business called autotest llc in florida",
+          "purpose": null,
+          "impact": null,
+          "legacy": null,
+          "passion": null,
+          "problem": null,
+          "mission": null
+        },
+        "businessDNA": {
+          "concept": null,
+          "industry": null,
+          "model": null,
+          "customers": null,
+          "uniqueness": null,
+          "scalability": null,
+          "timeline": null
+        },
+        "execution": {
+          "structure": null,
+          "state": null,
+          "funding": null,
+          "team": null,
+          "experience": null,
+          "resources": null,
+          "challenges": null
+        },
+        "successVision": {
+          "revenue": null,
+          "lifestyle": null,
+          "freedom": null,
+          "growth": null,
+          "exit": null,
+          "timeframe": null
+        },
+        "packageDNA": {
+          "urgency": null,
+          "support": null,
+          "budget": null,
+          "complexity": null,
+          "confidence": null,
+          "package": null
+        },
+        "analysis": {
+          "completeness": null,
+          "strengths": [
+            "Clear vision"
+          ],
+          "gaps": [
+            "Target market unclear",
+            "Funding requirements undefined"
+          ],
+          "recommendations": [],
+          "packageFit": "Launch Basic",
+          "readiness": "Needs more discovery"
+        }
+      }
+    },
+    {
+      "id": "test-webhook-123",
+      "callNumber": 1,
+      "assistantId": "5ef9abf6-66b4-4457-9848-ee5436d6191f",
+      "timestamp": "2025-08-15T17:18:09.653Z",
+      "duration": 120,
+      "status": "ended",
+      "customer": {
+        "phone": "+15551234567",
+        "name": "jennifer martinez",
+        "email": "jennifer@digitaledge.com"
+      },
+      "businessName": null,
+      "state": "california",
+      "package": null,
+      "summary": "",
+      "transcript": "Hi, my name is Jennifer Martinez and my email is jennifer@digitaledge.com. I want to start a business called Digital Edge LLC in California.",
+      "dreamDNA": {
+        "identity": {
+          "name": "jennifer martinez and my email is jennifer@digitaledge",
+          "email": "jennifer@digitaledge.com",
+          "phone": null,
+          "location": "california"
+        },
+        "dreamEssence": {
+          "vision": "start a business called digital edge llc in california",
+          "purpose": null,
+          "impact": null,
+          "legacy": null,
+          "passion": null,
+          "problem": null,
+          "mission": null
+        },
+        "businessDNA": {
+          "concept": "bus",
+          "industry": null,
+          "model": null,
+          "customers": null,
+          "uniqueness": null,
+          "scalability": null,
+          "timeline": null
+        },
+        "execution": {
+          "structure": null,
+          "state": null,
+          "funding": null,
+          "team": null,
+          "experience": null,
+          "resources": null,
+          "challenges": null
+        },
+        "successVision": {
+          "revenue": null,
+          "lifestyle": null,
+          "freedom": null,
+          "growth": null,
+          "exit": null,
+          "timeframe": null
+        },
+        "packageDNA": {
+          "urgency": null,
+          "support": null,
+          "budget": null,
+          "complexity": null,
+          "confidence": null,
+          "package": null
+        }
+      }
+    },
+    {
+      "id": "cfa0815f-1919-4af0-806b-f8e26aea2c8b",
+      "callNumber": 1,
+      "assistantId": "5ef9abf6-66b4-4457-9848-ee5436d6191f",
+      "timestamp": "2025-08-15T17:27:20.071Z",
+      "duration": 92,
+      "status": "ended",
+      "customer": {
+        "phone": null,
+        "name": "willy wonka",
+        "email": null
+      },
+      "businessName": null,
+      "state": "florida",
+      "package": "Launch Basic",
+      "summary": "",
+      "transcript": "User: Hey, Alex. My name is Willy Wonka, and my email is willy at wonka dot com. I wanna start a consulting business called Test Works LLC in Florida. I'm interested in the launch basic package. Please save this and let's schedule the next call. Thanks. Goodbye.\nAI: Great, Willie. Me save that information right away. Extract and save business data. Conversation text, Hey, Alex. My name is Willy Wonka, and my email is willy at wonka dot com. I wanna start a consulting business called Test Works LLC in Florida. Uh, I'm interested in the launch basic package. Please save this, and let's schedule the next call. Thanks. Goodbye. Call stage. 1 what? Perfect. I've saved your details. Now here's what we can expect next. I will quickly validate the business name TestWorks LLC for the state of Florida, calculate the formation costs for the launch basic package. Multi tool loose dot parallel. Tool loose's much recipient name functions. Validate, business name. Now parameters, uh, state, Florida. Business name, TestWorks LLC. Frost recipient name, functions, calculate the formation costs. Parameters, state, Florida, and package type, launch basic.\n",
+      "dreamDNA": {
+        "identity": {
+          "name": "willy wonka, and my email is willy at wonka dot com",
+          "email": null,
+          "phone": null,
+          "location": "florida"
+        },
+        "dreamEssence": {
+          "vision": null,
+          "purpose": null,
+          "impact": null,
+          "legacy": null,
+          "passion": null,
+          "problem": null,
+          "mission": null
+        },
+        "businessDNA": {
+          "concept": "consult",
+          "industry": null,
+          "model": null,
+          "customers": null,
+          "uniqueness": null,
+          "scalability": null,
+          "timeline": null
+        },
+        "execution": {
+          "structure": null,
+          "state": null,
+          "funding": null,
+          "team": null,
+          "experience": null,
+          "resources": null,
+          "challenges": null
+        },
+        "successVision": {
+          "revenue": null,
+          "lifestyle": null,
+          "freedom": null,
+          "growth": null,
+          "exit": null,
+          "timeframe": null
+        },
+        "packageDNA": {
+          "urgency": null,
+          "support": null,
+          "budget": null,
+          "complexity": null,
+          "confidence": null,
+          "package": null
+        },
+        "analysis": {
+          "completeness": null,
+          "strengths": [],
+          "gaps": [
+            "Vision needs clarification",
+            "Target market unclear",
+            "Funding requirements undefined"
+          ],
+          "recommendations": [],
+          "packageFit": "Launch Basic",
+          "readiness": "Needs more discovery"
+        }
+      }
+    },
+    {
+      "id": "cb2456c0-4c0e-4ba6-8b5c-2fddad2ee806",
+      "callNumber": 1,
+      "assistantId": "5ef9abf6-66b4-4457-9848-ee5436d6191f",
+      "timestamp": "2025-08-15T17:36:38.995Z",
+      "duration": 35,
+      "status": "ended",
+      "customer": {
+        "phone": null,
+        "name": "sam testing",
+        "email": null
+      },
+      "businessName": null,
+      "state": "texas",
+      "package": null,
+      "summary": "",
+      "transcript": "User: Hi, Alex. My name is Sam Testing, and my email is sam at test dot com. I wanna start a marketing agency called test Flow Solutions LLC in Texas. I'm interested in the LaunchPro package. Please save this information Thanks. Goodbye.\nAI: 1 moment.\nAI: Great, Sam.\nAI: I've saved your details. If you have any more questions or need assistance, feel free to reach out again Goodbye.\n",
+      "dreamDNA": {
+        "identity": {
+          "name": "sam testing, and my email is sam at test dot com",
+          "email": null,
+          "phone": null,
+          "location": "texas"
+        },
+        "dreamEssence": {
+          "vision": null,
+          "purpose": null,
+          "impact": null,
+          "legacy": null,
+          "passion": null,
+          "problem": null,
+          "mission": null
+        },
+        "businessDNA": {
+          "concept": "market",
+          "industry": null,
+          "model": null,
+          "customers": null,
+          "uniqueness": null,
+          "scalability": null,
+          "timeline": null
+        },
+        "execution": {
+          "structure": null,
+          "state": null,
+          "funding": null,
+          "team": null,
+          "experience": null,
+          "resources": null,
+          "challenges": null
+        },
+        "successVision": {
+          "revenue": null,
+          "lifestyle": null,
+          "freedom": null,
+          "growth": null,
+          "exit": null,
+          "timeframe": null
+        },
+        "packageDNA": {
+          "urgency": null,
+          "support": null,
+          "budget": null,
+          "complexity": null,
+          "confidence": null,
+          "package": null
+        }
+      }
+    },
+    {
+      "id": "b2507c32-3b9b-4aec-870c-f9ef3c2c0e48",
+      "callNumber": 1,
+      "assistantId": "5ef9abf6-66b4-4457-9848-ee5436d6191f",
+      "timestamp": "2025-08-15T17:44:58.928Z",
+      "duration": 141,
+      "status": "ended",
+      "customer": {
+        "phone": null,
+        "name": "bob moses",
+        "email": null
+      },
+      "businessName": null,
+      "state": "florida",
+      "package": null,
+      "summary": "",
+      "transcript": "User: Hello. My name is Bob Moses. I'd like to create a music LLC in Florida.\nAI: Great, Bob. Me save that information right away. Let's confirm.\nAI: Name, Bob Moses. Business type, Music LLC. State of operation, Florida. I'll save this now. Calling the save function. Uh, this will just take a sec. Perfect, Bob.\nAI: I've saved your details successfully. Now let's dive into your vision a bit more. You tell me what kinds of services or offerings your music LLC will provide?\nUser: Yes. It'll be DJ events.\nAI: Just a sec. Sounds exciting. I've saved that detail as well.\nAI: Thanks. Do you have any preferred names for your LLC that we could look into validating for availability?\nUser: Bob Moses, LLC.\nAI: 1 moment. Just a sec.\nAI: Saved successfully.\nAI: The name Bob Moses LLC is validated in Florida. This name is available.\nAI: What kind of timeline are we working with? Do you need this finalized right away? Or is it a plan to launch? In a few weeks?\nUser: Right away.\nAI: Just a sec. Just a sec.\nAI: Hold on a sec.\nAI: Registration requirements in Florida do include name validation.\nAI: Do you have a package option preference for basic? This is premium. The fees range here\nUser: Premium.\nAI: 1 moment. Just a sec.\nAI: All premium just tabulated. Would you like a summary? Show state fees.\nAI: Expedite breakdown,\nUser: No. Thanks.\nAI: Uh, this will just take a sec.\nAI: Great, Bob. I've got everything saved for you.\nAI: I'll schedule a follow-up call in the next 3, 5 days. To proceed with the registration finalization. Is there anything else you'd like to discuss?\nUser: No. Thank you. Goodbye.\nAI: Thanks, Bob. Goodbye.\n",
+      "dreamDNA": {
+        "identity": {
+          "name": "bob moses",
+          "email": null,
+          "phone": null,
+          "location": "florida"
+        },
+        "dreamEssence": {
+          "vision": null,
+          "purpose": null,
+          "impact": null,
+          "legacy": null,
+          "passion": null,
+          "problem": null,
+          "mission": null
+        },
+        "businessDNA": {
+          "concept": null,
+          "industry": null,
+          "model": null,
+          "customers": null,
+          "uniqueness": null,
+          "scalability": null,
+          "timeline": null
+        },
+        "execution": {
+          "structure": null,
+          "state": null,
+          "funding": null,
+          "team": null,
+          "experience": null,
+          "resources": null,
+          "challenges": null
+        },
+        "successVision": {
+          "revenue": null,
+          "lifestyle": null,
+          "freedom": null,
+          "growth": null,
+          "exit": null,
+          "timeframe": null
+        },
+        "packageDNA": {
+          "urgency": null,
+          "support": null,
+          "budget": null,
+          "complexity": null,
+          "confidence": null,
+          "package": null
+        }
+      }
+    },
+    {
+      "id": "ba87cad8-0d1e-4d2f-b112-a3fa7ab678d6",
+      "callNumber": 1,
+      "assistantId": "5ef9abf6-66b4-4457-9848-ee5436d6191f",
+      "timestamp": "2025-08-15T18:04:05.024Z",
+      "duration": 182,
+      "status": "ended",
+      "customer": {
+        "phone": null,
+        "name": "katie berry",
+        "email": null
+      },
+      "businessName": null,
+      "state": "california",
+      "package": null,
+      "summary": "",
+      "transcript": "User: My name is Katie Berry. I'd like to start a business Katy Perry LLC, in California. My phone number is 6 1 9 6 5 4 4 3 2 1. My email address is katie at perry dot com.\nAI: Great, Katie. Let me save that information right away. I'll store your details and gather more information.\nAI: Extract and save business data, call stage, 1. Customer phone, 6 to 1. 9 6 5 4 4 3 2. Um, conversation text, My name is Katy Perry. I'd like to start a business, Katy Perry LLC in California. My phone number is 6 1 9 6 5 4 4 3 2 1. My email address is katie at perry dot com. Wow. Perfect. I've saved your details. Next, let's validate the business name Katy Perry LLC for California. Hold on a sec. Your business name, Katy Perry LLC\nAI: has been validated successfully for California. Additionally, I retrieved the state requirements, uh, for forming a business in California, Do you have a preference, um, for the entity type, e g, LLC, corporation, etcetera? Or would you like guidance And could you share your timeline\nUser: We'll see solo.\nAI: Got it. As a sole proprietor,\nUser: Great. LLC.\nAI: perfect. An LLC is a great choice. Let me save that information as well.\nAI: Um, next, provide you with an estimate of the formation cost for an LLC in California. 1 moment, please. Uh, this will just take a sec. The initial cost to form an LLC\nAI: California has been calculated successfully. Lastly, may I ask about your time line and urgency? Uh, are you looking to get started immediately, or do you have a specific time frame in mind? For establishing this LLC?\nUser: Looking to get started immediately.\nAI: Perfect. I'll note your urgency to start immediately, Let me save that updated detail.\nAI: I'll also schedule your next call within 35 days to solidify further steps. 1 moment. Perfect, Katie. I've saved all your details successfully.\nAI: Uh, you're forming Katy Perry LLC in California. As an LLC. And aiming to start immediately. Your next call will be scheduled shortly. Within 35 to 2 days. Is there anything else you'd like assistance with before we wrap up?\nUser: So thank you.\nAI: You're very welcome, Katie. You for sharing your vision. I'm excited for Katy Perry LLC to take off. You the best for your journey ahead. And we'll touch base again in 35 days. Have a great day.\nUser: Thank you. Goodbye.\nAI: Goodbye, Katie. Have a wonderful day.\n",
+      "dreamDNA": {
+        "identity": {
+          "name": "katie berry",
+          "email": null,
+          "phone": null,
+          "location": "california"
+        },
+        "dreamEssence": {
+          "vision": null,
+          "purpose": null,
+          "impact": null,
+          "legacy": null,
+          "passion": null,
+          "problem": null,
+          "mission": null
+        },
+        "businessDNA": {
+          "concept": "bus",
+          "industry": null,
+          "model": null,
+          "customers": null,
+          "uniqueness": null,
+          "scalability": null,
+          "timeline": null
+        },
+        "execution": {
+          "structure": null,
+          "state": null,
+          "funding": null,
+          "team": null,
+          "experience": null,
+          "resources": null,
+          "challenges": null
+        },
+        "successVision": {
+          "revenue": null,
+          "lifestyle": null,
+          "freedom": null,
+          "growth": null,
+          "exit": null,
+          "timeframe": null
+        },
+        "packageDNA": {
+          "urgency": null,
+          "support": null,
+          "budget": null,
+          "complexity": null,
+          "confidence": null,
+          "package": null
+        }
+      }
+    },
+    {
+      "id": "8676af60-df42-4e38-9b96-30ac5f5724b0",
+      "callNumber": 1,
+      "assistantId": "5ef9abf6-66b4-4457-9848-ee5436d6191f",
+      "timestamp": "2025-08-15T18:07:38.019Z",
+      "duration": 108,
+      "status": "ended",
+      "customer": {
+        "phone": null,
+        "name": "bill clinton",
+        "email": null
+      },
+      "businessName": null,
+      "state": "california",
+      "package": null,
+      "summary": "",
+      "transcript": "User: Hello. My name is Bill Clinton. My email address is bill at clinton dot org.\nAI: Thank you, Bill. Um, let me, well, save your information right away. Extract and save business data under you. Conversation text. Hello. My name is Bill Clinton. My email address is bill at clinton dot org. Call stage 1 customer phone, your phone. Great. I've saved your details. What business concept or vision do you have in mind?\nUser: Political advising.\nAI: 1 moment.\nUser: Formula.\nAI: Great. I've saved your business\nUser: LLC in California.\nAI: hold on a sec.\nAI: Great. I've saved your preference for forming an LLC in California.\nAI: I've also retrieved the state requirements for setting up an LLC in California. To move forward, uh, California requires filing articles of organization, and paying a filing fee.\nUser: Okay. Thanks for that information. I know that.\nAI: You're welcome, Bill. Um, since you're aware of the state requirements, for California, you like me to help validate a business name for your LLC\nUser: Not at this point.\nAI: Understood, Bill. Next. Are you looking to move forward immediately, or do you have a specific timeline in mind for forming your LLC?\nUser: Immediately.\nAI: Uh, this will just take a sec.\nAI: I've saved your urgency to move forward immediately.\nAI: Based on this, we can schedule a follow-up call the next 35 days to ensure your\nUser: Thank you. Bye.\nAI: you're welcome, Bill. Uh, it was great speaking with you. Um, I'll ensure a follow-up call is scheduled shortly. Bye for now.\n",
+      "dreamDNA": {
+        "identity": {
+          "name": "bill clinton",
+          "email": null,
+          "phone": null,
+          "location": "mind"
+        },
+        "dreamEssence": {
+          "vision": null,
+          "purpose": null,
+          "impact": null,
+          "legacy": null,
+          "passion": null,
+          "problem": null,
+          "mission": null
+        },
+        "businessDNA": {
+          "concept": null,
+          "industry": null,
+          "model": null,
+          "customers": null,
+          "uniqueness": null,
+          "scalability": null,
+          "timeline": null
+        },
+        "execution": {
+          "structure": null,
+          "state": null,
+          "funding": null,
+          "team": null,
+          "experience": null,
+          "resources": null,
+          "challenges": null
+        },
+        "successVision": {
+          "revenue": null,
+          "lifestyle": null,
+          "freedom": null,
+          "growth": null,
+          "exit": null,
+          "timeframe": null
+        },
+        "packageDNA": {
+          "urgency": null,
+          "support": null,
+          "budget": null,
+          "complexity": null,
+          "confidence": null,
+          "package": null
+        }
+      },
+      "enhancedAnalysis": {
+        "customer_name": "Bill Clinton",
+        "customer_email": null,
+        "customer_phone": null,
+        "business_name": null,
+        "state_of_operation": null,
+        "entity_type": "LLC",
+        "status": "in_progress",
+        "call_stage": 1,
+        "created_at": "2025-08-15T18:07:38.018Z",
+        "updated_at": "2025-08-15T18:07:38.018Z",
+        "business_type": null,
+        "services": null,
+        "timeline": "Immediate",
+        "package_preference": null,
+        "mcp_functions_count": 1,
+        "name_validated": false,
+        "data_completeness_score": 25
+      }
+    },
+    {
+      "id": "c52f383a-64a8-4441-8c21-3857e4a876f1",
+      "callNumber": 1,
+      "assistantId": "5ef9abf6-66b4-4457-9848-ee5436d6191f",
+      "timestamp": "2025-08-15T18:21:23.812Z",
+      "duration": 114,
+      "status": "ended",
+      "customer": {
+        "phone": null,
+        "name": "entering the",
+        "email": null
+      },
+      "businessName": null,
+      "state": "california",
+      "package": null,
+      "summary": "",
+      "transcript": "User: My name is Diplo, and I'd like to start a music music LLC. In California.\nAI: Great, Diplo. Me save that information right away.\nAI: I'm entering the following details. Name, Diplo. Business idea. Music focused. LLC. State, California. Me quickly save this. Calling the extract and save business data tool now. Give me a moment. Perfect, Diplo. I've saved your information successfully.\nAI: Now could you share your our email and phone number so I can update your file and keep in touch?\nUser: 6 1 9 8 5 1 0 2 2. And diplo at m e dot com.\nAI: Just a sec.\nAI: Perfect. I've saved your phone number and email, Diplo.\nAI: Let's dive deeper into, um, your music LLC idea. Are you planning for a record label, production company, uh, talent management, or something else?\nUser: Record label production company.\nAI: Give me a moment.\nAI: Great, Diplo.\nAI: I've saved your idea for a record label, uh, production company. You're aiming for an LLC, in California, I can share the state specific requirements Want me to check that out?\nUser: That's okay.\nAI: Alright. Thinking check name validation. Also, get initial cost estimates. Let me know to help further. Want timeline or\nUser: Okay. I'm good.\nAI: alright then. Me a moment. Definitely looking forward. Schedule call 2. Follow-up call within 35 days. Validate.\nUser: Okay. Sounds good. Thank you. Goodbye.\nAI: Thank you, Diplo. Looking forward to our next chat Goodbye, and thank you.\n",
+      "dreamDNA": {
+        "identity": {
+          "name": "diplo, and i'd like to start a music music llc",
+          "email": null,
+          "phone": null,
+          "location": "california"
+        },
+        "dreamEssence": {
+          "vision": null,
+          "purpose": null,
+          "impact": null,
+          "legacy": null,
+          "passion": null,
+          "problem": null,
+          "mission": null
+        },
+        "businessDNA": {
+          "concept": "music music llc",
+          "industry": null,
+          "model": null,
+          "customers": null,
+          "uniqueness": null,
+          "scalability": null,
+          "timeline": null
+        },
+        "execution": {
+          "structure": null,
+          "state": null,
+          "funding": null,
+          "team": null,
+          "experience": null,
+          "resources": null,
+          "challenges": null
+        },
+        "successVision": {
+          "revenue": null,
+          "lifestyle": null,
+          "freedom": null,
+          "growth": null,
+          "exit": null,
+          "timeframe": null
+        },
+        "packageDNA": {
+          "urgency": null,
+          "support": null,
+          "budget": null,
+          "complexity": null,
+          "confidence": null,
+          "package": null
+        }
+      },
+      "enhancedAnalysis": {
+        "customer_name": "Diplo",
+        "customer_email": "diplo@m.e.com",
+        "customer_phone": "+1619851022",
+        "business_name": "Diplo's Music LLC",
+        "business_type": "Music",
+        "state_of_operation": "California",
+        "entity_type": "LLC",
+        "services": "Record label, production company",
+        "timeline": "Within a month",
+        "package_preference": null,
+        "urgency_level": null,
+        "key_requirements": [
+          "Name validation",
+          "Initial cost estimates"
+        ],
+        "pain_points": null,
+        "budget_mentioned": null,
+        "next_steps": "Follow-up call within 35 days",
+        "call_stage": 1,
+        "status": "in_progress",
+        "created_at": "2025-08-15T18:21:23.812Z",
+        "updated_at": "2025-08-15T18:21:23.812Z",
+        "ai_confidence_score": 100,
+        "extraction_method": "AI-GPT4",
+        "data_completeness_score": 80
+      }
+    },
+    {
+      "id": "7c25becd-fdfd-4ac5-b0f4-0f0d5bed152a",
+      "callNumber": 1,
+      "assistantId": "5ef9abf6-66b4-4457-9848-ee5436d6191f",
+      "timestamp": "2025-08-15T18:29:48.403Z",
+      "duration": 137,
+      "status": "ended",
+      "customer": {
+        "phone": null,
+        "name": "tommy hilfiger",
+        "email": null
+      },
+      "businessName": null,
+      "state": "california",
+      "package": null,
+      "summary": "",
+      "transcript": "User: Hello. My name is Tommy Hilfiger. I'd like to create a California LLC Tommy Hilfiger and Co, and it's a sole proprietorship And my phone number is 6 1 9 8 5 1 0 6 3 2. My email is Tommy at Hill Figure dot com. And I'd like to get going on this ASAP. Thank you. Goodbye.\nAI: Hello, Tommy. Me save all this critical information right away. Extract and save business data. Conversation text. Hello. My name is Tommy Hilfiger. I'd like to create a California LLC Tommy Hilfiger and Co, and it's a sole proprietorship. And my phone number is 6 1 9 8 5 1 0 6 3 2. Um, my email is Tommy at hill figure dot com. And I'd like to get going on this ASAP. Call stage. 1. Customer phone. 6 1 9 8 5 1 0 6 3 2. Perfect. Saved your details. I'll validate the business name, Tommy Hilfiger and Co. For California, and check the formation requirements. Please hold on. Multi tool loose dot parallel. Match tool looses recipient name functions validate business name. Parameters, search state California. Business name, Tommy Hilfiger and co. Drugs. Recipient name functions get state requirements for parameters, state California. Author recipient name functions. Calculate.\nUser: Thanks. Goodbye.\nAI: Just a sec.\nAI: Give me a moment.\nAI: Thank you, Tommy. Uh, I've saved all your details. Validated your business name, and gathered the information on California's state requirements. And costs for forming your LLC. Although you are exiting the call, feel free to reach out if you have more questions or need further assistance. Goodbye.\n",
+      "dreamDNA": {
+        "identity": {
+          "name": "tommy hilfiger",
+          "email": null,
+          "phone": null,
+          "location": null
+        },
+        "dreamEssence": {
+          "vision": null,
+          "purpose": null,
+          "impact": null,
+          "legacy": null,
+          "passion": null,
+          "problem": null,
+          "mission": null
+        },
+        "businessDNA": {
+          "concept": null,
+          "industry": null,
+          "model": null,
+          "customers": null,
+          "uniqueness": null,
+          "scalability": null,
+          "timeline": null
+        },
+        "execution": {
+          "structure": null,
+          "state": null,
+          "funding": null,
+          "team": null,
+          "experience": null,
+          "resources": null,
+          "challenges": null
+        },
+        "successVision": {
+          "revenue": null,
+          "lifestyle": null,
+          "freedom": null,
+          "growth": null,
+          "exit": null,
+          "timeframe": null
+        },
+        "packageDNA": {
+          "urgency": null,
+          "support": null,
+          "budget": null,
+          "complexity": null,
+          "confidence": null,
+          "package": null
+        }
+      },
+      "enhancedAnalysis": {
+        "customer_name": "Tommy Hilfiger",
+        "customer_email": "Tommy@HillFigure.com",
+        "customer_phone": "+16198510632",
+        "business_name": "Tommy Hilfiger and Co",
+        "business_type": "Sole Proprietorship",
+        "state_of_operation": "California",
+        "entity_type": "LLC",
+        "services": null,
+        "timeline": "Immediate",
+        "package_preference": null,
+        "urgency_level": "High",
+        "key_requirements": null,
+        "pain_points": null,
+        "budget_mentioned": null,
+        "next_steps": "Validate business name and gather information on state requirements",
+        "call_stage": 1,
+        "status": "in_progress",
+        "created_at": "2025-08-15T18:29:48.403Z",
+        "updated_at": "2025-08-15T18:29:48.403Z",
+        "ai_confidence_score": 100,
+        "extraction_method": "AI-GPT4",
+        "data_completeness_score": 73
+      }
+    },
+    {
+      "id": "11e9aa41-22ae-42ae-9c49-942e13af0287",
+      "callNumber": 1,
+      "assistantId": "5ef9abf6-66b4-4457-9848-ee5436d6191f",
+      "timestamp": "2025-08-15T18:51:16.731Z",
+      "duration": 104,
+      "status": "ended",
+      "customer": {
+        "phone": null,
+        "name": "bill gates",
+        "email": null
+      },
+      "businessName": null,
+      "state": "florida",
+      "package": null,
+      "summary": "",
+      "transcript": "User: Hello. My name is Bill Gates, and I'd like to start a nuclear power plant business called atomic power energy, LLC.\nAI: 1 moment.\nAI: Great, Bill.\nAI: I've saved that information right away. Uh, could you also provide me with your preferred contact email and phone number? This way, I\nUser: Yeah. So bill at gates foundation dot org. Phone number,\nAI: hold on a sec.\nUser: 7 4 7\nUser: 3 4 8 2.\nAI: 1 moment.\nAI: Thanks, Bill. Uh, I've saved your email and phone information.\nAI: Let's proceed. What state are you looking to set up? Atomic Power Energy LLC in?\nUser: Florida.\nAI: Uh, this will just take a sec.\nAI: Got it. I've saved Florida as your preferred state for formation.\nAI: Uh, now let me confirm. Um, are you set on forming this as an LLC specifically, or would you like to explore other entity types? Like a corporate\nUser: An LLC, sole proprietor.\nAI: Hold on a sec.\nAI: Great. I've saved that preference for an LLC as a as sole proprietor.\nAI: Let's talk about your timeline. How quickly you\nUser: Right away.\nAI: just a sec.\nAI: Got it. You're ready to move forward immediately. Thank you. Uh, so now confirm. Finalize your name.\nUser: Bill Gates.\nAI: Just a sec.\nAI: Uh, alright. So now I will schedule second call.\nAI: A few regarding formation requirements and costs, and\nUser: Great. Thanks so much. Have a good day. Goodbye.\nAI: you're welcome. Bill, great. You will. Talk soon. Have a good day. Bye.\n",
+      "dreamDNA": {
+        "identity": {
+          "name": "bill gates, and i'd like to start a nuclear power plant business called atomic power energy, llc",
+          "email": null,
+          "phone": null,
+          "location": null
+        },
+        "dreamEssence": {
+          "vision": null,
+          "purpose": null,
+          "impact": null,
+          "legacy": null,
+          "passion": null,
+          "problem": null,
+          "mission": null
+        },
+        "businessDNA": {
+          "concept": "nuclear power plant bus",
+          "industry": null,
+          "model": null,
+          "customers": null,
+          "uniqueness": null,
+          "scalability": null,
+          "timeline": null
+        },
+        "execution": {
+          "structure": null,
+          "state": null,
+          "funding": null,
+          "team": null,
+          "experience": null,
+          "resources": null,
+          "challenges": null
+        },
+        "successVision": {
+          "revenue": null,
+          "lifestyle": null,
+          "freedom": null,
+          "growth": null,
+          "exit": null,
+          "timeframe": null
+        },
+        "packageDNA": {
+          "urgency": null,
+          "support": null,
+          "budget": null,
+          "complexity": null,
+          "confidence": null,
+          "package": null
+        }
+      },
+      "enhancedAnalysis": {
+        "customer_name": "Bill Gates",
+        "customer_email": "bill@gatesfoundation.org",
+        "customer_phone": "+17473483200",
+        "business_name": "Atomic Power Energy",
+        "business_type": "Nuclear Power",
+        "state_of_operation": "Florida",
+        "entity_type": "LLC",
+        "services": null,
+        "timeline": "Immediate",
+        "package_preference": null,
+        "urgency_level": "High",
+        "key_requirements": null,
+        "pain_points": null,
+        "budget_mentioned": null,
+        "next_steps": "Schedule second call regarding formation requirements and costs",
+        "call_stage": 1,
+        "status": "in_progress",
+        "created_at": "2025-08-15T18:51:16.731Z",
+        "updated_at": "2025-08-15T18:51:16.731Z",
+        "ai_confidence_score": 100,
+        "extraction_method": "AI-GPT4",
+        "data_completeness_score": 73
+      }
+    }
+  ],
+  "dreamDNA": {
+    "15559876543": {
+      "identity": {
+        "name": "maria lopez and my email is maria@healthyeats",
+        "email": "maria@healthyeats.com",
+        "phone": null,
+        "location": "austin"
+      },
+      "dreamEssence": {
+        "vision": "start a healthy meal delivery business",
+        "purpose": "i am passionate about helping busy parents feed their families nutritious food",
+        "impact": null,
+        "legacy": null,
+        "passion": null,
+        "problem": "that most meal delivery services focus on convenience over health",
+        "mission": null
+      },
+      "businessDNA": {
+        "concept": "healthy meal delivery bus",
+        "industry": null,
+        "model": null,
+        "customers": "customers are working parents who care about nutrition but dont have time to meal plan and shop. i think i can make $50,000 per month serving families in austin, texas. i need about $75,000 to start with the commercial kitchen and initial",
+        "uniqueness": null,
+        "scalability": null,
+        "timeline": null
+      },
+      "execution": {
+        "structure": null,
+        "state": null,
+        "funding": 75000,
+        "team": null,
+        "experience": null,
+        "resources": null,
+        "challenges": null
+      },
+      "successVision": {
+        "revenue": 50000,
+        "lifestyle": null,
+        "freedom": null,
+        "growth": null,
+        "exit": null,
+        "timeframe": null
+      },
+      "packageDNA": {
+        "urgency": null,
+        "support": null,
+        "budget": null,
+        "complexity": null,
+        "confidence": null,
+        "package": null
+      },
+      "analysis": {
+        "completeness": null,
+        "strengths": [
+          "Clear vision",
+          "Strong purpose",
+          "Defined target market",
+          "Financial clarity"
+        ],
+        "gaps": [],
+        "recommendations": [],
+        "packageFit": "Launch Basic",
+        "readiness": "Needs more discovery"
+      }
+    },
+    "15551234567": {
+      "identity": {
+        "name": "jennifer martinez and my email is jennifer@digitaledge",
+        "email": "jennifer@digitaledge.com",
+        "phone": null,
+        "location": "california"
+      },
+      "dreamEssence": {
+        "vision": "start a business called digital edge llc in california",
+        "purpose": null,
+        "impact": null,
+        "legacy": null,
+        "passion": null,
+        "problem": null,
+        "mission": null
+      },
+      "businessDNA": {
+        "concept": "bus",
+        "industry": null,
+        "model": null,
+        "customers": null,
+        "uniqueness": null,
+        "scalability": null,
+        "timeline": null
+      },
+      "execution": {
+        "structure": null,
+        "state": null,
+        "funding": null,
+        "team": null,
+        "experience": null,
+        "resources": null,
+        "challenges": null
+      },
+      "successVision": {
+        "revenue": null,
+        "lifestyle": null,
+        "freedom": null,
+        "growth": null,
+        "exit": null,
+        "timeframe": null
+      },
+      "packageDNA": {
+        "urgency": null,
+        "support": null,
+        "budget": null,
+        "complexity": null,
+        "confidence": null,
+        "package": null
+      },
+      "analysis": {
+        "completeness": null,
+        "strengths": [
+          "Clear vision"
+        ],
+        "gaps": [
+          "Target market unclear",
+          "Funding requirements undefined"
+        ],
+        "recommendations": [],
+        "packageFit": "Launch Basic",
+        "readiness": "Needs more discovery"
+      }
+    },
+    "15559998888": {
+      "identity": {
+        "name": "auto test user, email autotest@example",
+        "email": "autotest@example.com",
+        "phone": null,
+        "location": "florida"
+      },
+      "dreamEssence": {
+        "vision": "start an auto-extraction test business called autotest llc in florida",
+        "purpose": null,
+        "impact": null,
+        "legacy": null,
+        "passion": null,
+        "problem": null,
+        "mission": null
+      },
+      "businessDNA": {
+        "concept": null,
+        "industry": null,
+        "model": null,
+        "customers": null,
+        "uniqueness": null,
+        "scalability": null,
+        "timeline": null
+      },
+      "execution": {
+        "structure": null,
+        "state": null,
+        "funding": null,
+        "team": null,
+        "experience": null,
+        "resources": null,
+        "challenges": null
+      },
+      "successVision": {
+        "revenue": null,
+        "lifestyle": null,
+        "freedom": null,
+        "growth": null,
+        "exit": null,
+        "timeframe": null
+      },
+      "packageDNA": {
+        "urgency": null,
+        "support": null,
+        "budget": null,
+        "complexity": null,
+        "confidence": null,
+        "package": null
+      },
+      "analysis": {
+        "completeness": null,
+        "strengths": [
+          "Clear vision"
+        ],
+        "gaps": [
+          "Target market unclear",
+          "Funding requirements undefined"
+        ],
+        "recommendations": [],
+        "packageFit": "Launch Basic",
+        "readiness": "Needs more discovery"
+      }
+    },
+    "unknown": {
+      "identity": {
+        "name": "bill gates, and i'd like to start a nuclear power plant business called atomic power energy, llc",
+        "email": null,
+        "phone": null,
+        "location": "california"
+      },
+      "dreamEssence": {
+        "vision": null,
+        "purpose": null,
+        "impact": null,
+        "legacy": null,
+        "passion": null,
+        "problem": null,
+        "mission": null
+      },
+      "businessDNA": {
+        "concept": "nuclear power plant bus",
+        "industry": null,
+        "model": null,
+        "customers": null,
+        "uniqueness": null,
+        "scalability": null,
+        "timeline": null
+      },
+      "execution": {
+        "structure": null,
+        "state": null,
+        "funding": null,
+        "team": null,
+        "experience": null,
+        "resources": null,
+        "challenges": null
+      },
+      "successVision": {
+        "revenue": null,
+        "lifestyle": null,
+        "freedom": null,
+        "growth": null,
+        "exit": null,
+        "timeframe": null
+      },
+      "packageDNA": {
+        "urgency": null,
+        "support": null,
+        "budget": null,
+        "complexity": null,
+        "confidence": null,
+        "package": null
+      },
+      "analysis": {
+        "completeness": null,
+        "strengths": [],
+        "gaps": [
+          "Vision needs clarification",
+          "Target market unclear",
+          "Funding requirements undefined"
+        ],
+        "recommendations": [],
+        "packageFit": "Launch Basic",
+        "readiness": "Needs more discovery"
+      }
+    }
+  }
+}

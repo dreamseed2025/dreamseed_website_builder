@@ -1,0 +1,38 @@
+{
+  "slug": "test-1755197672-4c6e3bbd",
+  "company_name": "Dream Seed Test",
+  "profile_json": {
+    "site": {
+      "company_name": "Dream Seed Test",
+      "domain": "test.dreamseed.ai"
+    },
+    "brand": {
+      "primary_hex": "#0E0E10",
+      "secondary_hex": "#F59E0B",
+      "accent_hex": "#10B981"
+    },
+    "services": [
+      {
+        "name": "Test Service",
+        "description": "Test service for validation",
+        "icon": "test"
+      }
+    ],
+    "testimonials": [
+      {
+        "name": "Test User",
+        "company": "Test Company",
+        "quote": "This is a test testimonial",
+        "rating": 5
+      }
+    ],
+    "plans": [
+      {
+        "name": "Test Plan",
+        "price": 999,
+        "currency": "USD",
+        "description": "Test plan for validation"
+      }
+    ]
+  }
+}

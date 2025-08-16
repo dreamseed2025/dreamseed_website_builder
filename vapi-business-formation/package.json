@@ -1,0 +1,31 @@
+{
+  "name": "vapi-business-formation-system",
+  "version": "1.0.0",
+  "description": "Complete voice AI business formation system using Vapi.ai and Supabase",
+  "scripts": {
+    "deploy": "./scripts/deploy-supabase.sh",
+    "setup-webhooks": "deno run --allow-net --allow-env scripts/setup-vapi-webhooks.ts",
+    "test": "deno run --allow-net scripts/test-system.ts",
+    "dev": "supabase start",
+    "stop": "supabase stop"
+  },
+  "keywords": [
+    "vapi",
+    "voice-ai",
+    "business-formation",
+    "supabase",
+    "webhooks",
+    "analytics"
+  ],
+  "author": "DreamSeed",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {},
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dreamseed2025/vapi-business-formation"
+  }
+}

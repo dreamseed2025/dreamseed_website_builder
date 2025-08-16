@@ -1,0 +1,82 @@
+{
+  "workflow_fix": "Replace the current 'Supabase: Upsert Site1' node with this structure:",
+  "nodes_to_add": [
+    {
+      "node_name": "Check if Site Exists",
+      "type": "supabase",
+      "operation": "getAll", 
+      "table": "sites",
+      "filters": {
+        "conditions": [
+          {
+            "keyName": "slug",
+            "condition": "eq", 
+            "keyValue": "={{ $json.slug }}"
+          }
+        ]
+      }
+    },
+    {
+      "node_name": "IF Site Exists",
+      "type": "if",
+      "conditions": {
+        "options": {
+          "caseSensitive": true,
+          "leftValue": "={{ $json.length }}",
+          "operation": "larger",
+          "rightValue": 0
+        }
+      }
+    },
+    {
+      "node_name": "Update Existing Site",
+      "type": "supabase", 
+      "operation": "update",
+      "table": "sites",
+      "filters": {
+        "conditions": [
+          {
+            "keyName": "slug",
+            "condition": "eq",
+            "keyValue": "={{ $items('Normalize Payload')[0].json.slug }}"
+          }
+        ]
+      },
+      "fieldsUi": {
+        "fieldValues": [
+          {
+            "fieldId": "company_name",
+            "fieldValue": "={{ $items('Normalize Payload')[0].json.company_name }}"
+          },
+          {
+            "fieldId": "profile_json", 
+            "fieldValue": "={{ $items('Normalize Payload')[0].json.profile_json }}"
+          }
+        ]
+      }
+    },
+    {
+      "node_name": "Insert New Site",
+      "type": "supabase",
+      "operation": "insert", 
+      "table": "sites",
+      "fieldsUi": {
+        "fieldValues": [
+          {
+            "fieldId": "slug",
+            "fieldValue": "={{ $items('Normalize Payload')[0].json.slug }}"
+          },
+          {
+            "fieldId": "company_name", 
+            "fieldValue": "={{ $items('Normalize Payload')[0].json.company_name }}"
+          },
+          {
+            "fieldId": "profile_json",
+            "fieldValue": "={{ $items('Normalize Payload')[0].json.profile_json }}"
+          }
+        ]
+      }
+    }
+  ],
+  "connection_flow": "Normalize Payload -> Check if Site Exists -> IF Site Exists -> (TRUE: Update Existing Site | FALSE: Insert New Site) -> Both merge -> Build site.json"
+}

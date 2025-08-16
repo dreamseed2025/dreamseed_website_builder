@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dream Seed — Launch Your Dream Business With One Click</title>
+    <meta name="description" content="Skip the paperwork and get started today with our AI-powered business builder.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        /* Header */
+        header {
+            background: #141416;
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #56b978;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #56b978;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #141416 0%, #3348a8 100%);
+            color: white;
+            padding: 8rem 0 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://kxldodhrhqbwyvgyuqfd.supabase.co/storage/v1/object/public/webimages/dream_seed_1.png') center/cover;
+            opacity: 0.1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .cta-button {
+            background: #56b978;
+            color: white;
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 600;
+        }
+        
+        .cta-button:hover {
+            background: #4a9d66;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(86, 185, 120, 0.3);
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 4rem 0;
+            background: #f8f9fa;
+        }
+        
+        .features h2 {
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #141416;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .feature-card h3 {
+            color: #3348a8;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        /* Services Section */
+        .services {
+            padding: 4rem 0;
+        }
+        
+        .services h2 {
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #141416;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .service-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .service-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .service-content {
+            padding: 2rem;
+        }
+        
+        .service-content h3 {
+            color: #3348a8;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .service-features {
+            list-style: none;
+            margin-top: 1rem;
+        }
+        
+        .service-features li {
+            padding: 0.5rem 0;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .service-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #56b978;
+            font-weight: bold;
+        }
+        
+        /* Pricing Section */
+        .pricing {
+            padding: 4rem 0;
+            background: #f8f9fa;
+        }
+        
+        .pricing h2 {
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #141416;
+        }
+        
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .pricing-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            position: relative;
+        }
+        
+        .pricing-card.featured {
+            border: 3px solid #56b978;
+            transform: scale(1.05);
+        }
+        
+        .pricing-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #3348a8;
+        }
+        
+        .price {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #141416;
+            margin-bottom: 1rem;
+        }
+        
+        .price::before {
+            content: '$';
+            font-size: 1.5rem;
+            vertical-align: top;
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            padding: 4rem 0;
+        }
+        
+        .testimonials h2 {
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #141416;
+        }
+        
+        .testimonial-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .testimonial-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            object-fit: cover;
+        }
+        
+        .testimonial-quote {
+            font-size: 1.2rem;
+            font-style: italic;
+            margin-bottom: 1rem;
+            color: #555;
+        }
+        
+        .testimonial-author {
+            font-weight: 600;
+            color: #3348a8;
+        }
+        
+        .stars {
+            color: #ffc107;
+            margin-bottom: 1rem;
+        }
+        
+        /* FAQ Section */
+        .faq {
+            padding: 4rem 0;
+            background: #f8f9fa;
+        }
+        
+        .faq h2 {
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #141416;
+        }
+        
+        .faq-item {
+            background: white;
+            margin-bottom: 1rem;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .faq-question {
+            background: #3348a8;
+            color: white;
+            padding: 1.5rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        .faq-answer {
+            padding: 1.5rem;
+            color: #555;
+        }
+        
+        /* Contact Section */
+        .contact {
+            padding: 4rem 0;
+            background: #141416;
+            color: white;
+        }
+        
+        .contact h2 {
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+        }
+        
+        .contact-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            text-align: center;
+        }
+        
+        .contact-item h3 {
+            color: #56b978;
+            margin-bottom: 1rem;
+        }
+        
+        .contact-item a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .contact-item a:hover {
+            color: #56b978;
+        }
+        
+        /* Footer */
+        footer {
+            background: #000;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .pricing-card.featured {
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <div class="logo">🌱 Dream Seed</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#testimonials">Reviews</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Launch Your Dream Business With One Click</h1>
+                <p>Skip the paperwork and get started today with our AI-powered business builder.</p>
+                <a href="#pricing" class="cta-button">Get Started Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2>Why Choose Dream Seed?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>Form your LLC or corporation with ease</h3>
+                    <p>Complete legal formation process handled for you</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Professional website, logo, and brand kit included</h3>
+                    <p>Everything you need for a professional presence</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Bank account, credit card, and payment setup</h3>
+                    <p>Full financial infrastructure ready to go</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Transparent, all-inclusive pricing</h3>
+                    <p>No hidden fees or surprise costs</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Ongoing compliance monitoring</h3>
+                    <p>Stay compliant with automated tracking</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <h2>Our Services</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <img src="https://kxldodhrhqbwyvgyuqfd.supabase.co/storage/v1/object/public/webimages/dream_seed_5.png" alt="Formation & Legal Setup" class="service-image">
+                    <div class="service-content">
+                        <h3>Formation & Legal Setup</h3>
+                        <p>LLC, S-Corp, or C-Corp registration, EIN, permits, and trademark assistance.</p>
+                        <ul class="service-features">
+                            <li>LLC registration</li>
+                            <li>EIN filing</li>
+                            <li>Licenses and permits</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <img src="https://kxldodhrhqbwyvgyuqfd.supabase.co/storage/v1/object/public/webimages/dream_seed_6.png" alt="Branding & Digital Presence" class="service-image">
+                    <div class="service-content">
+                        <h3>Branding & Digital Presence</h3>
+                        <p>Logo, domain, website, email, and social media setup.</p>
+                        <ul class="service-features">
+                            <li>Logo design</li>
+                            <li>Website launch</li>
+                            <li>Custom domain & email</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <img src="https://kxldodhrhqbwyvgyuqfd.supabase.co/storage/v1/object/public/webimages/dream_seed_7.png" alt="Financial & Operational Setup" class="service-image">
+                    <div class="service-content">
+                        <h3>Financial & Operational Setup</h3>
+                        <p>Business bank account, credit card, accounting software, and payment processing.</p>
+                        <ul class="service-features">
+                            <li>Bank account setup</li>
+                            <li>Stripe/Square integration</li>
+                            <li>QuickBooks/Xero configuration</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing">
+        <div class="container">
+            <h2>Choose Your Launch Package</h2>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Launch Basic</h3>
+                    <div class="price">999</div>
+                    <p>LLC formation, EIN, starter brand kit, and one-page site.</p>
+                    <a href="#contact" class="cta-button">Get Started</a>
+                </div>
+                <div class="pricing-card featured">
+                    <h3>Launch Pro</h3>
+                    <div class="price">1799</div>
+                    <p>Everything in Basic plus full brand kit, 5-page website, and premium integrations.</p>
+                    <a href="#contact" class="cta-button">Get Started</a>
+                </div>
+                <div class="pricing-card">
+                    <h3>Launch Complete</h3>
+                    <div class="price">3499</div>
+                    <p>Full turnkey launch with all features, priority filing, and ongoing compliance for 1 year.</p>
+                    <a href="#contact" class="cta-button">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <h2>What Our Customers Say</h2>
+            <div class="testimonial-card">
+                <img src="https://kxldodhrhqbwyvgyuqfd.supabase.co/storage/v1/object/public/webimages/dream_seed_8.png" alt="Ava R." class="testimonial-image">
+                <div class="stars">★★★★★</div>
+                <div class="testimonial-quote">"I had a registered LLC, polished brand kit, and clean website in days. Dream Seed made it effortless."</div>
+                <div class="testimonial-author">Ava R., Founder of Kind Kettle</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq">
+        <div class="container">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-item">
+                <div class="faq-question">How fast can I launch?</div>
+                <div class="faq-answer">Core assets are ready in days; official filings depend on state processing times.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">What's included in the price?</div>
+                <div class="faq-answer">Our all-inclusive packages cover legal filings, branding, website, and operational setup—no hidden fees.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2>Get Started Today</h2>
+            <div class="contact-content">
+                <div class="contact-item">
+                    <h3>Email Us</h3>
+                    <p><a href="mailto:hello@dreamseed.ai">hello@dreamseed.ai</a></p>
+                </div>
+                <div class="contact-item">
+                    <h3>Call Us</h3>
+                    <p><a href="tel:+15551234567">+1-555-123-4567</a></p>
+                </div>
+                <div class="contact-item">
+                    <h3>Business Hours</h3>
+                    <p>Monday - Friday<br>9am - 5pm</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Dream Seed. All rights reserved. | Launch Your Dream Business With One Click</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

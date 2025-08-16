@@ -1,60 +1,79 @@
 {
-  "name": "dreamseed-vapi-system",
+  "name": "dreamseed-platform",
   "version": "2.0.0",
-  "description": "Complete business formation platform with AI voice calls - Web Call Revolution",
+  "description": "Complete business formation platform with AI voice calls and automated website builder",
+  "private": true,
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "vapi:start": "cd public/simple-vapi-webhook && npm start",
+    "vapi:dev": "cd public/simple-vapi-webhook && npm run dev",
+    "vapi:install": "cd public/simple-vapi-webhook && npm install",
     "test": "echo \"No tests yet\" && exit 0",
-    "commit": "./git-commit.sh",
-    "version": "echo \"DreamSeed VAPI System v2.0.0 - Web Call Revolution\""
+    "version": "echo \"DreamSeed Platform v2.0.0 - Business Formation & Website Builder\""
   },
   "keywords": [
+    "dreamseed",
     "vapi",
     "voice-ai",
     "business-formation",
     "web-calls",
-    "customer-journey",
+    "website-builder",
+    "next.js",
     "supabase",
-    "openai",
-    "webhook"
+    "openai"
   ],
   "author": "DreamSeed Team",
   "license": "MIT",
   "dependencies": {
-    "@supabase/supabase-js": "^2.0.0",
-    "axios": "^1.0.0",
-    "cors": "^2.8.5",
-    "dotenv": "^16.0.0",
-    "express": "^4.18.0",
-    "openai": "^4.0.0"
+    "@supabase/supabase-js": "^2.55.0",
+    "next": "^14.2.5",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "nodemon": "^3.0.0"
+    "@tailwindcss/postcss": "^4.1.12",
+    "@types/node": "^20.14.12",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.40",
+    "tailwindcss": "^3.4.7",
+    "typescript": "^5.5.4"
   },
   "engines": {
     "node": ">=18.0.0"
   },
   "repository": {
     "type": "git",
-    "url": "."
+    "url": "https://github.com/dreamseed2025/dreamseed_website_builder.git"
   },
-  "changelog": "CHANGELOG.md",
+  "homepage": "https://github.com/dreamseed2025/dreamseed_website_builder",
+  "bugs": {
+    "url": "https://github.com/dreamseed2025/dreamseed_website_builder/issues"
+  },
   "features": {
-    "web-calls": true,
-    "phone-callbacks": true,
-    "customer-journey": true,
-    "real-time-monitoring": true,
-    "data-extraction": true,
-    "multi-stage-calls": true,
-    "debug-tools": true
+    "website-builder": {
+      "enabled": true,
+      "port": 3000,
+      "templates": ["modern-saas-01"],
+      "deployment": "vercel"
+    },
+    "vapi-system": {
+      "enabled": true,
+      "port": 3002,
+      "web-calls": true,
+      "phone-callbacks": true,
+      "customer-journey": true,
+      "monitoring": true,
+      "location": "public/simple-vapi-webhook"
+    }
   },
-  "endpoints": {
-    "web-call-primary": "/web-call-fixed.html",
-    "web-call-fallback": "/web-call-proxy.html",
-    "admin-dashboard": "/admin-dashboard.html",
-    "system-home": "/system-home.html",
-    "troubleshooting": "/vapi-fix-guide.html"
-  }
+  "workspaces": [
+    "public/simple-vapi-webhook"
+  ],
+  "changelog": "CHANGELOG.md"
 }

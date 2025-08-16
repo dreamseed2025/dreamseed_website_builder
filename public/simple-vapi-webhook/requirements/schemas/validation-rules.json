@@ -1,0 +1,213 @@
+{
+  "validation_rules": {
+    "critical_fields": {
+      "call_1_required": [
+        "contact_info.first_name",
+        "contact_info.last_name", 
+        "contact_info.email",
+        "contact_info.phone",
+        "llc_filing.business_name",
+        "llc_filing.entity_type",
+        "llc_filing.state_of_formation"
+      ],
+      "call_2_required": [
+        "brand_identity.brand_personality",
+        "brand_identity.color_preferences",
+        "brand_identity.industry_sector",
+        "website_content.business_description",
+        "website_content.problem_solved",
+        "website_content.target_customers"
+      ],
+      "call_3_required": [
+        "business_operations.business_location_type",
+        "compliance_licensing.professional_licenses_required",
+        "financial_setup.business_banking_preferred",
+        "technology_systems.software_requirements"
+      ],
+      "call_4_required": [
+        "launch_strategy.official_launch_date",
+        "marketing_acquisition.marketing_channels_primary",
+        "growth_scalability.revenue_goals_year_one"
+      ]
+    },
+    
+    "data_quality_rules": {
+      "business_name": {
+        "min_length": 2,
+        "max_length": 100,
+        "pattern": "^[a-zA-Z0-9\\s&\\-\\.,']+$",
+        "forbidden_words": ["LLC", "Inc", "Corp"],
+        "uniqueness_check": true
+      },
+      "email": {
+        "format": "email",
+        "domain_validation": true
+      },
+      "phone": {
+        "format": "^\\+?[1-9]\\d{1,14}$",
+        "us_format_preferred": true
+      },
+      "state_of_formation": {
+        "enum": ["AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY", "DC"]
+      },
+      "domain_name": {
+        "pattern": "^[a-zA-Z0-9][a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9]$",
+        "max_length": 63,
+        "availability_check": true
+      }
+    },
+    
+    "completion_thresholds": {
+      "call_1_minimum": 20,
+      "call_2_minimum": 40,
+      "call_3_minimum": 60,
+      "call_4_minimum": 85,
+      "llc_filing_ready": 85,
+      "logo_design_ready": 80,
+      "domain_purchase_ready": 70,
+      "website_build_ready": 90,
+      "business_launch_ready": 95
+    },
+    
+    "consistency_checks": {
+      "business_name_consistency": [
+        "llc_filing.business_name",
+        "brand_identity.business_name",
+        "domain_requirements.primary_business_name",
+        "website_content.business_name_tagline"
+      ],
+      "contact_info_consistency": [
+        "contact_info.email",
+        "website_content.business_email"
+      ],
+      "industry_consistency": [
+        "brand_identity.industry_sector",
+        "llc_filing.naics_code",
+        "compliance_licensing.professional_licenses_required"
+      ]
+    },
+    
+    "dependency_validation": {
+      "llc_filing_dependencies": {
+        "business_name": "required_for_all",
+        "state_of_formation": "affects_compliance_requirements",
+        "entity_type": "affects_tax_obligations",
+        "member_info": "required_for_multi_member"
+      },
+      "logo_design_dependencies": {
+        "brand_personality": "affects_design_direction",
+        "color_preferences": "defines_color_palette",
+        "industry_sector": "influences_style_choices",
+        "target_audience": "guides_design_decisions"
+      },
+      "website_dependencies": {
+        "business_description": "homepage_hero_content",
+        "services_products": "main_navigation_structure",
+        "contact_info": "contact_page_content",
+        "brand_colors": "website_color_scheme"
+      }
+    },
+    
+    "data_quality_scoring": {
+      "completeness_weight": 40,
+      "accuracy_weight": 30,
+      "consistency_weight": 20,
+      "depth_weight": 10,
+      "scoring_formula": "(completeness * 0.4) + (accuracy * 0.3) + (consistency * 0.2) + (depth * 0.1)"
+    },
+    
+    "warning_triggers": {
+      "missing_critical_info": {
+        "severity": "high",
+        "condition": "required_field_missing",
+        "action": "flag_for_immediate_follow_up"
+      },
+      "inconsistent_data": {
+        "severity": "medium", 
+        "condition": "conflicting_field_values",
+        "action": "schedule_validation_call"
+      },
+      "low_quality_responses": {
+        "severity": "medium",
+        "condition": "response_length < 10_characters",
+        "action": "request_more_detail"
+      },
+      "incomplete_call_stage": {
+        "severity": "high",
+        "condition": "completion_below_threshold",
+        "action": "schedule_additional_call"
+      }
+    },
+    
+    "readiness_criteria": {
+      "llc_filing": {
+        "required_fields": [
+          "business_name",
+          "entity_type", 
+          "state_of_formation",
+          "member_names",
+          "registered_agent"
+        ],
+        "quality_threshold": 85,
+        "validation_checks": [
+          "name_availability",
+          "state_requirements_met",
+          "member_info_complete"
+        ]
+      },
+      "logo_design": {
+        "required_fields": [
+          "brand_personality",
+          "color_preferences",
+          "style_direction",
+          "logo_type_preference"
+        ],
+        "quality_threshold": 80,
+        "validation_checks": [
+          "brand_direction_clear",
+          "visual_preferences_defined"
+        ]
+      },
+      "domain_purchase": {
+        "required_fields": [
+          "primary_business_name",
+          "domain_extension_preference"
+        ],
+        "quality_threshold": 70,
+        "validation_checks": [
+          "domain_availability",
+          "trademark_conflicts"
+        ]
+      },
+      "website_build": {
+        "required_fields": [
+          "business_description",
+          "services_products",
+          "contact_info",
+          "brand_colors",
+          "website_content"
+        ],
+        "quality_threshold": 90,
+        "validation_checks": [
+          "content_completeness",
+          "technical_requirements_defined"
+        ]
+      },
+      "business_launch": {
+        "required_fields": [
+          "all_legal_requirements",
+          "all_branding_assets", 
+          "all_operational_systems",
+          "marketing_strategy",
+          "support_systems"
+        ],
+        "quality_threshold": 95,
+        "validation_checks": [
+          "legal_compliance_complete",
+          "operational_readiness",
+          "market_strategy_defined"
+        ]
+      }
+    }
+  }
+}

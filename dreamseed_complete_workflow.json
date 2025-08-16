@@ -1,0 +1,270 @@
+{
+  "name": "Dream Seed Publish Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "dreamseed/publish",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "39a47132-8518-434b-b5bf-53116914cf80",
+      "name": "Webhook (POST profile_json)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "webhookId": "d0752106-cd9c-45bc-b320-372574c3340f"
+    },
+    {
+      "parameters": {
+        "functionCode": "const b = items[0].json;\nreturn [{ json: {\n  slug: b.slug || \"dream-seed\",\n  company_name: b.company_name || \"Dream Seed\",\n  profile_json: b.profile_json || {},\n  images: Array.isArray(b.images) ? b.images : [],\n  status: b.status || \"draft\"\n}}];"
+      },
+      "id": "2b5e16b7-3b95-46ad-9a7a-003bc883f8d4",
+      "name": "Normalize Payload",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 2,
+      "position": [
+        240,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://kxldodhrhqbwyvgyuqfd.supabase.co/rest/v1/sites",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "on_conflict",
+              "value": "slug"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "sb_secret_GsVwx89kbQsB6LukLj7qdA_MUcB6-ZU"
+            },
+            {
+              "name": "Authorization",
+              "value": "Bearer sb_secret_GsVwx89kbQsB6LukLj7qdA_MUcB6-ZU"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "[{\"slug\":\"={{$json.slug}}\",\"company_name\":\"={{$json.company_name}}\",\"profile_json\":{{$json.profile_json}},\"status\":\"draft\"}]",
+        "options": {}
+      },
+      "id": "df7d7cb7-30bc-434b-8345-b16599c804aa",
+      "name": "Supabase: Upsert Site",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        500,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://kxldodhrhqbwyvgyuqfd.supabase.co/rest/v1/sites?slug=eq.{{$json.slug}}&select=id,slug",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "sb_secret_GsVwx89kbQsB6LukLj7qdA_MUcB6-ZU"
+            },
+            {
+              "name": "Authorization",
+              "value": "Bearer sb_secret_GsVwx89kbQsB6LukLj7qdA_MUcB6-ZU"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "84c1db17-4b86-4bbd-a3f8-72949be0d11a",
+      "name": "Supabase: Get Site ID",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        740,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "functionCode": "const site = items[0].json[0];\nconst input = $items(\"Normalize Payload\", 0, 0).json;\nreturn [{ json: { \n  site_id: site.id, \n  slug: site.slug, \n  profile_json: input.profile_json, \n  images: input.images \n} }];"
+      },
+      "id": "2e56a393-a008-4978-b29f-2423aac5560d",
+      "name": "Build site.json",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 2,
+      "position": [
+        980,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "https://api.github.com/repos/dreamseed2025/dreamseed_website_builder/contents/site.json",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer ${GITHUB_TOKEN}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\"message\":\"chore: update site.json\",\"content\":\"={{ Buffer.from(JSON.stringify($json, null, 2)).toString('base64') }}\",\"branch\":\"main\"}",
+        "options": {}
+      },
+      "id": "d70bfbb8-ceb7-4ab5-8ffc-0f81ba6658a4",
+      "name": "GitHub: PUT site.json",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        1220,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.vercel.com/v1/integrations/deploy/prj_dSB2N6HNUUc3tJwYZKJxfSNtyIM6/TgFqpeEPQj",
+        "options": {}
+      },
+      "id": "4788915e-1178-4cc9-866d-139719802035",
+      "name": "Vercel: Deploy Hook",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        1460,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\"status\":\"ok\",\"message\":\"Queued deploy\",\"slug\":\"={{$items('Build site.json',0,0).json.slug}}\"}",
+        "options": {}
+      },
+      "id": "e1848cd8-b4ed-4da4-b704-d116db7dac74",
+      "name": "Respond",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1700,
+        0
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook (POST profile_json)": {
+      "main": [
+        [
+          {
+            "node": "Normalize Payload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Normalize Payload": {
+      "main": [
+        [
+          {
+            "node": "Supabase: Upsert Site",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase: Upsert Site": {
+      "main": [
+        [
+          {
+            "node": "Supabase: Get Site ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase: Get Site ID": {
+      "main": [
+        [
+          {
+            "node": "Build site.json",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build site.json": {
+      "main": [
+        [
+          {
+            "node": "GitHub: PUT site.json",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GitHub: PUT site.json": {
+      "main": [
+        [
+          {
+            "node": "Vercel: Deploy Hook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Vercel: Deploy Hook": {
+      "main": [
+        [
+          {
+            "node": "Respond",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "fa2046f1-b025-43bf-996a-26087319f968",
+  "meta": {
+    "instanceId": "ba5c44a1eb2ab253b5a9795a9aca63a77c3a62add72b5780d23ce191c4e198e7"
+  },
+  "id": "wr2E7LWKDFQd5qYp",
+  "tags": []
+}

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start Your Business Formation Journey</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .form-container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #666;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .cta-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 18px 40px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .cta-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .success-message {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .error-message {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .required {
+            color: #dc3545;
+        }
+        
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-container {
+                padding: 30px 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <div class="header">
+            <h1>🚀 Start Your Business Journey</h1>
+            <p>Complete this form to begin your personalized 4-call business formation process. Our AI consultant will call you within 2 hours!</p>
+        </div>
+        
+        <form id="onboardingForm">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="name">Full Name <span class="required">*</span></label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address <span class="required">*</span></label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="phone">Phone Number <span class="required">*</span></label>
+                    <input type="tel" id="phone" name="phone" placeholder="+1 (555) 123-4567" required>
+                </div>
+                <div class="form-group">
+                    <label for="state">State of Operation <span class="required">*</span></label>
+                    <select id="state" name="state" required>
+                        <option value="">Select State</option>
+                        <option value="California">California</option>
+                        <option value="Florida">Florida</option>
+                        <option value="Texas">Texas</option>
+                        <option value="New York">New York</option>
+                        <option value="Delaware">Delaware</option>
+                        <option value="Nevada">Nevada</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="businessName">Business Name (if you have one)</label>
+                <input type="text" id="businessName" name="businessName" placeholder="Your Amazing Business LLC">
+            </div>
+            
+            <div class="form-group">
+                <label for="businessType">Type of Business <span class="required">*</span></label>
+                <select id="businessType" name="businessType" required>
+                    <option value="">Select Business Type</option>
+                    <option value="Consulting">Consulting</option>
+                    <option value="E-commerce">E-commerce</option>
+                    <option value="Food & Beverage">Food & Beverage</option>
+                    <option value="Technology">Technology</option>
+                    <option value="Real Estate">Real Estate</option>
+                    <option value="Healthcare">Healthcare</option>
+                    <option value="Creative Services">Creative Services</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="services">What services/products will you offer? <span class="required">*</span></label>
+                <textarea id="services" name="services" rows="3" placeholder="Describe what your business will do..." required></textarea>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="timeline">When do you want to start?</label>
+                    <select id="timeline" name="timeline">
+                        <option value="Immediately">Immediately</option>
+                        <option value="Within a month">Within a month</option>
+                        <option value="Within 3 months">Within 3 months</option>
+                        <option value="Flexible">Flexible</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="urgency">Priority Level</label>
+                    <select id="urgency" name="urgency">
+                        <option value="High">High - Need to start ASAP</option>
+                        <option value="Medium">Medium - Normal timeline</option>
+                        <option value="Low">Low - Just exploring</option>
+                    </select>
+                </div>
+            </div>
+            
+            <button type="submit" class="cta-button" id="submitBtn">
+                🎯 Start My Business Formation Journey
+            </button>
+            
+            <div id="successMessage" class="success-message">
+                <h3>🎉 Success! Your journey has begun!</h3>
+                <p>We've received your information and our AI business consultant will call you within the next 2 hours to begin Call 1 - Business Foundation. You'll receive an email confirmation shortly.</p>
+            </div>
+            
+            <div id="errorMessage" class="error-message">
+                <h3>❌ Something went wrong</h3>
+                <p id="errorText">Please try again or contact support.</p>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('onboardingForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const successMsg = document.getElementById('successMessage');
+            const errorMsg = document.getElementById('errorMessage');
+            
+            // Disable button and show loading
+            submitBtn.disabled = true;
+            submitBtn.textContent = '🔄 Starting Your Journey...';
+            
+            // Hide previous messages
+            successMsg.style.display = 'none';
+            errorMsg.style.display = 'none';
+            
+            // Collect form data
+            const formData = new FormData(e.target);
+            const customerData = {
+                name: formData.get('name'),
+                email: formData.get('email'),
+                phone: formData.get('phone'),
+                state: formData.get('state'),
+                businessName: formData.get('businessName'),
+                businessType: formData.get('businessType'),
+                services: formData.get('services'),
+                timeline: formData.get('timeline') || 'Within a month',
+                urgency: formData.get('urgency') || 'Medium'
+            };
+            
+            try {
+                // Submit to trigger Call 1
+                const response = await fetch('/api/trigger-call-1', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(customerData)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    successMsg.style.display = 'block';
+                    e.target.style.display = 'none';
+                } else {
+                    throw new Error(result.error || 'Unknown error occurred');
+                }
+                
+            } catch (error) {
+                console.error('Form submission error:', error);
+                document.getElementById('errorText').textContent = error.message;
+                errorMsg.style.display = 'block';
+                
+                // Re-enable button
+                submitBtn.disabled = false;
+                submitBtn.textContent = '🎯 Start My Business Formation Journey';
+            }
+        });
+        
+        // Phone number formatting
+        document.getElementById('phone').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length >= 10) {
+                value = value.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
+                if (value.length === 14) {
+                    value = '+1 ' + value;
+                }
+            }
+            e.target.value = value;
+        });
+    </script>
+</body>
+</html>

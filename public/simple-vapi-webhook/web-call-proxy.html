@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DreamSeed - Server-Initiated Call</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .phone-input-section {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+        
+        .phone-input {
+            width: 100%;
+            max-width: 300px;
+            padding: 15px;
+            font-size: 1.2em;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-align: center;
+            margin: 20px auto;
+            display: block;
+        }
+        
+        .phone-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .phone-input:focus {
+            outline: none;
+            border-color: #ffd700;
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        #start-call {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            font-size: 1.3em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(238, 90, 36, 0.4);
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 20px;
+        }
+        
+        #start-call:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(238, 90, 36, 0.6);
+        }
+        
+        #start-call:disabled {
+            background: rgba(255, 255, 255, 0.3);
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            font-weight: bold;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .status.success {
+            background: rgba(39, 174, 96, 0.3);
+            border: 1px solid #27ae60;
+        }
+        
+        .status.error {
+            background: rgba(231, 76, 60, 0.3);
+            border: 1px solid #e74c3c;
+        }
+        
+        .status.loading {
+            background: rgba(52, 152, 219, 0.3);
+            border: 1px solid #3498db;
+        }
+        
+        .info-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        
+        .info-box h3 {
+            color: #ffd700;
+            margin-top: 0;
+        }
+        
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .alternative-options {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .option-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .option-card:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌱 DreamSeed Business Formation</h1>
+        <p style="font-size: 1.2em; opacity: 0.9;">Connect with an Expert</p>
+        
+        <div class="phone-input-section">
+            <h3>📞 Enter Your Phone Number</h3>
+            <p style="opacity: 0.8;">We'll call you immediately to start your business formation journey</p>
+            <input 
+                type="tel" 
+                id="phone-number" 
+                class="phone-input" 
+                placeholder="+1 (555) 123-4567"
+                value="+17279006911"
+            />
+            <button id="start-call" onclick="initiateServerCall()">
+                🎤 Call Me Now
+            </button>
+        </div>
+        
+        <div class="status" id="call-status">
+            Ready to connect you with a business formation expert
+        </div>
+        
+        <div class="info-box">
+            <h3>How This Works</h3>
+            <ol style="text-align: left; line-height: 1.8;">
+                <li>Enter your phone number above</li>
+                <li>Click "Call Me Now"</li>
+                <li>You'll receive a call within seconds</li>
+                <li>Speak with our AI assistant about your business</li>
+            </ol>
+        </div>
+        
+        <div class="alternative-options">
+            <h3 style="color: #ffd700;">Other Ways to Connect</h3>
+            
+            <div class="option-card" onclick="window.location.href='/web-call-button.html'">
+                <h4>🎤 Web Browser Call</h4>
+                <p style="opacity: 0.8;">Call directly from your browser (requires microphone)</p>
+            </div>
+            
+            <div class="option-card" onclick="window.location.href='/customer-onboarding-form.html'">
+                <h4>📝 Schedule a Call</h4>
+                <p style="opacity: 0.8;">Fill out a form and we'll call you during business hours</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Clean and format phone number
+        function formatPhoneNumber(phone) {
+            // Remove all non-digit characters except +
+            let cleaned = phone.replace(/[^\d+]/g, '');
+            
+            // Ensure it starts with country code
+            if (!cleaned.startsWith('+')) {
+                if (cleaned.startsWith('1') && cleaned.length === 11) {
+                    cleaned = '+' + cleaned;
+                } else if (cleaned.length === 10) {
+                    cleaned = '+1' + cleaned;
+                } else {
+                    cleaned = '+' + cleaned;
+                }
+            }
+            
+            return cleaned;
+        }
+        
+        // Update status display
+        function updateStatus(message, type = 'info') {
+            const statusEl = document.getElementById('call-status');
+            statusEl.className = 'status ' + type;
+            
+            if (type === 'loading') {
+                statusEl.innerHTML = '<span class="loading-spinner"></span>' + message;
+            } else {
+                statusEl.textContent = message;
+            }
+        }
+        
+        // Initiate call through server
+        async function initiateServerCall() {
+            const phoneInput = document.getElementById('phone-number');
+            const phoneNumber = formatPhoneNumber(phoneInput.value);
+            const button = document.getElementById('start-call');
+            
+            // Validate phone number
+            if (!phoneNumber || phoneNumber.length < 10) {
+                updateStatus('Please enter a valid phone number', 'error');
+                return;
+            }
+            
+            // Disable button during call initiation
+            button.disabled = true;
+            updateStatus('Initiating call to ' + phoneNumber + '...', 'loading');
+            
+            try {
+                // Get customer info from URL params or use defaults
+                const urlParams = new URLSearchParams(window.location.search);
+                const customerData = {
+                    email: urlParams.get('email') || `customer_${Date.now()}@dreamseed.com`,
+                    phone: phoneNumber,
+                    name: urlParams.get('name') || 'New Customer',
+                    business_name: urlParams.get('business') || 'Your Business',
+                    source: 'web-proxy-call'
+                };
+                
+                // First, create/update customer record
+                updateStatus('Setting up your profile...', 'loading');
+                
+                // Now initiate the call through our server
+                const response = await fetch('/api/start-call', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: customerData.email,
+                        phone: phoneNumber,
+                        customerName: customerData.name,
+                        businessName: customerData.business_name,
+                        callStage: 1,
+                        immediateCall: true,
+                        source: 'web-proxy'
+                    })
+                });
+                
+                if (!response.ok) {
+                    const error = await response.text();
+                    throw new Error(error || 'Failed to initiate call');
+                }
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    updateStatus('✅ Call initiated! Your phone will ring in a few seconds...', 'success');
+                    
+                    // Show additional info
+                    setTimeout(() => {
+                        updateStatus('📞 Please answer your phone when it rings!', 'success');
+                    }, 3000);
+                    
+                    // Re-enable button after 30 seconds
+                    setTimeout(() => {
+                        button.disabled = false;
+                        updateStatus('Ready for another call', 'info');
+                    }, 30000);
+                } else {
+                    throw new Error(result.message || 'Call initiation failed');
+                }
+                
+            } catch (error) {
+                console.error('Error initiating call:', error);
+                updateStatus('Failed to initiate call: ' + error.message, 'error');
+                button.disabled = false;
+            }
+        }
+        
+        // Add enter key support
+        document.getElementById('phone-number').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                initiateServerCall();
+            }
+        });
+        
+        // Format phone number as user types
+        document.getElementById('phone-number').addEventListener('input', function(e) {
+            let value = e.target.value;
+            
+            // Only format if it looks like a US number
+            if (value.length <= 14 && !value.includes('+') || value.startsWith('+1')) {
+                // Remove all non-digits
+                let cleaned = value.replace(/\D/g, '');
+                
+                // Format as US phone number
+                if (cleaned.length <= 10) {
+                    if (cleaned.length >= 6) {
+                        cleaned = cleaned.slice(0, 3) + '-' + cleaned.slice(3, 6) + '-' + cleaned.slice(6);
+                    } else if (cleaned.length >= 3) {
+                        cleaned = cleaned.slice(0, 3) + '-' + cleaned.slice(3);
+                    }
+                    e.target.value = cleaned;
+                }
+            }
+        });
+    </script>
+</body>
+</html>

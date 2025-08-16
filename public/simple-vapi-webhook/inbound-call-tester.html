@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inbound Call Tester</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #666;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2c3e50;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        
+        .test-button {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 18px 40px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-bottom: 20px;
+        }
+        
+        .test-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .test-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .results {
+            background: #f8f9fa;
+            border: 1px solid #e1e5e9;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .results.success {
+            background: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+        }
+        
+        .results.error {
+            background: #f8d7da;
+            border-color: #f5c6cb;
+            color: #721c24;
+        }
+        
+        .customer-info {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .progress-bar {
+            background: #e1e5e9;
+            border-radius: 10px;
+            height: 20px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            height: 100%;
+            transition: width 0.3s ease;
+            border-radius: 10px;
+        }
+        
+        .quick-tests {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .quick-test {
+            background: #f8f9fa;
+            border: 1px solid #e1e5e9;
+            border-radius: 5px;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .quick-test:hover {
+            background: #e9ecef;
+        }
+        
+        @media (max-width: 768px) {
+            .quick-tests {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 30px 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📞 Inbound Call Tester</h1>
+            <p>Test the smart caller identification system. Enter a phone number to see how the system would handle an inbound call.</p>
+        </div>
+        
+        <div class="quick-tests">
+            <div class="quick-test" onclick="testPhone('+17279006911')">
+                Test Alberto<br>
+                <small>+17279006911</small>
+            </div>
+            <div class="quick-test" onclick="testPhone('+15551234567')">
+                Test Unknown<br>
+                <small>+15551234567</small>
+            </div>
+        </div>
+        
+        <form id="testForm">
+            <div class="form-group">
+                <label for="phoneNumber">Phone Number</label>
+                <input type="tel" id="phoneNumber" name="phoneNumber" 
+                       placeholder="+1 (555) 123-4567" required>
+            </div>
+            
+            <button type="submit" class="test-button" id="testBtn">
+                🔍 Test Inbound Call Identification
+            </button>
+        </form>
+        
+        <div id="results" class="results">
+            <h3 id="resultsTitle"></h3>
+            <div id="resultsContent"></div>
+        </div>
+    </div>
+
+    <script>
+        function testPhone(phoneNumber) {
+            document.getElementById('phoneNumber').value = phoneNumber;
+            document.getElementById('testForm').dispatchEvent(new Event('submit'));
+        }
+        
+        document.getElementById('testForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const testBtn = document.getElementById('testBtn');
+            const results = document.getElementById('results');
+            const resultsTitle = document.getElementById('resultsTitle');
+            const resultsContent = document.getElementById('resultsContent');
+            
+            // Get form data
+            const formData = new FormData(e.target);
+            const phoneNumber = formData.get('phoneNumber');
+            
+            // Show loading state
+            testBtn.disabled = true;
+            testBtn.textContent = '🔄 Testing...';
+            results.style.display = 'none';
+            
+            try {
+                // Test the inbound call identification
+                const response = await fetch('/api/test-inbound-call', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ phoneNumber })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Show success results
+                    results.className = 'results success';
+                    resultsTitle.textContent = '✅ Inbound Call Identification Results';
+                    
+                    const { customer, progress, stage, greeting } = result.result;
+                    
+                    let content = `<p><strong>Phone:</strong> ${phoneNumber}</p>`;
+                    content += `<p><strong>Greeting:</strong> "${greeting}"</p>`;
+                    content += `<p><strong>Next Call Stage:</strong> ${stage}</p>`;
+                    
+                    if (customer) {
+                        content += `<div class="customer-info">`;
+                        content += `<h4>👤 Identified Customer</h4>`;
+                        content += `<p><strong>Name:</strong> ${customer.customer_name}</p>`;
+                        content += `<p><strong>Email:</strong> ${customer.customer_email}</p>`;
+                        content += `<p><strong>Business:</strong> ${customer.business_name || 'TBD'}</p>`;
+                        content += `<p><strong>State:</strong> ${customer.state_of_operation || 'TBD'}</p>`;
+                        content += `<p><strong>Progress:</strong> ${progress.completionScore}%</p>`;
+                        content += `<div class="progress-bar">`;
+                        content += `<div class="progress-fill" style="width: ${progress.completionScore}%"></div>`;
+                        content += `</div>`;
+                        
+                        content += `<h5>Call History:</h5>`;
+                        content += `<ul>`;
+                        content += `<li>Call 1: ${progress.callHistory.call1 ? '✅' : '❌'}</li>`;
+                        content += `<li>Call 2: ${progress.callHistory.call2 ? '✅' : '❌'}</li>`;
+                        content += `<li>Call 3: ${progress.callHistory.call3 ? '✅' : '❌'}</li>`;
+                        content += `<li>Call 4: ${progress.callHistory.call4 ? '✅' : '❌'}</li>`;
+                        content += `</ul>`;
+                        content += `</div>`;
+                    } else {
+                        content += `<div class="customer-info">`;
+                        content += `<h4>👋 New Caller</h4>`;
+                        content += `<p>This phone number is not in our system. The AI will start with a new customer welcome flow.</p>`;
+                        content += `</div>`;
+                    }
+                    
+                    resultsContent.innerHTML = content;
+                    
+                } else {
+                    throw new Error(result.error || 'Unknown error');
+                }
+                
+            } catch (error) {
+                // Show error results
+                results.className = 'results error';
+                resultsTitle.textContent = '❌ Test Failed';
+                resultsContent.innerHTML = `<p>${error.message}</p>`;
+            }
+            
+            // Reset button and show results
+            testBtn.disabled = false;
+            testBtn.textContent = '🔍 Test Inbound Call Identification';
+            results.style.display = 'block';
+        });
+        
+        // Phone number formatting
+        document.getElementById('phoneNumber').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length >= 10) {
+                value = value.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3');
+                if (value.length === 14) {
+                    value = '+1 ' + value;
+                }
+            }
+            e.target.value = value;
+        });
+    </script>
+</body>
+</html>
