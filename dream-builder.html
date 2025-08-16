@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Build your business dream - define your vision, goals, and formation requirements with DreamSeed">
+    <title>DreamSeed - Build Your Dream</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        
+        .dream-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .progress-bar {
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .progress-step {
+            flex: 1;
+            text-align: center;
+            font-size: 0.8rem;
+            opacity: 0.6;
+        }
+        
+        .progress-step.active {
+            opacity: 1;
+            font-weight: bold;
+        }
+        
+        .progress-step.completed {
+            opacity: 0.8;
+            color: #4ade80;
+        }
+        
+        .progress-line {
+            height: 4px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: #ff6b6b;
+            width: 50%;
+            transition: width 0.5s ease;
+        }
+        
+        .dream-section {
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 3rem;
+            backdrop-filter: blur(10px);
+            margin-bottom: 2rem;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            margin: 0 0 0.5rem 0;
+            text-align: center;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+        
+        .dream-form {
+            display: grid;
+            gap: 2rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 10px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            font-size: 1rem;
+            box-sizing: border-box;
+            min-height: 50px;
+        }
+        
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #ff6b6b;
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .entity-type-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .entity-option {
+            background: rgba(255,255,255,0.2);
+            border: 2px solid transparent;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .entity-option:hover,
+        .entity-option.selected {
+            border-color: #ff6b6b;
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-3px);
+        }
+        
+        .entity-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .entity-description {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            line-height: 1.4;
+        }
+        
+        .dream-preview {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .preview-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .preview-content {
+            display: grid;
+            gap: 1rem;
+        }
+        
+        .preview-item {
+            background: rgba(255,255,255,0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            border-left: 4px solid #ff6b6b;
+        }
+        
+        .preview-item strong {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #ffc107;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+        
+        .btn-secondary {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.5);
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.8);
+        }
+        
+        .completeness-score {
+            text-align: center;
+            margin: 2rem 0;
+        }
+        
+        .score-circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: conic-gradient(#4ade80 0deg, #4ade80 var(--score-deg), rgba(255,255,255,0.3) var(--score-deg));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .entity-type-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dream-container">
+        <div class="progress-bar">
+            <div class="progress-steps">
+                <div class="progress-step completed">1. Account Info</div>
+                <div class="progress-step active">2. Build Dream</div>
+                <div class="progress-step">3. Voice Call</div>
+                <div class="progress-step">4. Formation</div>
+            </div>
+            <div class="progress-line">
+                <div class="progress-fill"></div>
+            </div>
+        </div>
+        
+        <div class="dream-section">
+            <h1 class="section-title">🧬 Build Your Dream</h1>
+            <p class="section-subtitle">
+                Define your business vision and formation requirements.<br>
+                This will personalize your AI consultation experience.
+            </p>
+            
+            <form id="dream-form" class="dream-form">
+                <div class="form-group">
+                    <label for="visionStatement">Vision Statement</label>
+                    <textarea id="visionStatement" name="visionStatement" 
+                             placeholder="Describe your business vision in 2-3 sentences. What problem are you solving? What's your ultimate goal?"
+                             required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="corePurpose">Core Purpose</label>
+                    <textarea id="corePurpose" name="corePurpose" 
+                             placeholder="What is the main purpose of your business? What value do you provide to customers?"
+                             required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="targetMarket">Target Market</label>
+                    <textarea id="targetMarket" name="targetMarket" 
+                             placeholder="Who are your ideal customers? Describe your target audience, their needs, and demographics."
+                             required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="competitiveAdvantage">Competitive Advantage</label>
+                    <textarea id="competitiveAdvantage" name="competitiveAdvantage" 
+                             placeholder="What makes your business unique? How do you differentiate from competitors?"
+                             required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Entity Type</label>
+                    <p style="opacity: 0.8; margin-bottom: 1rem;">Choose the legal structure for your business:</p>
+                    <div class="entity-type-grid">
+                        <div class="entity-option" data-entity="LLC">
+                            <div class="entity-title">LLC</div>
+                            <div class="entity-description">
+                                Limited Liability Company. Flexible structure, personal asset protection, simple tax filing.
+                            </div>
+                        </div>
+                        <div class="entity-option" data-entity="Corporation">
+                            <div class="entity-title">Corporation</div>
+                            <div class="entity-description">
+                                Traditional corporate structure. Good for raising capital, more complex but structured.
+                            </div>
+                        </div>
+                        <div class="entity-option" data-entity="S-Corp">
+                            <div class="entity-title">S-Corp</div>
+                            <div class="entity-description">
+                                Pass-through taxation, limited shareholders, good for active business owners.
+                            </div>
+                        </div>
+                        <div class="entity-option" data-entity="Partnership">
+                            <div class="entity-title">Partnership</div>
+                            <div class="entity-description">
+                                Two or more owners, shared profits and responsibilities, simpler than corporations.
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="entityType" name="entityType">
+                </div>
+                
+                <div class="form-group">
+                    <label for="timeline">Desired Timeline</label>
+                    <select id="timeline" name="timeline" required>
+                        <option value="">Select timeline</option>
+                        <option value="ASAP">As soon as possible</option>
+                        <option value="1-2 weeks">1-2 weeks</option>
+                        <option value="1 month">Within 1 month</option>
+                        <option value="2-3 months">2-3 months</option>
+                        <option value="6+ months">6+ months</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="urgencyLevel">Priority Level</label>
+                    <select id="urgencyLevel" name="urgencyLevel" required>
+                        <option value="">Select priority</option>
+                        <option value="High">High - Need to start immediately</option>
+                        <option value="Medium">Medium - Planning ahead</option>
+                        <option value="Low">Low - Just exploring options</option>
+                    </select>
+                </div>
+            </form>
+            
+            <div class="completeness-score">
+                <div class="score-circle" id="scoreCircle" style="--score-deg: 0deg;">0%</div>
+                <p>Dream Completeness Score</p>
+            </div>
+            
+            <div class="dream-preview" id="dreamPreview" style="display: none;">
+                <div class="preview-title">🎯 Your Dream Summary</div>
+                <div class="preview-content" id="previewContent">
+                    <!-- Preview will be populated by JavaScript -->
+                </div>
+            </div>
+            
+            <div class="action-buttons">
+                <a href="/onboarding.html" class="btn-secondary">← Back</a>
+                <button type="submit" form="dream-form" class="btn-primary" id="continueBtn" disabled>
+                    Continue to Voice Consultation →
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let dreamData = {};
+        
+        // Entity type selection
+        document.querySelectorAll('.entity-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.entity-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                
+                this.classList.add('selected');
+                document.getElementById('entityType').value = this.dataset.entity;
+                updateCompletenessScore();
+                updatePreview();
+            });
+        });
+        
+        // Form field listeners
+        document.querySelectorAll('#dream-form input, #dream-form textarea, #dream-form select').forEach(field => {
+            field.addEventListener('input', function() {
+                updateCompletenessScore();
+                updatePreview();
+            });
+        });
+        
+        function updateCompletenessScore() {
+            const form = document.getElementById('dream-form');
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+            
+            let filledFields = 0;
+            const totalFields = 6; // vision, purpose, target, advantage, entity, timeline
+            
+            if (data.visionStatement && data.visionStatement.length > 20) filledFields++;
+            if (data.corePurpose && data.corePurpose.length > 20) filledFields++;
+            if (data.targetMarket && data.targetMarket.length > 20) filledFields++;
+            if (data.competitiveAdvantage && data.competitiveAdvantage.length > 20) filledFields++;
+            if (data.entityType) filledFields++;
+            if (data.timeline) filledFields++;
+            
+            const score = Math.round((filledFields / totalFields) * 100);
+            const scoreCircle = document.getElementById('scoreCircle');
+            scoreCircle.style.setProperty('--score-deg', `${(score / 100) * 360}deg`);
+            scoreCircle.textContent = `${score}%`;
+            
+            // Enable continue button if score > 80%
+            const continueBtn = document.getElementById('continueBtn');
+            continueBtn.disabled = score < 80;
+            
+            return score;
+        }
+        
+        function updatePreview() {
+            const form = document.getElementById('dream-form');
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+            
+            const preview = document.getElementById('dreamPreview');
+            const content = document.getElementById('previewContent');
+            
+            if (Object.values(data).some(value => value && value.length > 10)) {
+                preview.style.display = 'block';
+                
+                content.innerHTML = `
+                    ${data.visionStatement ? `<div class="preview-item"><strong>Vision:</strong> ${data.visionStatement}</div>` : ''}
+                    ${data.corePurpose ? `<div class="preview-item"><strong>Purpose:</strong> ${data.corePurpose}</div>` : ''}
+                    ${data.targetMarket ? `<div class="preview-item"><strong>Target Market:</strong> ${data.targetMarket}</div>` : ''}
+                    ${data.competitiveAdvantage ? `<div class="preview-item"><strong>Competitive Advantage:</strong> ${data.competitiveAdvantage}</div>` : ''}
+                    ${data.entityType ? `<div class="preview-item"><strong>Entity Type:</strong> ${data.entityType}</div>` : ''}
+                    ${data.timeline ? `<div class="preview-item"><strong>Timeline:</strong> ${data.timeline}</div>` : ''}
+                `;
+            } else {
+                preview.style.display = 'none';
+            }
+        }
+        
+        // Form submission
+        document.getElementById('dream-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const dreamData = Object.fromEntries(formData.entries());
+            
+            // Calculate completeness score
+            dreamData.completenessScore = updateCompletenessScore();
+            
+            if (dreamData.completenessScore < 80) {
+                alert('Please complete more fields to continue (need 80% completion)');
+                return;
+            }
+            
+            // Get existing user data
+            const userData = JSON.parse(localStorage.getItem('dreamSeedUserData') || '{}');
+            const userProfile = JSON.parse(localStorage.getItem('dreamSeedProfile') || '{}');
+            
+            // Create dream DNA object
+            const dreamDNA = {
+                id: 'dream_' + Date.now(),
+                user_id: userProfile.id || 'temp_user_' + Date.now(),
+                vision_statement: dreamData.visionStatement,
+                core_purpose: dreamData.corePurpose,
+                target_market: dreamData.targetMarket,
+                competitive_advantage: dreamData.competitiveAdvantage,
+                entity_type: dreamData.entityType,
+                timeline: dreamData.timeline,
+                urgency_level: dreamData.urgencyLevel,
+                completeness_score: dreamData.completenessScore,
+                created_at: new Date().toISOString()
+            };
+            
+            // Update user profile with dream info
+            userProfile.entity_type = dreamData.entityType;
+            userProfile.timeline = dreamData.timeline;
+            userProfile.urgency_level = dreamData.urgencyLevel;
+            userProfile.current_call_stage = 1; // Ready for first call
+            
+            // Save all data
+            localStorage.setItem('dreamSeedDream', JSON.stringify(dreamDNA));
+            localStorage.setItem('dreamSeedProfile', JSON.stringify(userProfile));
+            
+            // Show success and redirect
+            alert('Dream created successfully! Ready for voice consultation.');
+            window.location.href = '/voice-consultation.html';
+        });
+        
+        // Load existing data on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            const userData = JSON.parse(localStorage.getItem('dreamSeedUserData') || '{}');
+            const existingDream = JSON.parse(localStorage.getItem('dreamSeedDream') || '{}');
+            
+            // Fill form with existing dream data if available
+            if (existingDream.vision_statement) {
+                document.getElementById('visionStatement').value = existingDream.vision_statement || '';
+                document.getElementById('corePurpose').value = existingDream.core_purpose || '';
+                document.getElementById('targetMarket').value = existingDream.target_market || '';
+                document.getElementById('competitiveAdvantage').value = existingDream.competitive_advantage || '';
+                document.getElementById('timeline').value = existingDream.timeline || '';
+                document.getElementById('urgencyLevel').value = existingDream.urgency_level || '';
+                
+                if (existingDream.entity_type) {
+                    const entityOption = document.querySelector(`[data-entity="${existingDream.entity_type}"]`);
+                    if (entityOption) {
+                        entityOption.classList.add('selected');
+                        document.getElementById('entityType').value = existingDream.entity_type;
+                    }
+                }
+                
+                updateCompletenessScore();
+                updatePreview();
+            }
+        });
+    </script>
+
+    <!-- DreamSeed Unified Navigation -->
+    <script src="/components/unified-header.js"></script>
+</body>
+</html>

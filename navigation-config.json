@@ -4,32 +4,57 @@
       {
         "path": "index.html",
         "relativePath": "index.html",
-        "title": "DreamSeed - VAPI Voice Platform",
-        "description": "AI-Powered Business Formation & Voice Consultations...",
+        "title": "DreamSeed - AI Business Formation Platform",
+        "description": "DreamSeed - AI-powered business formation platform with voice consultation",
         "category": "Home",
-        "productionScore": 8,
+        "productionScore": 9,
         "productionStatus": "🟢 Production Ready",
         "issues": [
-          "Missing meta tags",
           "Missing footer"
         ],
         "features": {
           "hasNavigation": true,
           "hasHeader": true,
           "hasFooter": false,
-          "hasMetaTags": false,
+          "hasMetaTags": true,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": false,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:35:08.328Z"
+      }
+    ],
+    "Voice Interface": [
+      {
+        "path": "voice-consultation.html",
+        "relativePath": "voice-consultation.html",
+        "title": "DreamSeed - Voice Consultation",
+        "description": "Start your voice consultation with DreamSeed AI business consultant",
+        "category": "Voice/VAPI",
+        "productionScore": 9,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": true,
           "hasViewport": true,
           "hasCSS": true,
           "hasJS": true,
           "isResponsive": true,
           "hasSupabase": false,
           "hasVAPI": true,
-          "hasAuth": true
+          "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.982Z"
-      }
-    ],
-    "Voice Interface": [
+        "lastModified": "2025-08-16T21:35:08.327Z"
+      },
       {
         "path": "working-vapi-call.html",
         "relativePath": "working-vapi-call.html",
@@ -55,7 +80,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.980Z"
+        "lastModified": "2025-08-16T21:35:08.325Z"
       },
       {
         "path": "web-voice-working.html",
@@ -82,7 +107,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.980Z"
+        "lastModified": "2025-08-16T21:35:08.325Z"
       },
       {
         "path": "web-voice-widget.html",
@@ -109,7 +134,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.980Z"
+        "lastModified": "2025-08-16T21:35:08.325Z"
       },
       {
         "path": "web-voice-widget-standalone.html",
@@ -136,7 +161,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.980Z"
+        "lastModified": "2025-08-16T21:35:08.326Z"
       },
       {
         "path": "web-voice-vapi-direct.html",
@@ -163,7 +188,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.980Z"
+        "lastModified": "2025-08-16T21:35:08.326Z"
       },
       {
         "path": "web-voice-simple.html",
@@ -190,7 +215,7 @@
           "hasVAPI": false,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.980Z"
+        "lastModified": "2025-08-16T21:35:08.326Z"
       },
       {
         "path": "web-voice-natural.html",
@@ -217,7 +242,7 @@
           "hasVAPI": false,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.980Z"
+        "lastModified": "2025-08-16T21:35:08.326Z"
       },
       {
         "path": "web-voice-direct.html",
@@ -244,7 +269,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.980Z"
+        "lastModified": "2025-08-16T21:35:08.326Z"
       },
       {
         "path": "web-voice-call.html",
@@ -271,7 +296,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.981Z"
+        "lastModified": "2025-08-16T21:35:08.326Z"
       },
       {
         "path": "web-voice-call-import.html",
@@ -298,7 +323,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.981Z"
+        "lastModified": "2025-08-16T21:35:08.326Z"
       },
       {
         "path": "voice-call-enhanced.html",
@@ -325,7 +350,7 @@
           "hasVAPI": true,
           "hasAuth": true
         },
-        "lastModified": "2025-08-16T21:18:40.981Z"
+        "lastModified": "2025-08-16T21:35:08.327Z"
       },
       {
         "path": "voice-call-direct.html",
@@ -352,7 +377,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.981Z"
+        "lastModified": "2025-08-16T21:35:08.327Z"
       },
       {
         "path": "voice-call-browser.html",
@@ -379,7 +404,7 @@
           "hasVAPI": false,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.981Z"
+        "lastModified": "2025-08-16T21:35:08.327Z"
       },
       {
         "path": "vapi-voice-final.html",
@@ -406,7 +431,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.981Z"
+        "lastModified": "2025-08-16T21:35:08.327Z"
       },
       {
         "path": "simple-call-test.html",
@@ -433,7 +458,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.982Z"
+        "lastModified": "2025-08-16T21:35:08.328Z"
       },
       {
         "path": "public/simple-vapi-webhook/web-call-proxy.html",
@@ -460,7 +485,7 @@
           "hasVAPI": false,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.983Z"
+        "lastModified": "2025-08-16T21:35:08.329Z"
       },
       {
         "path": "public/simple-vapi-webhook/web-call-fixed.html",
@@ -487,7 +512,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.983Z"
+        "lastModified": "2025-08-16T21:35:08.329Z"
       },
       {
         "path": "public/simple-vapi-webhook/web-call-debug.html",
@@ -514,7 +539,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.983Z"
+        "lastModified": "2025-08-16T21:35:08.329Z"
       },
       {
         "path": "public/simple-vapi-webhook/web-call-button.html",
@@ -541,7 +566,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.983Z"
+        "lastModified": "2025-08-16T21:35:08.329Z"
       },
       {
         "path": "public/simple-vapi-webhook/vapi-fix-guide.html",
@@ -568,7 +593,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.984Z"
+        "lastModified": "2025-08-16T21:35:08.329Z"
       },
       {
         "path": "public/simple-vapi-webhook/test-interface.html",
@@ -595,7 +620,7 @@
           "hasVAPI": false,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.984Z"
+        "lastModified": "2025-08-16T21:35:08.330Z"
       },
       {
         "path": "public/simple-vapi-webhook/system-home.html",
@@ -622,7 +647,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.984Z"
+        "lastModified": "2025-08-16T21:35:08.330Z"
       },
       {
         "path": "public/simple-vapi-webhook/stage-monitor.html",
@@ -649,7 +674,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.984Z"
+        "lastModified": "2025-08-16T21:35:08.330Z"
       },
       {
         "path": "public/simple-vapi-webhook/info-tracker.html",
@@ -676,7 +701,7 @@
           "hasVAPI": false,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.984Z"
+        "lastModified": "2025-08-16T21:35:08.330Z"
       },
       {
         "path": "public/simple-vapi-webhook/index.html",
@@ -703,7 +728,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.984Z"
+        "lastModified": "2025-08-16T21:35:08.330Z"
       },
       {
         "path": "public/simple-vapi-webhook/inbound-call-tester.html",
@@ -730,7 +755,7 @@
           "hasVAPI": false,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.984Z"
+        "lastModified": "2025-08-16T21:35:08.330Z"
       },
       {
         "path": "public/simple-vapi-webhook/customer-onboarding-form.html",
@@ -757,7 +782,7 @@
           "hasVAPI": false,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.985Z"
+        "lastModified": "2025-08-16T21:35:08.331Z"
       }
     ],
     "Dashboards": [
@@ -786,7 +811,7 @@
           "hasVAPI": true,
           "hasAuth": true
         },
-        "lastModified": "2025-08-16T21:18:40.982Z"
+        "lastModified": "2025-08-16T21:35:08.328Z"
       },
       {
         "path": "customer-dashboard.html",
@@ -813,34 +838,7 @@
           "hasVAPI": true,
           "hasAuth": true
         },
-        "lastModified": "2025-08-16T21:18:40.982Z"
-      },
-      {
-        "path": "requirements-framework/templates/info-tracker-dashboard.html",
-        "relativePath": "requirements-framework/templates/info-tracker-dashboard.html",
-        "title": "DreamSeed - Customer Information Tracker",
-        "description": "Customer Information Completeness Tracker...",
-        "category": "Dashboards",
-        "productionScore": 8,
-        "productionStatus": "🟢 Production Ready",
-        "issues": [
-          "Missing meta tags",
-          "Missing footer"
-        ],
-        "features": {
-          "hasNavigation": true,
-          "hasHeader": true,
-          "hasFooter": false,
-          "hasMetaTags": false,
-          "hasViewport": true,
-          "hasCSS": true,
-          "hasJS": true,
-          "isResponsive": true,
-          "hasSupabase": false,
-          "hasVAPI": false,
-          "hasAuth": false
-        },
-        "lastModified": "2025-08-16T21:18:40.983Z"
+        "lastModified": "2025-08-16T21:35:08.328Z"
       },
       {
         "path": "public/simple-vapi-webhook/web-call-dashboard.html",
@@ -867,7 +865,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.983Z"
+        "lastModified": "2025-08-16T21:35:08.329Z"
       },
       {
         "path": "public/simple-vapi-webhook/dashboard-test.html",
@@ -894,7 +892,7 @@
           "hasVAPI": false,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.985Z"
+        "lastModified": "2025-08-16T21:35:08.331Z"
       },
       {
         "path": "public/simple-vapi-webhook/customer-dashboard.html",
@@ -921,7 +919,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.985Z"
+        "lastModified": "2025-08-16T21:35:08.331Z"
       },
       {
         "path": "public/simple-vapi-webhook/call-dashboard.html",
@@ -948,7 +946,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.985Z"
+        "lastModified": "2025-08-16T21:35:08.331Z"
       },
       {
         "path": "public/simple-vapi-webhook/admin-dashboard.html",
@@ -975,7 +973,34 @@
           "hasVAPI": false,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.985Z"
+        "lastModified": "2025-08-16T21:35:08.331Z"
+      },
+      {
+        "path": "requirements-framework/templates/info-tracker-dashboard.html",
+        "relativePath": "requirements-framework/templates/info-tracker-dashboard.html",
+        "title": "DreamSeed - Customer Information Tracker",
+        "description": "Customer Information Completeness Tracker...",
+        "category": "Dashboards",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": false,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:35:08.331Z"
       },
       {
         "path": "public/simple-vapi-webhook/dashboard.html",
@@ -1004,12 +1029,38 @@
           "hasVAPI": false,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.985Z"
+        "lastModified": "2025-08-16T21:35:08.330Z"
       }
     ]
   },
   "secondary": {
     "Voice/VAPI": [
+      {
+        "path": "voice-consultation.html",
+        "relativePath": "voice-consultation.html",
+        "title": "DreamSeed - Voice Consultation",
+        "description": "Start your voice consultation with DreamSeed AI business consultant",
+        "category": "Voice/VAPI",
+        "productionScore": 9,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": true,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:35:08.327Z"
+      },
       {
         "path": "working-vapi-call.html",
         "relativePath": "working-vapi-call.html",
@@ -1035,7 +1086,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.980Z"
+        "lastModified": "2025-08-16T21:35:08.325Z"
       },
       {
         "path": "web-voice-working.html",
@@ -1062,7 +1113,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.980Z"
+        "lastModified": "2025-08-16T21:35:08.325Z"
       },
       {
         "path": "web-voice-widget.html",
@@ -1089,7 +1140,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.980Z"
+        "lastModified": "2025-08-16T21:35:08.325Z"
       },
       {
         "path": "web-voice-widget-standalone.html",
@@ -1116,7 +1167,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.980Z"
+        "lastModified": "2025-08-16T21:35:08.326Z"
       },
       {
         "path": "web-voice-vapi-direct.html",
@@ -1143,7 +1194,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.980Z"
+        "lastModified": "2025-08-16T21:35:08.326Z"
       },
       {
         "path": "web-voice-simple.html",
@@ -1170,7 +1221,7 @@
           "hasVAPI": false,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.980Z"
+        "lastModified": "2025-08-16T21:35:08.326Z"
       },
       {
         "path": "web-voice-natural.html",
@@ -1197,7 +1248,7 @@
           "hasVAPI": false,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.980Z"
+        "lastModified": "2025-08-16T21:35:08.326Z"
       },
       {
         "path": "web-voice-direct.html",
@@ -1224,7 +1275,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.980Z"
+        "lastModified": "2025-08-16T21:35:08.326Z"
       },
       {
         "path": "web-voice-call.html",
@@ -1251,7 +1302,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.981Z"
+        "lastModified": "2025-08-16T21:35:08.326Z"
       },
       {
         "path": "web-voice-call-import.html",
@@ -1278,7 +1329,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.981Z"
+        "lastModified": "2025-08-16T21:35:08.326Z"
       },
       {
         "path": "voice-call-enhanced.html",
@@ -1305,7 +1356,7 @@
           "hasVAPI": true,
           "hasAuth": true
         },
-        "lastModified": "2025-08-16T21:18:40.981Z"
+        "lastModified": "2025-08-16T21:35:08.327Z"
       },
       {
         "path": "voice-call-direct.html",
@@ -1332,7 +1383,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.981Z"
+        "lastModified": "2025-08-16T21:35:08.327Z"
       },
       {
         "path": "voice-call-browser.html",
@@ -1359,7 +1410,7 @@
           "hasVAPI": false,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.981Z"
+        "lastModified": "2025-08-16T21:35:08.327Z"
       },
       {
         "path": "vapi-voice-final.html",
@@ -1386,7 +1437,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.981Z"
+        "lastModified": "2025-08-16T21:35:08.327Z"
       },
       {
         "path": "simple-call-test.html",
@@ -1413,7 +1464,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.982Z"
+        "lastModified": "2025-08-16T21:35:08.328Z"
       },
       {
         "path": "public/simple-vapi-webhook/web-call-proxy.html",
@@ -1440,7 +1491,7 @@
           "hasVAPI": false,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.983Z"
+        "lastModified": "2025-08-16T21:35:08.329Z"
       },
       {
         "path": "public/simple-vapi-webhook/web-call-fixed.html",
@@ -1467,7 +1518,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.983Z"
+        "lastModified": "2025-08-16T21:35:08.329Z"
       },
       {
         "path": "public/simple-vapi-webhook/web-call-debug.html",
@@ -1494,7 +1545,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.983Z"
+        "lastModified": "2025-08-16T21:35:08.329Z"
       },
       {
         "path": "public/simple-vapi-webhook/web-call-button.html",
@@ -1521,7 +1572,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.983Z"
+        "lastModified": "2025-08-16T21:35:08.329Z"
       },
       {
         "path": "public/simple-vapi-webhook/vapi-fix-guide.html",
@@ -1548,7 +1599,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.984Z"
+        "lastModified": "2025-08-16T21:35:08.329Z"
       },
       {
         "path": "public/simple-vapi-webhook/test-interface.html",
@@ -1575,7 +1626,7 @@
           "hasVAPI": false,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.984Z"
+        "lastModified": "2025-08-16T21:35:08.330Z"
       },
       {
         "path": "public/simple-vapi-webhook/system-home.html",
@@ -1602,7 +1653,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.984Z"
+        "lastModified": "2025-08-16T21:35:08.330Z"
       },
       {
         "path": "public/simple-vapi-webhook/stage-monitor.html",
@@ -1629,7 +1680,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.984Z"
+        "lastModified": "2025-08-16T21:35:08.330Z"
       },
       {
         "path": "public/simple-vapi-webhook/info-tracker.html",
@@ -1656,7 +1707,7 @@
           "hasVAPI": false,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.984Z"
+        "lastModified": "2025-08-16T21:35:08.330Z"
       },
       {
         "path": "public/simple-vapi-webhook/index.html",
@@ -1683,7 +1734,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.984Z"
+        "lastModified": "2025-08-16T21:35:08.330Z"
       },
       {
         "path": "public/simple-vapi-webhook/inbound-call-tester.html",
@@ -1710,7 +1761,7 @@
           "hasVAPI": false,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.984Z"
+        "lastModified": "2025-08-16T21:35:08.330Z"
       },
       {
         "path": "public/simple-vapi-webhook/customer-onboarding-form.html",
@@ -1737,7 +1788,194 @@
           "hasVAPI": false,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.985Z"
+        "lastModified": "2025-08-16T21:35:08.331Z"
+      }
+    ],
+    "Other": [
+      {
+        "path": "welcome.html",
+        "relativePath": "welcome.html",
+        "title": "Welcome to DreamSeed - Start Your Business Journey",
+        "description": "Start your business formation journey with DreamSeed - AI-powered business formation with voice guidance",
+        "category": "Other",
+        "productionScore": 9,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": true,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": false,
+          "hasAuth": true
+        },
+        "lastModified": "2025-08-16T21:35:08.325Z"
+      },
+      {
+        "path": "sitemap.html",
+        "relativePath": "sitemap.html",
+        "title": "DreamSeed - Complete Sitemap & Page Directory",
+        "description": "Complete sitemap and page directory for DreamSeed platform with production readiness scores",
+        "category": "Other",
+        "productionScore": 9,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": true,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:35:08.328Z"
+      },
+      {
+        "path": "onboarding.html",
+        "relativePath": "onboarding.html",
+        "title": "DreamSeed - Create Your Account",
+        "description": "Create your DreamSeed account - personalized business formation starts here",
+        "category": "Other",
+        "productionScore": 9,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": true,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": false,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:35:08.328Z"
+      },
+      {
+        "path": "dream-builder.html",
+        "relativePath": "dream-builder.html",
+        "title": "DreamSeed - Build Your Dream",
+        "description": "Build your business dream - define your vision, goals, and formation requirements with DreamSeed",
+        "category": "Other",
+        "productionScore": 9,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": true,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": false,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:35:08.328Z"
+      },
+      {
+        "path": "index-full.html",
+        "relativePath": "index-full.html",
+        "title": "DreamSeed - AI Business Formation & Website Builder",
+        "description": "Your AI-Powered Business Formation Platform...",
+        "category": "Other",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": true
+        },
+        "lastModified": "2025-08-16T21:35:08.328Z"
+      },
+      {
+        "path": "auth/signup.html",
+        "relativePath": "auth/signup.html",
+        "title": "DreamSeed - Create Account",
+        "description": "Join DreamSeed Business Formation...",
+        "category": "Other",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": true,
+          "hasVAPI": false,
+          "hasAuth": true
+        },
+        "lastModified": "2025-08-16T21:35:08.329Z"
+      },
+      {
+        "path": "auth/login.html",
+        "relativePath": "auth/login.html",
+        "title": "DreamSeed - Login",
+        "description": "Business Formation Platform...",
+        "category": "Other",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": true,
+          "hasVAPI": false,
+          "hasAuth": true
+        },
+        "lastModified": "2025-08-16T21:35:08.329Z"
       }
     ],
     "Testing/Debug": [
@@ -1766,7 +2004,7 @@
           "hasVAPI": false,
           "hasAuth": true
         },
-        "lastModified": "2025-08-16T21:18:40.982Z"
+        "lastModified": "2025-08-16T21:35:08.328Z"
       },
       {
         "path": "test-database-direct.html",
@@ -1796,7 +2034,7 @@
           "hasVAPI": false,
           "hasAuth": true
         },
-        "lastModified": "2025-08-16T21:18:40.981Z"
+        "lastModified": "2025-08-16T21:35:08.327Z"
       },
       {
         "path": "test-auth-simple.html",
@@ -1826,16 +2064,16 @@
           "hasVAPI": false,
           "hasAuth": true
         },
-        "lastModified": "2025-08-16T21:18:40.982Z"
+        "lastModified": "2025-08-16T21:35:08.327Z"
       }
     ],
-    "Other": [
+    "Home": [
       {
-        "path": "sitemap.html",
-        "relativePath": "sitemap.html",
-        "title": "DreamSeed - Complete Sitemap & Page Directory",
-        "description": "Complete sitemap and page directory for DreamSeed platform with production readiness scores",
-        "category": "Other",
+        "path": "index.html",
+        "relativePath": "index.html",
+        "title": "DreamSeed - AI Business Formation Platform",
+        "description": "DreamSeed - AI-powered business formation platform with voice consultation",
+        "category": "Home",
         "productionScore": 9,
         "productionStatus": "🟢 Production Ready",
         "issues": [
@@ -1851,120 +2089,10 @@
           "hasJS": true,
           "isResponsive": true,
           "hasSupabase": false,
-          "hasVAPI": true,
+          "hasVAPI": false,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.982Z"
-      },
-      {
-        "path": "index-full.html",
-        "relativePath": "index-full.html",
-        "title": "DreamSeed - AI Business Formation & Website Builder",
-        "description": "Your AI-Powered Business Formation Platform...",
-        "category": "Other",
-        "productionScore": 8,
-        "productionStatus": "🟢 Production Ready",
-        "issues": [
-          "Missing meta tags",
-          "Missing footer"
-        ],
-        "features": {
-          "hasNavigation": true,
-          "hasHeader": true,
-          "hasFooter": false,
-          "hasMetaTags": false,
-          "hasViewport": true,
-          "hasCSS": true,
-          "hasJS": true,
-          "isResponsive": true,
-          "hasSupabase": false,
-          "hasVAPI": true,
-          "hasAuth": true
-        },
-        "lastModified": "2025-08-16T21:18:40.982Z"
-      },
-      {
-        "path": "auth/signup.html",
-        "relativePath": "auth/signup.html",
-        "title": "DreamSeed - Create Account",
-        "description": "Join DreamSeed Business Formation...",
-        "category": "Other",
-        "productionScore": 8,
-        "productionStatus": "🟢 Production Ready",
-        "issues": [
-          "Missing meta tags",
-          "Missing footer"
-        ],
-        "features": {
-          "hasNavigation": true,
-          "hasHeader": true,
-          "hasFooter": false,
-          "hasMetaTags": false,
-          "hasViewport": true,
-          "hasCSS": true,
-          "hasJS": true,
-          "isResponsive": true,
-          "hasSupabase": true,
-          "hasVAPI": false,
-          "hasAuth": true
-        },
-        "lastModified": "2025-08-16T21:18:40.982Z"
-      },
-      {
-        "path": "auth/login.html",
-        "relativePath": "auth/login.html",
-        "title": "DreamSeed - Login",
-        "description": "Business Formation Platform...",
-        "category": "Other",
-        "productionScore": 8,
-        "productionStatus": "🟢 Production Ready",
-        "issues": [
-          "Missing meta tags",
-          "Missing footer"
-        ],
-        "features": {
-          "hasNavigation": true,
-          "hasHeader": true,
-          "hasFooter": false,
-          "hasMetaTags": false,
-          "hasViewport": true,
-          "hasCSS": true,
-          "hasJS": true,
-          "isResponsive": true,
-          "hasSupabase": true,
-          "hasVAPI": false,
-          "hasAuth": true
-        },
-        "lastModified": "2025-08-16T21:18:40.983Z"
-      }
-    ],
-    "Home": [
-      {
-        "path": "index.html",
-        "relativePath": "index.html",
-        "title": "DreamSeed - VAPI Voice Platform",
-        "description": "AI-Powered Business Formation & Voice Consultations...",
-        "category": "Home",
-        "productionScore": 8,
-        "productionStatus": "🟢 Production Ready",
-        "issues": [
-          "Missing meta tags",
-          "Missing footer"
-        ],
-        "features": {
-          "hasNavigation": true,
-          "hasHeader": true,
-          "hasFooter": false,
-          "hasMetaTags": false,
-          "hasViewport": true,
-          "hasCSS": true,
-          "hasJS": true,
-          "isResponsive": true,
-          "hasSupabase": false,
-          "hasVAPI": true,
-          "hasAuth": true
-        },
-        "lastModified": "2025-08-16T21:18:40.982Z"
+        "lastModified": "2025-08-16T21:35:08.328Z"
       }
     ],
     "Dashboards": [
@@ -1993,7 +2121,7 @@
           "hasVAPI": true,
           "hasAuth": true
         },
-        "lastModified": "2025-08-16T21:18:40.982Z"
+        "lastModified": "2025-08-16T21:35:08.328Z"
       },
       {
         "path": "customer-dashboard.html",
@@ -2020,34 +2148,7 @@
           "hasVAPI": true,
           "hasAuth": true
         },
-        "lastModified": "2025-08-16T21:18:40.982Z"
-      },
-      {
-        "path": "requirements-framework/templates/info-tracker-dashboard.html",
-        "relativePath": "requirements-framework/templates/info-tracker-dashboard.html",
-        "title": "DreamSeed - Customer Information Tracker",
-        "description": "Customer Information Completeness Tracker...",
-        "category": "Dashboards",
-        "productionScore": 8,
-        "productionStatus": "🟢 Production Ready",
-        "issues": [
-          "Missing meta tags",
-          "Missing footer"
-        ],
-        "features": {
-          "hasNavigation": true,
-          "hasHeader": true,
-          "hasFooter": false,
-          "hasMetaTags": false,
-          "hasViewport": true,
-          "hasCSS": true,
-          "hasJS": true,
-          "isResponsive": true,
-          "hasSupabase": false,
-          "hasVAPI": false,
-          "hasAuth": false
-        },
-        "lastModified": "2025-08-16T21:18:40.983Z"
+        "lastModified": "2025-08-16T21:35:08.328Z"
       },
       {
         "path": "public/simple-vapi-webhook/web-call-dashboard.html",
@@ -2074,7 +2175,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.983Z"
+        "lastModified": "2025-08-16T21:35:08.329Z"
       },
       {
         "path": "public/simple-vapi-webhook/dashboard-test.html",
@@ -2101,7 +2202,7 @@
           "hasVAPI": false,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.985Z"
+        "lastModified": "2025-08-16T21:35:08.331Z"
       },
       {
         "path": "public/simple-vapi-webhook/customer-dashboard.html",
@@ -2128,7 +2229,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.985Z"
+        "lastModified": "2025-08-16T21:35:08.331Z"
       },
       {
         "path": "public/simple-vapi-webhook/call-dashboard.html",
@@ -2155,7 +2256,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.985Z"
+        "lastModified": "2025-08-16T21:35:08.331Z"
       },
       {
         "path": "public/simple-vapi-webhook/admin-dashboard.html",
@@ -2182,7 +2283,34 @@
           "hasVAPI": false,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.985Z"
+        "lastModified": "2025-08-16T21:35:08.331Z"
+      },
+      {
+        "path": "requirements-framework/templates/info-tracker-dashboard.html",
+        "relativePath": "requirements-framework/templates/info-tracker-dashboard.html",
+        "title": "DreamSeed - Customer Information Tracker",
+        "description": "Customer Information Completeness Tracker...",
+        "category": "Dashboards",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": false,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:35:08.331Z"
       },
       {
         "path": "public/simple-vapi-webhook/dashboard.html",
@@ -2211,7 +2339,7 @@
           "hasVAPI": false,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:18:40.985Z"
+        "lastModified": "2025-08-16T21:35:08.330Z"
       }
     ]
   },

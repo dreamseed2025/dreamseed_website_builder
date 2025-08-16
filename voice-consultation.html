@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Start your voice consultation with DreamSeed AI business consultant">
+    <title>DreamSeed - Voice Consultation</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        
+        .consultation-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .progress-bar {
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .progress-step {
+            flex: 1;
+            text-align: center;
+            font-size: 0.8rem;
+            opacity: 0.6;
+        }
+        
+        .progress-step.active {
+            opacity: 1;
+            font-weight: bold;
+        }
+        
+        .progress-step.completed {
+            opacity: 0.8;
+            color: #4ade80;
+        }
+        
+        .progress-line {
+            height: 4px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: #ff6b6b;
+            width: 75%;
+            transition: width 0.5s ease;
+        }
+        
+        .voice-section {
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 3rem;
+            backdrop-filter: blur(10px);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            margin: 0 0 0.5rem 0;
+            text-align: center;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+        
+        .user-summary {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+        
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .summary-item {
+            background: rgba(255,255,255,0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            border-left: 4px solid #ff6b6b;
+        }
+        
+        .summary-item strong {
+            display: block;
+            color: #ffc107;
+            margin-bottom: 0.5rem;
+        }
+        
+        .voice-interface {
+            background: rgba(255,255,255,0.2);
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            margin: 2rem 0;
+        }
+        
+        .voice-button {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 2rem 3rem;
+            border-radius: 50px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 15px 40px rgba(238, 90, 36, 0.4);
+            transition: all 0.3s ease;
+            margin: 2rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            min-width: 300px;
+            margin: 2rem auto;
+        }
+        
+        .voice-button:hover:not(:disabled) {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px rgba(238, 90, 36, 0.6);
+        }
+        
+        .voice-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .voice-button.active {
+            background: linear-gradient(45deg, #4ade80, #22c55e);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .voice-status {
+            background: rgba(0,0,0,0.3);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+        
+        .consultation-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .consultation-option {
+            background: rgba(255,255,255,0.1);
+            border: 2px solid transparent;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .consultation-option:hover,
+        .consultation-option.selected {
+            border-color: #ff6b6b;
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-3px);
+        }
+        
+        .option-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .option-description {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .call-stages {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .stages-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .stages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        .stage-item {
+            background: rgba(255,255,255,0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .stage-item.completed {
+            background: rgba(34, 197, 94, 0.3);
+            border: 2px solid #22c55e;
+        }
+        
+        .stage-item.current {
+            background: rgba(255, 107, 107, 0.3);
+            border: 2px solid #ff6b6b;
+        }
+        
+        .stage-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stage-title {
+            font-weight: bold;
+            margin-bottom: 0.25rem;
+        }
+        
+        .stage-description {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+        
+        .btn-secondary {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.5);
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, #4ade80, #22c55e);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.8);
+        }
+        
+        @media (max-width: 768px) {
+            .consultation-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .stages-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .voice-button {
+                min-width: 250px;
+                font-size: 1.2rem;
+                padding: 1.5rem 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="consultation-container">
+        <div class="progress-bar">
+            <div class="progress-steps">
+                <div class="progress-step completed">1. Account Info</div>
+                <div class="progress-step completed">2. Build Dream</div>
+                <div class="progress-step active">3. Voice Call</div>
+                <div class="progress-step">4. Formation</div>
+            </div>
+            <div class="progress-line">
+                <div class="progress-fill"></div>
+            </div>
+        </div>
+        
+        <div class="voice-section">
+            <h1 class="section-title">🎤 Voice Consultation</h1>
+            <p class="section-subtitle">
+                Talk with our AI business consultant about your formation needs.<br>
+                Get personalized guidance based on your dream and goals.
+            </p>
+            
+            <div class="user-summary" id="userSummary">
+                <h3 style="margin-top: 0; text-align: center;">📋 Your Profile Summary</h3>
+                <div class="summary-grid" id="summaryGrid">
+                    <!-- Will be populated by JavaScript -->
+                </div>
+            </div>
+            
+            <div class="consultation-options">
+                <div class="consultation-option selected" data-type="guided">
+                    <div class="option-title">🎯 Guided Consultation</div>
+                    <div class="option-description">
+                        Follow our 4-stage process with structured guidance and document preparation.
+                    </div>
+                </div>
+                <div class="consultation-option" data-type="freeform">
+                    <div class="option-title">💬 Open Conversation</div>
+                    <div class="option-description">
+                        Have a natural conversation about your business formation questions.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="voice-interface">
+                <button id="voiceButton" class="voice-button" onclick="startVoiceConsultation()">
+                    <span id="voiceIcon">🎤</span>
+                    <span id="voiceText">Start Voice Consultation</span>
+                </button>
+                
+                <div class="voice-status" id="voiceStatus">
+                    Ready to start your consultation. Click the button above to begin.
+                </div>
+            </div>
+            
+            <div class="call-stages">
+                <div class="stages-title">📞 Consultation Stages</div>
+                <div class="stages-grid" id="stagesGrid">
+                    <div class="stage-item current">
+                        <div class="stage-number">1</div>
+                        <div class="stage-title">Discovery Call</div>
+                        <div class="stage-description">Understanding your business goals and needs</div>
+                    </div>
+                    <div class="stage-item">
+                        <div class="stage-number">2</div>
+                        <div class="stage-title">Formation Planning</div>
+                        <div class="stage-description">Choosing entity type and structure details</div>
+                    </div>
+                    <div class="stage-item">
+                        <div class="stage-number">3</div>
+                        <div class="stage-title">Documentation</div>
+                        <div class="stage-description">Preparing legal documents and filings</div>
+                    </div>
+                    <div class="stage-item">
+                        <div class="stage-number">4</div>
+                        <div class="stage-title">Completion</div>
+                        <div class="stage-description">Final review and business activation</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="action-buttons">
+                <a href="/dream-builder.html" class="btn-secondary">← Back to Dream Builder</a>
+                <a href="/dashboard.html" class="btn-primary" id="dashboardBtn" style="display: none;">
+                    Go to Dashboard →
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let voiceActive = false;
+        let consultationType = 'guided';
+        let currentStage = 1;
+        
+        // Load user data and populate summary
+        function loadUserSummary() {
+            const userData = JSON.parse(localStorage.getItem('dreamSeedUserData') || '{}');
+            const dreamData = JSON.parse(localStorage.getItem('dreamSeedDream') || '{}');
+            const userProfile = JSON.parse(localStorage.getItem('dreamSeedProfile') || '{}');
+            
+            const summaryGrid = document.getElementById('summaryGrid');
+            summaryGrid.innerHTML = `
+                <div class="summary-item">
+                    <strong>Name</strong>
+                    ${userData.firstName} ${userData.lastName}
+                </div>
+                <div class="summary-item">
+                    <strong>Business</strong>
+                    ${userData.businessName || dreamData.business_name || 'New Business'}
+                </div>
+                <div class="summary-item">
+                    <strong>Type</strong>
+                    ${userData.businessType || 'Not specified'}
+                </div>
+                <div class="summary-item">
+                    <strong>Entity</strong>
+                    ${dreamData.entity_type || 'LLC'}
+                </div>
+                <div class="summary-item">
+                    <strong>State</strong>
+                    ${userData.stateOperation || 'Not specified'}
+                </div>
+                <div class="summary-item">
+                    <strong>Timeline</strong>
+                    ${dreamData.timeline || 'Not specified'}
+                </div>
+            `;
+            
+            // Update current stage based on user progress
+            currentStage = userProfile.current_call_stage || 1;
+            updateStageDisplay();
+        }
+        
+        function updateStageDisplay() {
+            const stages = document.querySelectorAll('.stage-item');
+            stages.forEach((stage, index) => {
+                stage.classList.remove('completed', 'current');
+                if (index + 1 < currentStage) {
+                    stage.classList.add('completed');
+                } else if (index + 1 === currentStage) {
+                    stage.classList.add('current');
+                }
+            });
+        }
+        
+        // Consultation type selection
+        document.querySelectorAll('.consultation-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.consultation-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                
+                this.classList.add('selected');
+                consultationType = this.dataset.type;
+                
+                updateVoiceButtonText();
+            });
+        });
+        
+        function updateVoiceButtonText() {
+            const voiceText = document.getElementById('voiceText');
+            if (consultationType === 'guided') {
+                voiceText.textContent = `Start Stage ${currentStage} Consultation`;
+            } else {
+                voiceText.textContent = 'Start Open Conversation';
+            }
+        }
+        
+        function startVoiceConsultation() {
+            const button = document.getElementById('voiceButton');
+            const status = document.getElementById('voiceStatus');
+            const icon = document.getElementById('voiceIcon');
+            
+            if (!voiceActive) {
+                // Start voice consultation
+                voiceActive = true;
+                button.classList.add('active');
+                button.disabled = true;
+                icon.textContent = '🔊';
+                document.getElementById('voiceText').textContent = 'Connecting...';
+                status.textContent = 'Connecting to AI consultant...';
+                
+                // Simulate connection process
+                setTimeout(() => {
+                    status.textContent = 'Connected! You can start speaking now.';
+                    document.getElementById('voiceText').textContent = 'Speaking...';
+                    
+                    // Prepare user context for VAPI
+                    const userContext = prepareUserContext();
+                    
+                    // In a real implementation, this would initialize VAPI
+                    initializeVAPI(userContext);
+                    
+                }, 2000);
+                
+                // Simulate consultation completion
+                setTimeout(() => {
+                    completeConsultation();
+                }, 30000); // 30 seconds for demo
+                
+            } else {
+                // End consultation
+                endConsultation();
+            }
+        }
+        
+        function prepareUserContext() {
+            const userData = JSON.parse(localStorage.getItem('dreamSeedUserData') || '{}');
+            const dreamData = JSON.parse(localStorage.getItem('dreamSeedDream') || '{}');
+            const userProfile = JSON.parse(localStorage.getItem('dreamSeedProfile') || '{}');
+            
+            return {
+                // User info
+                name: `${userData.firstName} ${userData.lastName}`,
+                email: userData.email,
+                businessName: userData.businessName || dreamData.business_name,
+                businessType: userData.businessType,
+                
+                // Dream context
+                visionStatement: dreamData.vision_statement,
+                corePurpose: dreamData.core_purpose,
+                targetMarket: dreamData.target_market,
+                competitiveAdvantage: dreamData.competitive_advantage,
+                entityType: dreamData.entity_type,
+                timeline: dreamData.timeline,
+                urgencyLevel: dreamData.urgency_level,
+                
+                // Consultation context
+                consultationType: consultationType,
+                currentCallStage: currentStage,
+                stateOfOperation: userData.stateOperation,
+                
+                // Session info
+                sessionId: 'consultation_' + Date.now(),
+                timestamp: new Date().toISOString()
+            };
+        }
+        
+        function initializeVAPI(userContext) {
+            // This would be the actual VAPI initialization
+            console.log('VAPI Context:', userContext);
+            
+            // For demo purposes, we'll show the consultation is active
+            // In production, this would call VAPI SDK with the user context
+            
+            // Example of what would happen:
+            // vapi.start({
+            //     assistantId: getAssistantId(userContext),
+            //     metadata: userContext
+            // });
+        }
+        
+        function completeConsultation() {
+            const status = document.getElementById('voiceStatus');
+            const button = document.getElementById('voiceButton');
+            const dashboardBtn = document.getElementById('dashboardBtn');
+            
+            status.textContent = `Stage ${currentStage} consultation completed! Ready for next step.`;
+            button.classList.remove('active');
+            button.disabled = false;
+            document.getElementById('voiceIcon').textContent = '✅';
+            document.getElementById('voiceText').textContent = 'Consultation Complete';
+            
+            // Update progress
+            currentStage++;
+            const userProfile = JSON.parse(localStorage.getItem('dreamSeedProfile') || '{}');
+            userProfile.current_call_stage = currentStage;
+            userProfile[`call_${currentStage - 1}_completed`] = true;
+            userProfile[`call_${currentStage - 1}_completed_at`] = new Date().toISOString();
+            
+            if (currentStage > 4) {
+                userProfile.status = 'completed';
+                status.textContent = 'All consultations complete! Your business formation is ready.';
+            }
+            
+            localStorage.setItem('dreamSeedProfile', JSON.stringify(userProfile));
+            
+            updateStageDisplay();
+            dashboardBtn.style.display = 'inline-block';
+        }
+        
+        function endConsultation() {
+            voiceActive = false;
+            const button = document.getElementById('voiceButton');
+            const status = document.getElementById('voiceStatus');
+            
+            button.classList.remove('active');
+            button.disabled = false;
+            document.getElementById('voiceIcon').textContent = '🎤';
+            updateVoiceButtonText();
+            status.textContent = 'Consultation ended. You can start again anytime.';
+        }
+        
+        // Initialize page
+        window.addEventListener('DOMContentLoaded', function() {
+            loadUserSummary();
+            updateVoiceButtonText();
+            
+            // Check if user has no data (direct access)
+            const userData = JSON.parse(localStorage.getItem('dreamSeedUserData') || '{}');
+            if (!userData.firstName) {
+                // Redirect to onboarding if no user data
+                if (confirm('No user data found. Would you like to start the onboarding process?')) {
+                    window.location.href = '/welcome.html';
+                }
+            }
+        });
+    </script>
+
+    <!-- DreamSeed Unified Navigation -->
+    <script src="/components/unified-header.js"></script>
+</body>
+</html>
