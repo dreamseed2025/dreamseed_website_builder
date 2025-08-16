@@ -56,10 +56,13 @@
         <div class="widget-container">
             <h3>🚀 Start Your Consultation</h3>
             
-            <!-- VAPI Widget with hardcoded keys for standalone deployment -->
+            <!-- VAPI Widget with voice configuration -->
             <vapi-widget 
                 public-key="360c27df-9f83-4b80-bd33-e17dbcbf4971"
-                assistant-id="af397e88-c286-416f-9f74-e7665401bdb7">
+                assistant-id="af397e88-c286-416f-9f74-e7665401bdb7"
+                show-public-key-invalid-message="false"
+                button-label="🎤 Start Voice Call"
+                show-widget-assistant-id="false">
             </vapi-widget>
             
             <!-- Fallback button if VAPI widget doesn't load -->
