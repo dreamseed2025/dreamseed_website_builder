@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DreamSeed - Browser Voice Call</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .call-container {
+            background: rgba(255,255,255,0.1);
+            padding: 60px;
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+        }
+        
+        .voice-button {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 30px 50px;
+            border-radius: 25px;
+            font-size: 1.5em;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 15px 40px rgba(238, 90, 36, 0.4);
+            transition: all 0.3s ease;
+            margin: 30px 0;
+            width: 100%;
+        }
+        
+        .voice-button:hover:not(:disabled) {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px rgba(238, 90, 36, 0.6);
+        }
+        
+        .voice-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .status {
+            background: rgba(0,0,0,0.3);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            font-family: monospace;
+            min-height: 24px;
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .note {
+            background: rgba(39, 174, 96, 0.2);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border: 1px solid rgba(39, 174, 96, 0.5);
+        }
+        
+        .transcript {
+            background: rgba(0,0,0,0.4);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            text-align: left;
+            font-family: monospace;
+            font-size: 0.9em;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="call-container">
+        <h1>🎤 DreamSeed Voice Call</h1>
+        <p style="font-size: 1.2em; margin-bottom: 30px;">Talk with our AI using your browser</p>
+        
+        <div class="note">
+            <strong>📞 How it works:</strong><br>
+            • Click "Start Listening" to begin<br>
+            • Speak your business questions<br>
+            • AI will respond with text and voice<br>
+            • Works with Chrome, Safari, Edge
+        </div>
+        
+        <button id="voiceBtn" class="voice-button" onclick="toggleListening()">
+            🎤 Start Listening
+        </button>
+        
+        <div id="status" class="status">
+            Click the button to start voice conversation
+        </div>
+        
+        <div id="transcript" class="transcript" style="display: none;">
+            <strong>Conversation:</strong><br>
+            <div id="conversation"></div>
+        </div>
+        
+        <div style="margin-top: 30px; font-size: 0.9em; opacity: 0.8;">
+            <p><strong>Ask about:</strong> LLC formation, state selection, business names, pricing, DreamSeed services</p>
+        </div>
+        
+        <div style="margin-top: 20px;">
+            <a href="/" style="color: #ffd700; text-decoration: none;">← Back to Home</a>
+        </div>
+    </div>
+
+    <script>
+        let isListening = false;
+        let recognition = null;
+        let synthesis = window.speechSynthesis;
+        
+        // Initialize Speech Recognition
+        window.addEventListener('DOMContentLoaded', function() {
+            if ('webkitSpeechRecognition' in window) {
+                recognition = new webkitSpeechRecognition();
+            } else if ('SpeechRecognition' in window) {
+                recognition = new SpeechRecognition();
+            }
+            
+            if (recognition) {
+                recognition.continuous = false;
+                recognition.interimResults = false;
+                recognition.lang = 'en-US';
+                
+                recognition.onstart = function() {
+                    updateStatus("🎤 Listening... speak now!");
+                    isListening = true;
+                    updateButton();
+                };
+                
+                recognition.onresult = function(event) {
+                    const transcript = event.results[0][0].transcript;
+                    updateStatus("🤖 Processing your question...");
+                    addToConversation("You: " + transcript);
+                    
+                    // Send to AI (mock response for now)
+                    setTimeout(() => {
+                        handleAIResponse(transcript);
+                    }, 1000);
+                };
+                
+                recognition.onerror = function(event) {
+                    updateStatus("❌ Speech recognition error: " + event.error);
+                    isListening = false;
+                    updateButton();
+                };
+                
+                recognition.onend = function() {
+                    isListening = false;
+                    updateButton();
+                };
+                
+                updateStatus("✅ Voice system ready - browser speech recognition");
+            } else {
+                updateStatus("❌ Speech recognition not supported in this browser");
+            }
+        });
+        
+        function toggleListening() {
+            if (!recognition) {
+                updateStatus("❌ Speech recognition not available");
+                return;
+            }
+            
+            if (isListening) {
+                recognition.stop();
+            } else {
+                recognition.start();
+                document.getElementById('transcript').style.display = 'block';
+            }
+        }
+        
+        function handleAIResponse(userMessage) {
+            // Mock AI responses for business formation questions
+            const responses = {
+                'llc': "Great question about LLCs! An LLC (Limited Liability Company) provides personal asset protection and tax flexibility. DreamSeed can help you form an LLC in any state for $299. Which state are you considering?",
+                'business': "I'd be happy to help with your business formation! DreamSeed offers three packages: Basic LLC formation for $299, Premium with EIN and Operating Agreement for $599, and Enterprise with full legal review for $999. What type of business are you starting?",
+                'state': "State selection is crucial for LLCs. Delaware and Wyoming offer great privacy and tax benefits, while forming in your home state might be simpler for local businesses. What's your business focus?",
+                'price': "Our pricing is straightforward: Basic Plan $299 (LLC formation), Premium Plan $599 (LLC + EIN + Operating Agreement), Enterprise Plan $999 (Full service + legal review). All include state filing fees. Which plan interests you?",
+                'name': "Business name availability varies by state. We'll check name availability and reserve it during formation. Do you have a business name in mind?",
+                'default': "Thanks for your question about business formation! DreamSeed specializes in LLC formation, EIN applications, and business setup. We offer packages from $299-$999 to fit your needs. What specific aspect of business formation can I help you with?"
+            };
+            
+            // Simple keyword matching
+            let response = responses.default;
+            const message = userMessage.toLowerCase();
+            
+            if (message.includes('llc') || message.includes('limited liability')) {
+                response = responses.llc;
+            } else if (message.includes('state') || message.includes('delaware') || message.includes('wyoming')) {
+                response = responses.state;
+            } else if (message.includes('price') || message.includes('cost') || message.includes('fee')) {
+                response = responses.price;
+            } else if (message.includes('name')) {
+                response = responses.name;
+            } else if (message.includes('business') || message.includes('company')) {
+                response = responses.business;
+            }
+            
+            addToConversation("AI: " + response);
+            speakText(response);
+            updateStatus("✅ Response complete - click to ask another question");
+        }
+        
+        function speakText(text) {
+            if (synthesis) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.rate = 0.9;
+                utterance.pitch = 1;
+                utterance.volume = 1;
+                
+                utterance.onstart = function() {
+                    updateStatus("🔊 AI is speaking...");
+                };
+                
+                utterance.onend = function() {
+                    updateStatus("✅ Ready for your next question");
+                };
+                
+                synthesis.speak(utterance);
+            }
+        }
+        
+        function addToConversation(text) {
+            const conversation = document.getElementById('conversation');
+            const div = document.createElement('div');
+            div.textContent = text;
+            div.style.marginBottom = '10px';
+            div.style.color = text.startsWith('You:') ? '#ffd700' : '#fff';
+            conversation.appendChild(div);
+            conversation.scrollTop = conversation.scrollHeight;
+        }
+        
+        function updateStatus(message) {
+            document.getElementById('status').textContent = message;
+        }
+        
+        function updateButton() {
+            const btn = document.getElementById('voiceBtn');
+            if (isListening) {
+                btn.textContent = "🔴 Stop Listening";
+                btn.classList.add('pulse');
+                btn.style.background = "linear-gradient(45deg, #e74c3c, #c0392b)";
+            } else {
+                btn.textContent = "🎤 Start Listening";
+                btn.classList.remove('pulse');
+                btn.style.background = "linear-gradient(45deg, #ff6b6b, #ee5a24)";
+            }
+        }
+    </script>
+</body>
+</html>
