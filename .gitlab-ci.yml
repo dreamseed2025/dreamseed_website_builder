@@ -1,0 +1,71 @@
+# GitLab CI/CD Pipeline for DreamSeed VAPI Platform
+image: node:18
+
+stages:
+  - build
+  - deploy
+
+variables:
+  NODE_ENV: production
+
+# Cache node_modules for faster builds
+cache:
+  paths:
+    - node_modules/
+
+# Build stage
+build:
+  stage: build
+  script:
+    - echo "Installing dependencies..."
+    - npm install
+    - echo "Build complete"
+  artifacts:
+    paths:
+      - node_modules/
+      - .env
+    expire_in: 1 hour
+
+# Deploy to production server
+deploy:
+  stage: deploy
+  only:
+    - main
+    - master
+  script:
+    - echo "Deploying to production server..."
+    # Install SSH client
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    
+    # Add SSH key stored in GitLab CI/CD variables
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan -H "$SERVER_HOST" >> ~/.ssh/known_hosts
+    
+    # Deploy to server
+    - echo "Connecting to server..."
+    - |
+      ssh $SERVER_USER@$SERVER_HOST << EOF
+        cd $SERVER_PATH
+        git pull origin main
+        npm install --production
+        pm2 restart server || pm2 start server.js --name dreamseed-vapi
+        echo "Deployment complete!"
+      EOF
+  environment:
+    name: production
+    url: https://$SERVER_HOST
+
+# Deploy to Vercel (alternative)
+deploy-vercel:
+  stage: deploy
+  only:
+    - main
+  script:
+    - npm install -g vercel
+    - vercel --prod --token=$VERCEL_TOKEN --yes
+  environment:
+    name: vercel
+    url: https://simple-vapi-webhook.vercel.app
