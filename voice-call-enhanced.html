@@ -195,10 +195,14 @@
                     const config = await response.json();
                     supabase = window.supabase.createClient(config.supabaseUrl, config.supabaseAnonKey);
                 } else {
-                    // Fallback to direct Supabase connection (add your real URLs here)
+                    // Fallback to direct Supabase connection
                     console.log('Using fallback Supabase config');
-                    // supabase = window.supabase.createClient('YOUR_REAL_SUPABASE_URL', 'YOUR_REAL_SUPABASE_ANON_KEY');
+                    supabase = window.supabase.createClient(
+                        'https://kxldodhrhqbwyvgyuqfd.supabase.co',
+                        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt4bGRvZGhyaHFid3l2Z3l1cWZkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTUxMjAwNzgsImV4cCI6MjA3MDY5NjA3OH0.a7RTzupHtPO_1viiXYvF3SAtGNngiG_IDChCMAZN5mU'
+                    );
                 }
+                console.log('✅ Supabase client initialized');
             } catch (error) {
                 console.error('Supabase initialization error:', error);
             }

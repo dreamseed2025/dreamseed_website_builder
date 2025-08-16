@@ -3,11 +3,15 @@
   "version": "2.0.0",
   "description": "Complete business formation platform with AI voice calls and automated website builder",
   "private": true,
+  "type": "module",
   "main": "server.js",
   "scripts": {
     "build": "echo 'Static site - no build required'",
     "start": "echo 'Static site deployed'",
-    "test": "echo \"No tests yet\" && exit 0"
+    "test": "echo \"No tests yet\" && exit 0",
+    "db:check": "node check-database-status.js",
+    "db:setup": "node setup-complete-database.js",
+    "db:verify": "node verify-database-setup.js"
   },
   "keywords": [
     "dreamseed",
@@ -22,7 +26,10 @@
   ],
   "author": "DreamSeed Team",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "@supabase/supabase-js": "^2.38.0",
+    "dotenv": "^16.3.1"
+  },
   "devDependencies": {},
   "engines": {
     "node": ">=18.0.0"
