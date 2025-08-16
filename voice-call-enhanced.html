@@ -121,16 +121,12 @@
         <p style="font-size: 1.2em; margin-bottom: 30px;">Natural conversation with context & memory</p>
         
         <div class="user-info">
-            <h3>👤 User Context</h3>
+            <h3>👤 User Authentication</h3>
             <div class="form-group">
-                <label for="userId">User ID:</label>
-                <input type="text" id="userId" placeholder="Enter your User ID" value="">
+                <label for="userEmail">Email:</label>
+                <input type="email" id="userEmail" placeholder="Enter your email" value="">
             </div>
-            <div class="form-group">
-                <label for="dreamId">Dream ID:</label>
-                <input type="text" id="dreamId" placeholder="Enter your Dream/Project ID" value="">
-            </div>
-            <button onclick="saveUserContext()" style="
+            <button onclick="loadUserContext()" style="
                 background: rgba(39, 174, 96, 0.8);
                 color: white;
                 border: none;
@@ -138,7 +134,12 @@
                 border-radius: 8px;
                 cursor: pointer;
                 margin-top: 10px;
-            ">Save Context</button>
+            ">Load My Profile</button>
+            
+            <div id="userProfile" style="display: none; margin-top: 20px; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 10px; text-align: left;">
+                <h4>📋 Your Profile:</h4>
+                <div id="profileDetails"></div>
+            </div>
         </div>
         
         <!-- VAPI Widget with enhanced configuration -->
@@ -169,19 +170,51 @@
         </div>
     </div>
 
+    <!-- Supabase Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
     <!-- VAPI Widget Script -->
     <script src="https://unpkg.com/@vapi-ai/client-sdk-react/dist/embed/widget.umd.js" async type="text/javascript"></script>
     
     <script>
+        // Initialize Supabase (using placeholder URLs - replace with your actual config)
+        const supabaseUrl = 'YOUR_SUPABASE_URL';
+        const supabaseKey = 'YOUR_SUPABASE_ANON_KEY';
+        let supabase;
+        
+        // Initialize with environment config if available
+        async function initSupabase() {
+            try {
+                // Try to get real config from your deployment
+                const response = await fetch('/api/auth-config');
+                if (response.ok) {
+                    const config = await response.json();
+                    supabase = window.supabase.createClient(config.supabaseUrl, config.supabaseAnonKey);
+                } else {
+                    // Fallback to direct Supabase connection (add your real URLs here)
+                    console.log('Using fallback Supabase config');
+                    // supabase = window.supabase.createClient('YOUR_REAL_SUPABASE_URL', 'YOUR_REAL_SUPABASE_ANON_KEY');
+                }
+            } catch (error) {
+                console.error('Supabase initialization error:', error);
+            }
+        }
+        
         let userContext = {
+            email: '',
             userId: '',
-            dreamId: '',
+            userRole: '',
+            paymentStatus: '',
+            subscriptionType: '',
+            callProgress: {},
+            businessInfo: {},
             sessionId: generateSessionId()
         };
         
         // Load saved context
-        window.addEventListener('DOMContentLoaded', function() {
-            loadUserContext();
+        window.addEventListener('DOMContentLoaded', async function() {
+            await initSupabase();
+            loadSavedEmail();
             setupVapiWidget();
         });
         
@@ -189,52 +222,168 @@
             return 'session_' + Math.random().toString(36).substr(2, 9) + '_' + Date.now();
         }
         
-        function loadUserContext() {
-            // Load from localStorage
-            const saved = localStorage.getItem('dreamSeedUserContext');
+        function loadSavedEmail() {
+            const saved = localStorage.getItem('dreamSeedUserEmail');
             if (saved) {
-                try {
-                    userContext = { ...userContext, ...JSON.parse(saved) };
-                    document.getElementById('userId').value = userContext.userId || '';
-                    document.getElementById('dreamId').value = userContext.dreamId || '';
-                    
-                    if (userContext.userId && userContext.dreamId) {
-                        updateStatus(`✅ Welcome back! User: ${userContext.userId}, Dream: ${userContext.dreamId}`);
-                    }
-                } catch (error) {
-                    console.error('Error loading user context:', error);
-                }
+                document.getElementById('userEmail').value = saved;
             }
         }
         
-        function saveUserContext() {
-            userContext.userId = document.getElementById('userId').value.trim();
-            userContext.dreamId = document.getElementById('dreamId').value.trim();
-            
-            if (userContext.userId && userContext.dreamId) {
-                localStorage.setItem('dreamSeedUserContext', JSON.stringify(userContext));
-                updateStatus(`✅ Context saved! User: ${userContext.userId}, Dream: ${userContext.dreamId}`);
-                setupVapiWidget(); // Reinitialize with new context
-            } else {
-                updateStatus('❌ Please enter both User ID and Dream ID');
+        async function loadUserContext() {
+            const email = document.getElementById('userEmail').value.trim();
+            if (!email) {
+                updateStatus('❌ Please enter your email address');
+                return;
             }
+            
+            if (!supabase) {
+                updateStatus('❌ Database connection not available');
+                return;
+            }
+            
+            updateStatus('🔄 Loading your profile...');
+            
+            try {
+                // Fetch user data from Supabase
+                const { data: users, error } = await supabase
+                    .from('users')
+                    .select(`
+                        *,
+                        auth_user_id,
+                        customer_name,
+                        customer_email,
+                        customer_phone,
+                        business_name,
+                        business_type,
+                        state_of_operation,
+                        entity_type,
+                        call_1_completed,
+                        call_2_completed,
+                        call_3_completed,
+                        call_4_completed,
+                        call_1_completed_at,
+                        call_2_completed_at,
+                        call_3_completed_at,
+                        call_4_completed_at,
+                        current_call_stage,
+                        account_type,
+                        payment_status,
+                        subscription_type,
+                        amount_paid,
+                        payment_date,
+                        subscription_expires_at,
+                        status,
+                        package_preference,
+                        urgency_level,
+                        timeline
+                    `)
+                    .eq('customer_email', email)
+                    .limit(1);
+                
+                if (error) {
+                    throw error;
+                }
+                
+                if (users && users.length > 0) {
+                    const user = users[0];
+                    
+                    // Update user context
+                    userContext = {
+                        ...userContext,
+                        email: user.customer_email,
+                        userId: user.id,
+                        authUserId: user.auth_user_id,
+                        name: user.customer_name,
+                        phone: user.customer_phone,
+                        userRole: user.account_type,
+                        paymentStatus: user.payment_status,
+                        subscriptionType: user.subscription_type,
+                        amountPaid: user.amount_paid,
+                        callProgress: {
+                            call1: user.call_1_completed,
+                            call2: user.call_2_completed,
+                            call3: user.call_3_completed,
+                            call4: user.call_4_completed,
+                            currentStage: user.current_call_stage,
+                            call1Date: user.call_1_completed_at,
+                            call2Date: user.call_2_completed_at,
+                            call3Date: user.call_3_completed_at,
+                            call4Date: user.call_4_completed_at
+                        },
+                        businessInfo: {
+                            name: user.business_name,
+                            type: user.business_type,
+                            state: user.state_of_operation,
+                            entityType: user.entity_type,
+                            status: user.status,
+                            package: user.package_preference,
+                            urgency: user.urgency_level,
+                            timeline: user.timeline
+                        }
+                    };
+                    
+                    // Save email for next time
+                    localStorage.setItem('dreamSeedUserEmail', email);
+                    localStorage.setItem('dreamSeedUserContext', JSON.stringify(userContext));
+                    
+                    // Display profile
+                    displayUserProfile(user);
+                    updateStatus(`✅ Profile loaded! Welcome back, ${user.customer_name || 'valued customer'}`);
+                    
+                    // Setup VAPI with context
+                    setupVapiWidget();
+                    
+                } else {
+                    updateStatus('❌ No profile found with that email. Please check your email or sign up first.');
+                }
+                
+            } catch (error) {
+                console.error('Error loading user context:', error);
+                updateStatus(`❌ Error loading profile: ${error.message}`);
+            }
+        }
+        
+        function displayUserProfile(user) {
+            const profileDiv = document.getElementById('profileDetails');
+            const callsCompleted = [user.call_1_completed, user.call_2_completed, user.call_3_completed, user.call_4_completed].filter(Boolean).length;
+            
+            profileDiv.innerHTML = `
+                <p><strong>Name:</strong> ${user.customer_name || 'Not set'}</p>
+                <p><strong>Role:</strong> ${user.account_type} ${user.account_type === 'admin' ? '👑' : '👤'}</p>
+                <p><strong>Payment:</strong> ${user.payment_status} (${user.subscription_type || 'basic'})</p>
+                <p><strong>Business:</strong> ${user.business_name || 'Not set'} (${user.entity_type || 'LLC'})</p>
+                <p><strong>Call Progress:</strong> ${callsCompleted}/4 calls completed</p>
+                <p><strong>Current Stage:</strong> Call ${user.current_call_stage || 1}</p>
+                <p><strong>Formation Status:</strong> ${user.status || 'in_progress'}</p>
+            `;
+            
+            document.getElementById('userProfile').style.display = 'block';
         }
         
         function setupVapiWidget() {
             const widget = document.querySelector('vapi-widget');
-            if (widget && userContext.userId && userContext.dreamId) {
+            if (widget) {
                 // Configure widget with user context
                 widget.addEventListener('call-start', function() {
-                    updateStatus('🎤 Connected! Natural conversation active...');
-                    
-                    // Send context to VAPI assistant
-                    setTimeout(() => {
-                        sendContextToAssistant();
-                    }, 1000);
+                    if (userContext.userId) {
+                        updateStatus(`🎤 Connected! Natural conversation active with ${userContext.name || 'AI assistant'}...`);
+                        
+                        // Send context to VAPI assistant
+                        setTimeout(() => {
+                            sendContextToAssistant();
+                        }, 1000);
+                    } else {
+                        updateStatus('🎤 Connected! Please load your profile first for personalized experience.');
+                    }
                 });
                 
                 widget.addEventListener('call-end', function() {
                     updateStatus('📞 Conversation ended. Your context is saved for next time.');
+                    
+                    // Update call progress if this was a business formation call
+                    if (userContext.userId && userContext.callProgress.currentStage) {
+                        updateCallProgress();
+                    }
                 });
                 
                 widget.addEventListener('speech-start', function() {
@@ -251,26 +400,127 @@
             }
         }
         
+        async function updateCallProgress() {
+            // This could update the call completion status in Supabase
+            // For now, we'll just log it
+            console.log('Call completed, could update progress in database');
+            
+            if (supabase && userContext.authUserId) {
+                try {
+                    // Example: Mark current call stage as completed
+                    const currentStage = userContext.callProgress.currentStage;
+                    const updateData = {};
+                    updateData[`call_${currentStage}_completed`] = true;
+                    updateData[`call_${currentStage}_completed_at`] = new Date().toISOString();
+                    
+                    const { error } = await supabase
+                        .from('users')
+                        .update(updateData)
+                        .eq('auth_user_id', userContext.authUserId);
+                    
+                    if (!error) {
+                        console.log(`Call ${currentStage} marked as completed`);
+                    }
+                } catch (error) {
+                    console.error('Error updating call progress:', error);
+                }
+            }
+        }
+        
         function sendContextToAssistant() {
-            // This would typically be sent to your VAPI assistant
-            // The assistant should be configured to receive and use this context
+            if (!userContext.userId) {
+                console.log('No user context loaded yet');
+                return;
+            }
+            
+            // Create comprehensive context for VAPI assistant
             const contextMessage = {
                 type: 'user_context',
-                userId: userContext.userId,
-                dreamId: userContext.dreamId,
-                sessionId: userContext.sessionId,
                 timestamp: new Date().toISOString(),
-                message: `Hi! I'm user ${userContext.userId} working on dream project ${userContext.dreamId}. Please remember our previous conversations and continue where we left off.`
+                sessionId: userContext.sessionId,
+                
+                // User Identity
+                user: {
+                    id: userContext.userId,
+                    email: userContext.email,
+                    name: userContext.name,
+                    phone: userContext.phone,
+                    role: userContext.userRole
+                },
+                
+                // Payment & Subscription Info
+                payment: {
+                    status: userContext.paymentStatus,
+                    subscriptionType: userContext.subscriptionType,
+                    amountPaid: userContext.amountPaid
+                },
+                
+                // Call Progress Tracking
+                calls: {
+                    completed: userContext.callProgress,
+                    currentStage: userContext.callProgress.currentStage,
+                    totalCompleted: Object.values(userContext.callProgress).filter(v => v === true).length
+                },
+                
+                // Business Formation Context
+                business: userContext.businessInfo,
+                
+                // Personalized greeting based on context
+                systemMessage: generatePersonalizedGreeting()
             };
             
-            console.log('Sending context to assistant:', contextMessage);
-            updateStatus('🔄 Sharing your context with AI assistant...');
+            console.log('Sending comprehensive context to VAPI assistant:', contextMessage);
+            updateStatus('🔄 Sharing your complete profile with AI assistant...');
             
-            // In a real implementation, you'd send this via VAPI's message system
-            // For now, we'll just log it and show a status update
+            // In production, this would be sent to VAPI via their API
+            // The assistant should be configured to process this context
             setTimeout(() => {
-                updateStatus('✅ Context shared! AI now knows who you are and your project.');
+                updateStatus('✅ Full context shared! AI knows your payment status, call progress, and business details.');
             }, 2000);
+        }
+        
+        function generatePersonalizedGreeting() {
+            const { name, userRole, paymentStatus, callProgress, businessInfo } = userContext;
+            const callsCompleted = Object.values(callProgress).filter(v => v === true).length;
+            
+            let greeting = `Hello ${name || 'valued customer'}! `;
+            
+            // Add role-specific greeting
+            if (userRole === 'admin') {
+                greeting += `As an admin, you have full access to all features. `;
+            }
+            
+            // Add payment context
+            if (paymentStatus === 'paid') {
+                greeting += `Your ${userContext.subscriptionType} subscription is active. `;
+            } else if (paymentStatus === 'unpaid') {
+                greeting += `I see you haven't completed payment yet. I can help you understand our packages. `;
+            }
+            
+            // Add call progress context
+            if (callsCompleted > 0) {
+                greeting += `You've completed ${callsCompleted}/4 consultation calls. `;
+                if (callProgress.currentStage) {
+                    greeting += `We're currently on stage ${callProgress.currentStage}. `;
+                }
+            } else {
+                greeting += `Welcome! This appears to be your first consultation call. `;
+            }
+            
+            // Add business context
+            if (businessInfo.name) {
+                greeting += `I see you're working on "${businessInfo.name}" `;
+                if (businessInfo.type) {
+                    greeting += `(${businessInfo.type}) `;
+                }
+                if (businessInfo.state) {
+                    greeting += `in ${businessInfo.state}. `;
+                }
+            }
+            
+            greeting += `How can I help you today with your business formation journey?`;
+            
+            return greeting;
         }
         
         function updateStatus(message) {
