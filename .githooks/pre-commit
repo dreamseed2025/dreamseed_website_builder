@@ -1,0 +1,48 @@
+#!/bin/bash
+
+# DreamSeed Navigation Auto-Update Pre-Commit Hook
+# Automatically updates navigation system before each commit
+
+echo "🔄 Updating navigation system..."
+
+# Check if update-navigation.js exists
+if [ ! -f "update-navigation.js" ]; then
+    echo "⚠️ Navigation update script not found, skipping..."
+    exit 0
+fi
+
+# Check if Node.js is available
+if ! command -v node &> /dev/null; then
+    echo "⚠️ Node.js not found, skipping navigation update"
+    exit 0
+fi
+
+# Update navigation system
+echo "📊 Analyzing pages and updating navigation..."
+node update-navigation.js
+
+# Check if there were any changes to commit
+if [ $? -eq 0 ]; then
+    echo "✅ Navigation system updated successfully"
+    
+    # Add updated files to the commit
+    if [ -f "site-analysis.json" ]; then
+        git add site-analysis.json
+        echo "📄 Added site-analysis.json to commit"
+    fi
+    
+    if [ -f "navigation-config.json" ]; then
+        git add navigation-config.json
+        echo "📄 Added navigation-config.json to commit"
+    fi
+    
+    # Add any HTML files that were modified
+    git add *.html **/*.html 2>/dev/null || true
+    
+    echo "🎉 Navigation update complete and added to commit"
+else
+    echo "❌ Navigation update failed, but allowing commit to continue"
+fi
+
+# Exit successfully to allow commit to proceed
+exit 0

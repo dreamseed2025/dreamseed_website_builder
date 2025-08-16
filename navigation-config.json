@@ -1,0 +1,2221 @@
+{
+  "primary": {
+    "Home": [
+      {
+        "path": "index.html",
+        "relativePath": "index.html",
+        "title": "DreamSeed - VAPI Voice Platform",
+        "description": "AI-Powered Business Formation & Voice Consultations...",
+        "category": "Home",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": true
+        },
+        "lastModified": "2025-08-16T21:18:40.982Z"
+      }
+    ],
+    "Voice Interface": [
+      {
+        "path": "working-vapi-call.html",
+        "relativePath": "working-vapi-call.html",
+        "title": "DreamSeed - Voice Consultation",
+        "description": "Choose how you'd like to connect with our AI business consultant...",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.980Z"
+      },
+      {
+        "path": "web-voice-working.html",
+        "relativePath": "web-voice-working.html",
+        "title": "DreamSeed - Working Voice Assistant",
+        "description": "Talk to our business formation consultant...",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.980Z"
+      },
+      {
+        "path": "web-voice-widget.html",
+        "relativePath": "web-voice-widget.html",
+        "title": "DreamSeed - VAPI Widget Voice Assistant",
+        "description": "Natural conversation with our AI business consultant...",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.980Z"
+      },
+      {
+        "path": "web-voice-widget-standalone.html",
+        "relativePath": "web-voice-widget-standalone.html",
+        "title": "DreamSeed - Voice Assistant (Standalone)",
+        "description": "Natural conversation with our AI business consultant...",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.980Z"
+      },
+      {
+        "path": "web-voice-vapi-direct.html",
+        "relativePath": "web-voice-vapi-direct.html",
+        "title": "DreamSeed - VAPI SDK Direct",
+        "description": "Click once and have a natural conversation...",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.980Z"
+      },
+      {
+        "path": "web-voice-simple.html",
+        "relativePath": "web-voice-simple.html",
+        "title": "DreamSeed - Simple Voice Test",
+        "description": "",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": false,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.980Z"
+      },
+      {
+        "path": "web-voice-natural.html",
+        "relativePath": "web-voice-natural.html",
+        "title": "DreamSeed - Natural Voice Conversation",
+        "description": "Just start talking - like Siri or Alexa!...",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": false,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.980Z"
+      },
+      {
+        "path": "web-voice-direct.html",
+        "relativePath": "web-voice-direct.html",
+        "title": "DreamSeed - Direct Web Voice Call",
+        "description": "Browser-based voice recording with VAPI assistant...",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.980Z"
+      },
+      {
+        "path": "web-voice-call.html",
+        "relativePath": "web-voice-call.html",
+        "title": "DreamSeed - Web Voice Call",
+        "description": "Start a voice conversation with our AI business consultant...",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.981Z"
+      },
+      {
+        "path": "web-voice-call-import.html",
+        "relativePath": "web-voice-call-import.html",
+        "title": "DreamSeed - Web Voice Call (Import Version)",
+        "description": "Modern ES6 import-based VAPI integration...",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.981Z"
+      },
+      {
+        "path": "voice-call-enhanced.html",
+        "relativePath": "voice-call-enhanced.html",
+        "title": "DreamSeed - Enhanced Voice Call",
+        "description": "Natural conversation with context & memory...",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": true,
+          "hasVAPI": true,
+          "hasAuth": true
+        },
+        "lastModified": "2025-08-16T21:18:40.981Z"
+      },
+      {
+        "path": "voice-call-direct.html",
+        "relativePath": "voice-call-direct.html",
+        "title": "DreamSeed - Voice Call",
+        "description": "Talk directly with our AI business consultant...",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.981Z"
+      },
+      {
+        "path": "voice-call-browser.html",
+        "relativePath": "voice-call-browser.html",
+        "title": "DreamSeed - Browser Voice Call",
+        "description": "Talk with our AI using your browser...",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": false,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.981Z"
+      },
+      {
+        "path": "vapi-voice-final.html",
+        "relativePath": "vapi-voice-final.html",
+        "title": "DreamSeed - VAPI Voice Call",
+        "description": "Click for real voice conversation...",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.981Z"
+      },
+      {
+        "path": "simple-call-test.html",
+        "relativePath": "simple-call-test.html",
+        "title": "DreamSeed - Simple Call Test",
+        "description": "Test your VAPI connection with a direct API call...",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.982Z"
+      },
+      {
+        "path": "public/simple-vapi-webhook/web-call-proxy.html",
+        "relativePath": "public/simple-vapi-webhook/web-call-proxy.html",
+        "title": "DreamSeed - Server-Initiated Call",
+        "description": "Connect with an Expert...",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": false,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.983Z"
+      },
+      {
+        "path": "public/simple-vapi-webhook/web-call-fixed.html",
+        "relativePath": "public/simple-vapi-webhook/web-call-fixed.html",
+        "title": "DreamSeed - Working Web Call",
+        "description": "Talk to our AI business formation expert...",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.983Z"
+      },
+      {
+        "path": "public/simple-vapi-webhook/web-call-debug.html",
+        "relativePath": "public/simple-vapi-webhook/web-call-debug.html",
+        "title": "DreamSeed - Web Call Debug",
+        "description": "",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.983Z"
+      },
+      {
+        "path": "public/simple-vapi-webhook/web-call-button.html",
+        "relativePath": "public/simple-vapi-webhook/web-call-button.html",
+        "title": "DreamSeed - Talk to a Business Formation Expert",
+        "description": "Expert guidance for starting your business - from LLC filing to launch strategy...",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.983Z"
+      },
+      {
+        "path": "public/simple-vapi-webhook/vapi-fix-guide.html",
+        "relativePath": "public/simple-vapi-webhook/vapi-fix-guide.html",
+        "title": "VAPI Web Call Fix Guide",
+        "description": "You need to obtain a public key from your VAPI dashboard:...",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.984Z"
+      },
+      {
+        "path": "public/simple-vapi-webhook/test-interface.html",
+        "relativePath": "public/simple-vapi-webhook/test-interface.html",
+        "title": "DreamSeed Intelligent Call System - Testing Interface",
+        "description": "Test the complete 4-call progression with smart information carryover...",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": false,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.984Z"
+      },
+      {
+        "path": "public/simple-vapi-webhook/system-home.html",
+        "relativePath": "public/simple-vapi-webhook/system-home.html",
+        "title": "DreamSeed VAPI System - Complete Directory",
+        "description": "Complete Business Formation Platform with AI Voice Calls...",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": true,
+          "hasVAPI": true,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.984Z"
+      },
+      {
+        "path": "public/simple-vapi-webhook/stage-monitor.html",
+        "relativePath": "public/simple-vapi-webhook/stage-monitor.html",
+        "title": "DreamSeed Call Stage Monitor",
+        "description": "Real-time monitoring and testing for dynamic VAPI call stages...",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.984Z"
+      },
+      {
+        "path": "public/simple-vapi-webhook/info-tracker.html",
+        "relativePath": "public/simple-vapi-webhook/info-tracker.html",
+        "title": "DreamSeed - Customer Information Tracker",
+        "description": "Customer Information Completeness Tracker...",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": false,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.984Z"
+      },
+      {
+        "path": "public/simple-vapi-webhook/index.html",
+        "relativePath": "public/simple-vapi-webhook/index.html",
+        "title": "DreamSeed VAPI System - Home",
+        "description": "No calls yet. Waiting for voice AI conversations......",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.984Z"
+      },
+      {
+        "path": "public/simple-vapi-webhook/inbound-call-tester.html",
+        "relativePath": "public/simple-vapi-webhook/inbound-call-tester.html",
+        "title": "Inbound Call Tester",
+        "description": "Test the smart caller identification system. Enter a phone number to see how the system would handle...",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": false,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.984Z"
+      },
+      {
+        "path": "public/simple-vapi-webhook/customer-onboarding-form.html",
+        "relativePath": "public/simple-vapi-webhook/customer-onboarding-form.html",
+        "title": "Start Your Business Formation Journey",
+        "description": "Complete this form to begin your personalized 4-call business formation process. Our AI consultant w...",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": false,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.985Z"
+      }
+    ],
+    "Dashboards": [
+      {
+        "path": "dashboard.html",
+        "relativePath": "dashboard.html",
+        "title": "DreamSeed - Dashboard",
+        "description": "Loading your dashboard......",
+        "category": "Dashboards",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": true,
+          "hasVAPI": true,
+          "hasAuth": true
+        },
+        "lastModified": "2025-08-16T21:18:40.982Z"
+      },
+      {
+        "path": "customer-dashboard.html",
+        "relativePath": "customer-dashboard.html",
+        "title": "DreamSeed - Customer Dashboard",
+        "description": "Loading your dashboard......",
+        "category": "Dashboards",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": true,
+          "hasVAPI": true,
+          "hasAuth": true
+        },
+        "lastModified": "2025-08-16T21:18:40.982Z"
+      },
+      {
+        "path": "requirements-framework/templates/info-tracker-dashboard.html",
+        "relativePath": "requirements-framework/templates/info-tracker-dashboard.html",
+        "title": "DreamSeed - Customer Information Tracker",
+        "description": "Customer Information Completeness Tracker...",
+        "category": "Dashboards",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": false,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.983Z"
+      },
+      {
+        "path": "public/simple-vapi-webhook/web-call-dashboard.html",
+        "relativePath": "public/simple-vapi-webhook/web-call-dashboard.html",
+        "title": "DreamSeed Call Dashboard",
+        "description": "Initiate intelligent business formation calls from your browser...",
+        "category": "Dashboards",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.983Z"
+      },
+      {
+        "path": "public/simple-vapi-webhook/dashboard-test.html",
+        "relativePath": "public/simple-vapi-webhook/dashboard-test.html",
+        "title": "DreamSeed End-to-End Tester",
+        "description": "Test the complete requirements framework from transcript to customer tracking...",
+        "category": "Dashboards",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": false,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.985Z"
+      },
+      {
+        "path": "public/simple-vapi-webhook/customer-dashboard.html",
+        "relativePath": "public/simple-vapi-webhook/customer-dashboard.html",
+        "title": "DreamSeed - Your Business Formation Dashboard",
+        "description": "Continue your business formation journey with expert guidance....",
+        "category": "Dashboards",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.985Z"
+      },
+      {
+        "path": "public/simple-vapi-webhook/call-dashboard.html",
+        "relativePath": "public/simple-vapi-webhook/call-dashboard.html",
+        "title": "DreamSeed Call Dashboard",
+        "description": "Initiate business formation consultation calls...",
+        "category": "Dashboards",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.985Z"
+      },
+      {
+        "path": "public/simple-vapi-webhook/admin-dashboard.html",
+        "relativePath": "public/simple-vapi-webhook/admin-dashboard.html",
+        "title": "DreamSeed Admin - Customer Dashboard Links",
+        "description": "Generate personalized dashboard and call links for customers...",
+        "category": "Dashboards",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": false,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.985Z"
+      },
+      {
+        "path": "public/simple-vapi-webhook/dashboard.html",
+        "relativePath": "public/simple-vapi-webhook/dashboard.html",
+        "title": "DreamSeed - Unified Dashboard",
+        "description": "Complete view of customer dreams from voice AI to launched business...",
+        "category": "Dashboards",
+        "productionScore": 6,
+        "productionStatus": "🟡 Needs Minor Fixes",
+        "issues": [
+          "Not mobile-friendly",
+          "Missing meta tags",
+          "Not responsive",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": false,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": false,
+          "hasSupabase": false,
+          "hasVAPI": false,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.985Z"
+      }
+    ]
+  },
+  "secondary": {
+    "Voice/VAPI": [
+      {
+        "path": "working-vapi-call.html",
+        "relativePath": "working-vapi-call.html",
+        "title": "DreamSeed - Voice Consultation",
+        "description": "Choose how you'd like to connect with our AI business consultant...",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.980Z"
+      },
+      {
+        "path": "web-voice-working.html",
+        "relativePath": "web-voice-working.html",
+        "title": "DreamSeed - Working Voice Assistant",
+        "description": "Talk to our business formation consultant...",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.980Z"
+      },
+      {
+        "path": "web-voice-widget.html",
+        "relativePath": "web-voice-widget.html",
+        "title": "DreamSeed - VAPI Widget Voice Assistant",
+        "description": "Natural conversation with our AI business consultant...",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.980Z"
+      },
+      {
+        "path": "web-voice-widget-standalone.html",
+        "relativePath": "web-voice-widget-standalone.html",
+        "title": "DreamSeed - Voice Assistant (Standalone)",
+        "description": "Natural conversation with our AI business consultant...",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.980Z"
+      },
+      {
+        "path": "web-voice-vapi-direct.html",
+        "relativePath": "web-voice-vapi-direct.html",
+        "title": "DreamSeed - VAPI SDK Direct",
+        "description": "Click once and have a natural conversation...",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.980Z"
+      },
+      {
+        "path": "web-voice-simple.html",
+        "relativePath": "web-voice-simple.html",
+        "title": "DreamSeed - Simple Voice Test",
+        "description": "",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": false,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.980Z"
+      },
+      {
+        "path": "web-voice-natural.html",
+        "relativePath": "web-voice-natural.html",
+        "title": "DreamSeed - Natural Voice Conversation",
+        "description": "Just start talking - like Siri or Alexa!...",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": false,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.980Z"
+      },
+      {
+        "path": "web-voice-direct.html",
+        "relativePath": "web-voice-direct.html",
+        "title": "DreamSeed - Direct Web Voice Call",
+        "description": "Browser-based voice recording with VAPI assistant...",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.980Z"
+      },
+      {
+        "path": "web-voice-call.html",
+        "relativePath": "web-voice-call.html",
+        "title": "DreamSeed - Web Voice Call",
+        "description": "Start a voice conversation with our AI business consultant...",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.981Z"
+      },
+      {
+        "path": "web-voice-call-import.html",
+        "relativePath": "web-voice-call-import.html",
+        "title": "DreamSeed - Web Voice Call (Import Version)",
+        "description": "Modern ES6 import-based VAPI integration...",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.981Z"
+      },
+      {
+        "path": "voice-call-enhanced.html",
+        "relativePath": "voice-call-enhanced.html",
+        "title": "DreamSeed - Enhanced Voice Call",
+        "description": "Natural conversation with context & memory...",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": true,
+          "hasVAPI": true,
+          "hasAuth": true
+        },
+        "lastModified": "2025-08-16T21:18:40.981Z"
+      },
+      {
+        "path": "voice-call-direct.html",
+        "relativePath": "voice-call-direct.html",
+        "title": "DreamSeed - Voice Call",
+        "description": "Talk directly with our AI business consultant...",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.981Z"
+      },
+      {
+        "path": "voice-call-browser.html",
+        "relativePath": "voice-call-browser.html",
+        "title": "DreamSeed - Browser Voice Call",
+        "description": "Talk with our AI using your browser...",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": false,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.981Z"
+      },
+      {
+        "path": "vapi-voice-final.html",
+        "relativePath": "vapi-voice-final.html",
+        "title": "DreamSeed - VAPI Voice Call",
+        "description": "Click for real voice conversation...",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.981Z"
+      },
+      {
+        "path": "simple-call-test.html",
+        "relativePath": "simple-call-test.html",
+        "title": "DreamSeed - Simple Call Test",
+        "description": "Test your VAPI connection with a direct API call...",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.982Z"
+      },
+      {
+        "path": "public/simple-vapi-webhook/web-call-proxy.html",
+        "relativePath": "public/simple-vapi-webhook/web-call-proxy.html",
+        "title": "DreamSeed - Server-Initiated Call",
+        "description": "Connect with an Expert...",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": false,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.983Z"
+      },
+      {
+        "path": "public/simple-vapi-webhook/web-call-fixed.html",
+        "relativePath": "public/simple-vapi-webhook/web-call-fixed.html",
+        "title": "DreamSeed - Working Web Call",
+        "description": "Talk to our AI business formation expert...",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.983Z"
+      },
+      {
+        "path": "public/simple-vapi-webhook/web-call-debug.html",
+        "relativePath": "public/simple-vapi-webhook/web-call-debug.html",
+        "title": "DreamSeed - Web Call Debug",
+        "description": "",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.983Z"
+      },
+      {
+        "path": "public/simple-vapi-webhook/web-call-button.html",
+        "relativePath": "public/simple-vapi-webhook/web-call-button.html",
+        "title": "DreamSeed - Talk to a Business Formation Expert",
+        "description": "Expert guidance for starting your business - from LLC filing to launch strategy...",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.983Z"
+      },
+      {
+        "path": "public/simple-vapi-webhook/vapi-fix-guide.html",
+        "relativePath": "public/simple-vapi-webhook/vapi-fix-guide.html",
+        "title": "VAPI Web Call Fix Guide",
+        "description": "You need to obtain a public key from your VAPI dashboard:...",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.984Z"
+      },
+      {
+        "path": "public/simple-vapi-webhook/test-interface.html",
+        "relativePath": "public/simple-vapi-webhook/test-interface.html",
+        "title": "DreamSeed Intelligent Call System - Testing Interface",
+        "description": "Test the complete 4-call progression with smart information carryover...",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": false,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.984Z"
+      },
+      {
+        "path": "public/simple-vapi-webhook/system-home.html",
+        "relativePath": "public/simple-vapi-webhook/system-home.html",
+        "title": "DreamSeed VAPI System - Complete Directory",
+        "description": "Complete Business Formation Platform with AI Voice Calls...",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": true,
+          "hasVAPI": true,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.984Z"
+      },
+      {
+        "path": "public/simple-vapi-webhook/stage-monitor.html",
+        "relativePath": "public/simple-vapi-webhook/stage-monitor.html",
+        "title": "DreamSeed Call Stage Monitor",
+        "description": "Real-time monitoring and testing for dynamic VAPI call stages...",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.984Z"
+      },
+      {
+        "path": "public/simple-vapi-webhook/info-tracker.html",
+        "relativePath": "public/simple-vapi-webhook/info-tracker.html",
+        "title": "DreamSeed - Customer Information Tracker",
+        "description": "Customer Information Completeness Tracker...",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": false,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.984Z"
+      },
+      {
+        "path": "public/simple-vapi-webhook/index.html",
+        "relativePath": "public/simple-vapi-webhook/index.html",
+        "title": "DreamSeed VAPI System - Home",
+        "description": "No calls yet. Waiting for voice AI conversations......",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.984Z"
+      },
+      {
+        "path": "public/simple-vapi-webhook/inbound-call-tester.html",
+        "relativePath": "public/simple-vapi-webhook/inbound-call-tester.html",
+        "title": "Inbound Call Tester",
+        "description": "Test the smart caller identification system. Enter a phone number to see how the system would handle...",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": false,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.984Z"
+      },
+      {
+        "path": "public/simple-vapi-webhook/customer-onboarding-form.html",
+        "relativePath": "public/simple-vapi-webhook/customer-onboarding-form.html",
+        "title": "Start Your Business Formation Journey",
+        "description": "Complete this form to begin your personalized 4-call business formation process. Our AI consultant w...",
+        "category": "Voice/VAPI",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": false,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.985Z"
+      }
+    ],
+    "Testing/Debug": [
+      {
+        "path": "auth/test-auth.html",
+        "relativePath": "auth/test-auth.html",
+        "title": "DreamSeed - Auth System Test",
+        "description": "These elements automatically show/hide based on authentication state:...",
+        "category": "Testing/Debug",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": true,
+          "hasVAPI": false,
+          "hasAuth": true
+        },
+        "lastModified": "2025-08-16T21:18:40.982Z"
+      },
+      {
+        "path": "test-database-direct.html",
+        "relativePath": "test-database-direct.html",
+        "title": "Database Test",
+        "description": "Testing users table structure......",
+        "category": "Testing/Debug",
+        "productionScore": 5,
+        "productionStatus": "🟠 Needs Major Work",
+        "issues": [
+          "No styling",
+          "Not mobile-friendly",
+          "Missing meta tags",
+          "Not responsive",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": false,
+          "hasCSS": false,
+          "hasJS": true,
+          "isResponsive": false,
+          "hasSupabase": true,
+          "hasVAPI": false,
+          "hasAuth": true
+        },
+        "lastModified": "2025-08-16T21:18:40.981Z"
+      },
+      {
+        "path": "test-auth-simple.html",
+        "relativePath": "test-auth-simple.html",
+        "title": "Simple Auth Test",
+        "description": "URL: ${config.supabaseUrl}...",
+        "category": "Testing/Debug",
+        "productionScore": 5,
+        "productionStatus": "🟠 Needs Major Work",
+        "issues": [
+          "No styling",
+          "Not mobile-friendly",
+          "Missing meta tags",
+          "Not responsive",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": false,
+          "hasCSS": false,
+          "hasJS": true,
+          "isResponsive": false,
+          "hasSupabase": true,
+          "hasVAPI": false,
+          "hasAuth": true
+        },
+        "lastModified": "2025-08-16T21:18:40.982Z"
+      }
+    ],
+    "Other": [
+      {
+        "path": "sitemap.html",
+        "relativePath": "sitemap.html",
+        "title": "DreamSeed - Complete Sitemap & Page Directory",
+        "description": "Complete sitemap and page directory for DreamSeed platform with production readiness scores",
+        "category": "Other",
+        "productionScore": 9,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": true,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.982Z"
+      },
+      {
+        "path": "index-full.html",
+        "relativePath": "index-full.html",
+        "title": "DreamSeed - AI Business Formation & Website Builder",
+        "description": "Your AI-Powered Business Formation Platform...",
+        "category": "Other",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": true
+        },
+        "lastModified": "2025-08-16T21:18:40.982Z"
+      },
+      {
+        "path": "auth/signup.html",
+        "relativePath": "auth/signup.html",
+        "title": "DreamSeed - Create Account",
+        "description": "Join DreamSeed Business Formation...",
+        "category": "Other",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": true,
+          "hasVAPI": false,
+          "hasAuth": true
+        },
+        "lastModified": "2025-08-16T21:18:40.982Z"
+      },
+      {
+        "path": "auth/login.html",
+        "relativePath": "auth/login.html",
+        "title": "DreamSeed - Login",
+        "description": "Business Formation Platform...",
+        "category": "Other",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": true,
+          "hasVAPI": false,
+          "hasAuth": true
+        },
+        "lastModified": "2025-08-16T21:18:40.983Z"
+      }
+    ],
+    "Home": [
+      {
+        "path": "index.html",
+        "relativePath": "index.html",
+        "title": "DreamSeed - VAPI Voice Platform",
+        "description": "AI-Powered Business Formation & Voice Consultations...",
+        "category": "Home",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": true
+        },
+        "lastModified": "2025-08-16T21:18:40.982Z"
+      }
+    ],
+    "Dashboards": [
+      {
+        "path": "dashboard.html",
+        "relativePath": "dashboard.html",
+        "title": "DreamSeed - Dashboard",
+        "description": "Loading your dashboard......",
+        "category": "Dashboards",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": true,
+          "hasVAPI": true,
+          "hasAuth": true
+        },
+        "lastModified": "2025-08-16T21:18:40.982Z"
+      },
+      {
+        "path": "customer-dashboard.html",
+        "relativePath": "customer-dashboard.html",
+        "title": "DreamSeed - Customer Dashboard",
+        "description": "Loading your dashboard......",
+        "category": "Dashboards",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": true,
+          "hasVAPI": true,
+          "hasAuth": true
+        },
+        "lastModified": "2025-08-16T21:18:40.982Z"
+      },
+      {
+        "path": "requirements-framework/templates/info-tracker-dashboard.html",
+        "relativePath": "requirements-framework/templates/info-tracker-dashboard.html",
+        "title": "DreamSeed - Customer Information Tracker",
+        "description": "Customer Information Completeness Tracker...",
+        "category": "Dashboards",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": false,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.983Z"
+      },
+      {
+        "path": "public/simple-vapi-webhook/web-call-dashboard.html",
+        "relativePath": "public/simple-vapi-webhook/web-call-dashboard.html",
+        "title": "DreamSeed Call Dashboard",
+        "description": "Initiate intelligent business formation calls from your browser...",
+        "category": "Dashboards",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.983Z"
+      },
+      {
+        "path": "public/simple-vapi-webhook/dashboard-test.html",
+        "relativePath": "public/simple-vapi-webhook/dashboard-test.html",
+        "title": "DreamSeed End-to-End Tester",
+        "description": "Test the complete requirements framework from transcript to customer tracking...",
+        "category": "Dashboards",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": false,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.985Z"
+      },
+      {
+        "path": "public/simple-vapi-webhook/customer-dashboard.html",
+        "relativePath": "public/simple-vapi-webhook/customer-dashboard.html",
+        "title": "DreamSeed - Your Business Formation Dashboard",
+        "description": "Continue your business formation journey with expert guidance....",
+        "category": "Dashboards",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.985Z"
+      },
+      {
+        "path": "public/simple-vapi-webhook/call-dashboard.html",
+        "relativePath": "public/simple-vapi-webhook/call-dashboard.html",
+        "title": "DreamSeed Call Dashboard",
+        "description": "Initiate business formation consultation calls...",
+        "category": "Dashboards",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.985Z"
+      },
+      {
+        "path": "public/simple-vapi-webhook/admin-dashboard.html",
+        "relativePath": "public/simple-vapi-webhook/admin-dashboard.html",
+        "title": "DreamSeed Admin - Customer Dashboard Links",
+        "description": "Generate personalized dashboard and call links for customers...",
+        "category": "Dashboards",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": false,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.985Z"
+      },
+      {
+        "path": "public/simple-vapi-webhook/dashboard.html",
+        "relativePath": "public/simple-vapi-webhook/dashboard.html",
+        "title": "DreamSeed - Unified Dashboard",
+        "description": "Complete view of customer dreams from voice AI to launched business...",
+        "category": "Dashboards",
+        "productionScore": 6,
+        "productionStatus": "🟡 Needs Minor Fixes",
+        "issues": [
+          "Not mobile-friendly",
+          "Missing meta tags",
+          "Not responsive",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": false,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": false,
+          "hasSupabase": false,
+          "hasVAPI": false,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:18:40.985Z"
+      }
+    ]
+  },
+  "breadcrumbs": true,
+  "search": true,
+  "productionFilter": true
+}
