@@ -433,10 +433,10 @@
             let filledFields = 0;
             const totalFields = 6; // vision, purpose, target, advantage, entity, timeline
             
-            if (data.visionStatement && data.visionStatement.length > 20) filledFields++;
-            if (data.corePurpose && data.corePurpose.length > 20) filledFields++;
-            if (data.targetMarket && data.targetMarket.length > 20) filledFields++;
-            if (data.competitiveAdvantage && data.competitiveAdvantage.length > 20) filledFields++;
+            if (data.visionStatement && data.visionStatement.length > 10) filledFields++;
+            if (data.corePurpose && data.corePurpose.length > 10) filledFields++;
+            if (data.targetMarket && data.targetMarket.length > 5) filledFields++;
+            if (data.competitiveAdvantage && data.competitiveAdvantage.length > 5) filledFields++;
             if (data.entityType) filledFields++;
             if (data.timeline) filledFields++;
             
@@ -445,9 +445,9 @@
             scoreCircle.style.setProperty('--score-deg', `${(score / 100) * 360}deg`);
             scoreCircle.textContent = `${score}%`;
             
-            // Enable continue button if score > 80%
+            // Enable continue button if score >= 70% (lowered threshold)
             const continueBtn = document.getElementById('continueBtn');
-            continueBtn.disabled = score < 80;
+            continueBtn.disabled = score < 70;
             
             return score;
         }
@@ -486,8 +486,8 @@
             // Calculate completeness score
             dreamData.completenessScore = updateCompletenessScore();
             
-            if (dreamData.completenessScore < 80) {
-                alert('Please complete more fields to continue (need 80% completion)');
+            if (dreamData.completenessScore < 70) {
+                alert('Please complete more fields to continue (need 70% completion)');
                 return;
             }
             

@@ -25,7 +25,7 @@
           "hasVAPI": false,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.328Z"
+        "lastModified": "2025-08-16T21:55:01.341Z"
       }
     ],
     "Voice Interface": [
@@ -53,7 +53,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.327Z"
+        "lastModified": "2025-08-16T21:55:01.340Z"
       },
       {
         "path": "working-vapi-call.html",
@@ -80,7 +80,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.325Z"
+        "lastModified": "2025-08-16T21:55:01.339Z"
       },
       {
         "path": "web-voice-working.html",
@@ -107,7 +107,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.325Z"
+        "lastModified": "2025-08-16T21:55:01.339Z"
       },
       {
         "path": "web-voice-widget.html",
@@ -134,7 +134,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.325Z"
+        "lastModified": "2025-08-16T21:55:01.339Z"
       },
       {
         "path": "web-voice-widget-standalone.html",
@@ -161,7 +161,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.326Z"
+        "lastModified": "2025-08-16T21:55:01.339Z"
       },
       {
         "path": "web-voice-vapi-direct.html",
@@ -188,7 +188,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.326Z"
+        "lastModified": "2025-08-16T21:55:01.339Z"
       },
       {
         "path": "web-voice-simple.html",
@@ -215,7 +215,7 @@
           "hasVAPI": false,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.326Z"
+        "lastModified": "2025-08-16T21:55:01.340Z"
       },
       {
         "path": "web-voice-natural.html",
@@ -242,7 +242,7 @@
           "hasVAPI": false,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.326Z"
+        "lastModified": "2025-08-16T21:55:01.340Z"
       },
       {
         "path": "web-voice-direct.html",
@@ -269,7 +269,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.326Z"
+        "lastModified": "2025-08-16T21:55:01.340Z"
       },
       {
         "path": "web-voice-call.html",
@@ -296,7 +296,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.326Z"
+        "lastModified": "2025-08-16T21:55:01.340Z"
       },
       {
         "path": "web-voice-call-import.html",
@@ -323,7 +323,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.326Z"
+        "lastModified": "2025-08-16T21:55:01.340Z"
       },
       {
         "path": "voice-call-enhanced.html",
@@ -350,7 +350,7 @@
           "hasVAPI": true,
           "hasAuth": true
         },
-        "lastModified": "2025-08-16T21:35:08.327Z"
+        "lastModified": "2025-08-16T21:55:01.341Z"
       },
       {
         "path": "voice-call-direct.html",
@@ -377,7 +377,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.327Z"
+        "lastModified": "2025-08-16T21:55:01.341Z"
       },
       {
         "path": "voice-call-browser.html",
@@ -404,7 +404,7 @@
           "hasVAPI": false,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.327Z"
+        "lastModified": "2025-08-16T21:55:01.341Z"
       },
       {
         "path": "vapi-voice-final.html",
@@ -431,7 +431,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.327Z"
+        "lastModified": "2025-08-16T21:55:01.341Z"
       },
       {
         "path": "simple-call-test.html",
@@ -458,7 +458,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.328Z"
+        "lastModified": "2025-08-16T21:55:01.341Z"
       },
       {
         "path": "public/simple-vapi-webhook/web-call-proxy.html",
@@ -485,7 +485,7 @@
           "hasVAPI": false,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.329Z"
+        "lastModified": "2025-08-16T21:55:01.343Z"
       },
       {
         "path": "public/simple-vapi-webhook/web-call-fixed.html",
@@ -512,7 +512,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.329Z"
+        "lastModified": "2025-08-16T21:55:01.343Z"
       },
       {
         "path": "public/simple-vapi-webhook/web-call-debug.html",
@@ -539,7 +539,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.329Z"
+        "lastModified": "2025-08-16T21:55:01.343Z"
       },
       {
         "path": "public/simple-vapi-webhook/web-call-button.html",
@@ -566,7 +566,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.329Z"
+        "lastModified": "2025-08-16T21:55:01.343Z"
       },
       {
         "path": "public/simple-vapi-webhook/vapi-fix-guide.html",
@@ -593,7 +593,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.329Z"
+        "lastModified": "2025-08-16T21:55:01.343Z"
       },
       {
         "path": "public/simple-vapi-webhook/test-interface.html",
@@ -620,7 +620,7 @@
           "hasVAPI": false,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.330Z"
+        "lastModified": "2025-08-16T21:55:01.343Z"
       },
       {
         "path": "public/simple-vapi-webhook/system-home.html",
@@ -647,7 +647,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.330Z"
+        "lastModified": "2025-08-16T21:55:01.343Z"
       },
       {
         "path": "public/simple-vapi-webhook/stage-monitor.html",
@@ -674,7 +674,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.330Z"
+        "lastModified": "2025-08-16T21:55:01.344Z"
       },
       {
         "path": "public/simple-vapi-webhook/info-tracker.html",
@@ -701,7 +701,7 @@
           "hasVAPI": false,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.330Z"
+        "lastModified": "2025-08-16T21:55:01.344Z"
       },
       {
         "path": "public/simple-vapi-webhook/index.html",
@@ -728,7 +728,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.330Z"
+        "lastModified": "2025-08-16T21:55:01.344Z"
       },
       {
         "path": "public/simple-vapi-webhook/inbound-call-tester.html",
@@ -755,7 +755,7 @@
           "hasVAPI": false,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.330Z"
+        "lastModified": "2025-08-16T21:55:01.344Z"
       },
       {
         "path": "public/simple-vapi-webhook/customer-onboarding-form.html",
@@ -782,7 +782,7 @@
           "hasVAPI": false,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.331Z"
+        "lastModified": "2025-08-16T21:55:01.344Z"
       }
     ],
     "Dashboards": [
@@ -811,7 +811,7 @@
           "hasVAPI": true,
           "hasAuth": true
         },
-        "lastModified": "2025-08-16T21:35:08.328Z"
+        "lastModified": "2025-08-16T21:55:01.342Z"
       },
       {
         "path": "customer-dashboard.html",
@@ -838,142 +838,7 @@
           "hasVAPI": true,
           "hasAuth": true
         },
-        "lastModified": "2025-08-16T21:35:08.328Z"
-      },
-      {
-        "path": "public/simple-vapi-webhook/web-call-dashboard.html",
-        "relativePath": "public/simple-vapi-webhook/web-call-dashboard.html",
-        "title": "DreamSeed Call Dashboard",
-        "description": "Initiate intelligent business formation calls from your browser...",
-        "category": "Dashboards",
-        "productionScore": 8,
-        "productionStatus": "🟢 Production Ready",
-        "issues": [
-          "Missing meta tags",
-          "Missing footer"
-        ],
-        "features": {
-          "hasNavigation": true,
-          "hasHeader": true,
-          "hasFooter": false,
-          "hasMetaTags": false,
-          "hasViewport": true,
-          "hasCSS": true,
-          "hasJS": true,
-          "isResponsive": true,
-          "hasSupabase": false,
-          "hasVAPI": true,
-          "hasAuth": false
-        },
-        "lastModified": "2025-08-16T21:35:08.329Z"
-      },
-      {
-        "path": "public/simple-vapi-webhook/dashboard-test.html",
-        "relativePath": "public/simple-vapi-webhook/dashboard-test.html",
-        "title": "DreamSeed End-to-End Tester",
-        "description": "Test the complete requirements framework from transcript to customer tracking...",
-        "category": "Dashboards",
-        "productionScore": 8,
-        "productionStatus": "🟢 Production Ready",
-        "issues": [
-          "Missing meta tags",
-          "Missing footer"
-        ],
-        "features": {
-          "hasNavigation": true,
-          "hasHeader": true,
-          "hasFooter": false,
-          "hasMetaTags": false,
-          "hasViewport": true,
-          "hasCSS": true,
-          "hasJS": true,
-          "isResponsive": true,
-          "hasSupabase": false,
-          "hasVAPI": false,
-          "hasAuth": false
-        },
-        "lastModified": "2025-08-16T21:35:08.331Z"
-      },
-      {
-        "path": "public/simple-vapi-webhook/customer-dashboard.html",
-        "relativePath": "public/simple-vapi-webhook/customer-dashboard.html",
-        "title": "DreamSeed - Your Business Formation Dashboard",
-        "description": "Continue your business formation journey with expert guidance....",
-        "category": "Dashboards",
-        "productionScore": 8,
-        "productionStatus": "🟢 Production Ready",
-        "issues": [
-          "Missing meta tags",
-          "Missing footer"
-        ],
-        "features": {
-          "hasNavigation": true,
-          "hasHeader": true,
-          "hasFooter": false,
-          "hasMetaTags": false,
-          "hasViewport": true,
-          "hasCSS": true,
-          "hasJS": true,
-          "isResponsive": true,
-          "hasSupabase": false,
-          "hasVAPI": true,
-          "hasAuth": false
-        },
-        "lastModified": "2025-08-16T21:35:08.331Z"
-      },
-      {
-        "path": "public/simple-vapi-webhook/call-dashboard.html",
-        "relativePath": "public/simple-vapi-webhook/call-dashboard.html",
-        "title": "DreamSeed Call Dashboard",
-        "description": "Initiate business formation consultation calls...",
-        "category": "Dashboards",
-        "productionScore": 8,
-        "productionStatus": "🟢 Production Ready",
-        "issues": [
-          "Missing meta tags",
-          "Missing footer"
-        ],
-        "features": {
-          "hasNavigation": true,
-          "hasHeader": true,
-          "hasFooter": false,
-          "hasMetaTags": false,
-          "hasViewport": true,
-          "hasCSS": true,
-          "hasJS": true,
-          "isResponsive": true,
-          "hasSupabase": false,
-          "hasVAPI": true,
-          "hasAuth": false
-        },
-        "lastModified": "2025-08-16T21:35:08.331Z"
-      },
-      {
-        "path": "public/simple-vapi-webhook/admin-dashboard.html",
-        "relativePath": "public/simple-vapi-webhook/admin-dashboard.html",
-        "title": "DreamSeed Admin - Customer Dashboard Links",
-        "description": "Generate personalized dashboard and call links for customers...",
-        "category": "Dashboards",
-        "productionScore": 8,
-        "productionStatus": "🟢 Production Ready",
-        "issues": [
-          "Missing meta tags",
-          "Missing footer"
-        ],
-        "features": {
-          "hasNavigation": true,
-          "hasHeader": true,
-          "hasFooter": false,
-          "hasMetaTags": false,
-          "hasViewport": true,
-          "hasCSS": true,
-          "hasJS": true,
-          "isResponsive": true,
-          "hasSupabase": false,
-          "hasVAPI": false,
-          "hasAuth": false
-        },
-        "lastModified": "2025-08-16T21:35:08.331Z"
+        "lastModified": "2025-08-16T21:55:01.342Z"
       },
       {
         "path": "requirements-framework/templates/info-tracker-dashboard.html",
@@ -1000,7 +865,142 @@
           "hasVAPI": false,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.331Z"
+        "lastModified": "2025-08-16T21:55:01.342Z"
+      },
+      {
+        "path": "public/simple-vapi-webhook/web-call-dashboard.html",
+        "relativePath": "public/simple-vapi-webhook/web-call-dashboard.html",
+        "title": "DreamSeed Call Dashboard",
+        "description": "Initiate intelligent business formation calls from your browser...",
+        "category": "Dashboards",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:55:01.343Z"
+      },
+      {
+        "path": "public/simple-vapi-webhook/dashboard-test.html",
+        "relativePath": "public/simple-vapi-webhook/dashboard-test.html",
+        "title": "DreamSeed End-to-End Tester",
+        "description": "Test the complete requirements framework from transcript to customer tracking...",
+        "category": "Dashboards",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": false,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:55:01.344Z"
+      },
+      {
+        "path": "public/simple-vapi-webhook/customer-dashboard.html",
+        "relativePath": "public/simple-vapi-webhook/customer-dashboard.html",
+        "title": "DreamSeed - Your Business Formation Dashboard",
+        "description": "Continue your business formation journey with expert guidance....",
+        "category": "Dashboards",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:55:01.345Z"
+      },
+      {
+        "path": "public/simple-vapi-webhook/call-dashboard.html",
+        "relativePath": "public/simple-vapi-webhook/call-dashboard.html",
+        "title": "DreamSeed Call Dashboard",
+        "description": "Initiate business formation consultation calls...",
+        "category": "Dashboards",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:55:01.345Z"
+      },
+      {
+        "path": "public/simple-vapi-webhook/admin-dashboard.html",
+        "relativePath": "public/simple-vapi-webhook/admin-dashboard.html",
+        "title": "DreamSeed Admin - Customer Dashboard Links",
+        "description": "Generate personalized dashboard and call links for customers...",
+        "category": "Dashboards",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": false,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:55:01.345Z"
       },
       {
         "path": "public/simple-vapi-webhook/dashboard.html",
@@ -1029,7 +1029,7 @@
           "hasVAPI": false,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.330Z"
+        "lastModified": "2025-08-16T21:55:01.344Z"
       }
     ]
   },
@@ -1059,7 +1059,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.327Z"
+        "lastModified": "2025-08-16T21:55:01.340Z"
       },
       {
         "path": "working-vapi-call.html",
@@ -1086,7 +1086,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.325Z"
+        "lastModified": "2025-08-16T21:55:01.339Z"
       },
       {
         "path": "web-voice-working.html",
@@ -1113,7 +1113,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.325Z"
+        "lastModified": "2025-08-16T21:55:01.339Z"
       },
       {
         "path": "web-voice-widget.html",
@@ -1140,7 +1140,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.325Z"
+        "lastModified": "2025-08-16T21:55:01.339Z"
       },
       {
         "path": "web-voice-widget-standalone.html",
@@ -1167,7 +1167,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.326Z"
+        "lastModified": "2025-08-16T21:55:01.339Z"
       },
       {
         "path": "web-voice-vapi-direct.html",
@@ -1194,7 +1194,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.326Z"
+        "lastModified": "2025-08-16T21:55:01.339Z"
       },
       {
         "path": "web-voice-simple.html",
@@ -1221,7 +1221,7 @@
           "hasVAPI": false,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.326Z"
+        "lastModified": "2025-08-16T21:55:01.340Z"
       },
       {
         "path": "web-voice-natural.html",
@@ -1248,7 +1248,7 @@
           "hasVAPI": false,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.326Z"
+        "lastModified": "2025-08-16T21:55:01.340Z"
       },
       {
         "path": "web-voice-direct.html",
@@ -1275,7 +1275,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.326Z"
+        "lastModified": "2025-08-16T21:55:01.340Z"
       },
       {
         "path": "web-voice-call.html",
@@ -1302,7 +1302,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.326Z"
+        "lastModified": "2025-08-16T21:55:01.340Z"
       },
       {
         "path": "web-voice-call-import.html",
@@ -1329,7 +1329,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.326Z"
+        "lastModified": "2025-08-16T21:55:01.340Z"
       },
       {
         "path": "voice-call-enhanced.html",
@@ -1356,7 +1356,7 @@
           "hasVAPI": true,
           "hasAuth": true
         },
-        "lastModified": "2025-08-16T21:35:08.327Z"
+        "lastModified": "2025-08-16T21:55:01.341Z"
       },
       {
         "path": "voice-call-direct.html",
@@ -1383,7 +1383,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.327Z"
+        "lastModified": "2025-08-16T21:55:01.341Z"
       },
       {
         "path": "voice-call-browser.html",
@@ -1410,7 +1410,7 @@
           "hasVAPI": false,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.327Z"
+        "lastModified": "2025-08-16T21:55:01.341Z"
       },
       {
         "path": "vapi-voice-final.html",
@@ -1437,7 +1437,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.327Z"
+        "lastModified": "2025-08-16T21:55:01.341Z"
       },
       {
         "path": "simple-call-test.html",
@@ -1464,7 +1464,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.328Z"
+        "lastModified": "2025-08-16T21:55:01.341Z"
       },
       {
         "path": "public/simple-vapi-webhook/web-call-proxy.html",
@@ -1491,7 +1491,7 @@
           "hasVAPI": false,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.329Z"
+        "lastModified": "2025-08-16T21:55:01.343Z"
       },
       {
         "path": "public/simple-vapi-webhook/web-call-fixed.html",
@@ -1518,7 +1518,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.329Z"
+        "lastModified": "2025-08-16T21:55:01.343Z"
       },
       {
         "path": "public/simple-vapi-webhook/web-call-debug.html",
@@ -1545,7 +1545,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.329Z"
+        "lastModified": "2025-08-16T21:55:01.343Z"
       },
       {
         "path": "public/simple-vapi-webhook/web-call-button.html",
@@ -1572,7 +1572,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.329Z"
+        "lastModified": "2025-08-16T21:55:01.343Z"
       },
       {
         "path": "public/simple-vapi-webhook/vapi-fix-guide.html",
@@ -1599,7 +1599,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.329Z"
+        "lastModified": "2025-08-16T21:55:01.343Z"
       },
       {
         "path": "public/simple-vapi-webhook/test-interface.html",
@@ -1626,7 +1626,7 @@
           "hasVAPI": false,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.330Z"
+        "lastModified": "2025-08-16T21:55:01.343Z"
       },
       {
         "path": "public/simple-vapi-webhook/system-home.html",
@@ -1653,7 +1653,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.330Z"
+        "lastModified": "2025-08-16T21:55:01.343Z"
       },
       {
         "path": "public/simple-vapi-webhook/stage-monitor.html",
@@ -1680,7 +1680,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.330Z"
+        "lastModified": "2025-08-16T21:55:01.344Z"
       },
       {
         "path": "public/simple-vapi-webhook/info-tracker.html",
@@ -1707,7 +1707,7 @@
           "hasVAPI": false,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.330Z"
+        "lastModified": "2025-08-16T21:55:01.344Z"
       },
       {
         "path": "public/simple-vapi-webhook/index.html",
@@ -1734,7 +1734,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.330Z"
+        "lastModified": "2025-08-16T21:55:01.344Z"
       },
       {
         "path": "public/simple-vapi-webhook/inbound-call-tester.html",
@@ -1761,7 +1761,7 @@
           "hasVAPI": false,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.330Z"
+        "lastModified": "2025-08-16T21:55:01.344Z"
       },
       {
         "path": "public/simple-vapi-webhook/customer-onboarding-form.html",
@@ -1788,7 +1788,7 @@
           "hasVAPI": false,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.331Z"
+        "lastModified": "2025-08-16T21:55:01.344Z"
       }
     ],
     "Other": [
@@ -1816,7 +1816,7 @@
           "hasVAPI": false,
           "hasAuth": true
         },
-        "lastModified": "2025-08-16T21:35:08.325Z"
+        "lastModified": "2025-08-16T21:55:01.339Z"
       },
       {
         "path": "sitemap.html",
@@ -1842,7 +1842,7 @@
           "hasVAPI": true,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.328Z"
+        "lastModified": "2025-08-16T21:55:01.341Z"
       },
       {
         "path": "onboarding.html",
@@ -1868,7 +1868,7 @@
           "hasVAPI": false,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.328Z"
+        "lastModified": "2025-08-16T21:55:01.341Z"
       },
       {
         "path": "dream-builder.html",
@@ -1894,7 +1894,7 @@
           "hasVAPI": false,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.328Z"
+        "lastModified": "2025-08-16T21:55:01.342Z"
       },
       {
         "path": "index-full.html",
@@ -1921,7 +1921,7 @@
           "hasVAPI": true,
           "hasAuth": true
         },
-        "lastModified": "2025-08-16T21:35:08.328Z"
+        "lastModified": "2025-08-16T21:55:01.341Z"
       },
       {
         "path": "auth/signup.html",
@@ -1948,7 +1948,7 @@
           "hasVAPI": false,
           "hasAuth": true
         },
-        "lastModified": "2025-08-16T21:35:08.329Z"
+        "lastModified": "2025-08-16T21:55:01.342Z"
       },
       {
         "path": "auth/login.html",
@@ -1975,7 +1975,7 @@
           "hasVAPI": false,
           "hasAuth": true
         },
-        "lastModified": "2025-08-16T21:35:08.329Z"
+        "lastModified": "2025-08-16T21:55:01.342Z"
       }
     ],
     "Testing/Debug": [
@@ -2004,7 +2004,7 @@
           "hasVAPI": false,
           "hasAuth": true
         },
-        "lastModified": "2025-08-16T21:35:08.328Z"
+        "lastModified": "2025-08-16T21:55:01.342Z"
       },
       {
         "path": "test-database-direct.html",
@@ -2034,7 +2034,7 @@
           "hasVAPI": false,
           "hasAuth": true
         },
-        "lastModified": "2025-08-16T21:35:08.327Z"
+        "lastModified": "2025-08-16T21:55:01.341Z"
       },
       {
         "path": "test-auth-simple.html",
@@ -2064,7 +2064,7 @@
           "hasVAPI": false,
           "hasAuth": true
         },
-        "lastModified": "2025-08-16T21:35:08.327Z"
+        "lastModified": "2025-08-16T21:55:01.341Z"
       }
     ],
     "Home": [
@@ -2092,7 +2092,7 @@
           "hasVAPI": false,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.328Z"
+        "lastModified": "2025-08-16T21:55:01.341Z"
       }
     ],
     "Dashboards": [
@@ -2121,7 +2121,7 @@
           "hasVAPI": true,
           "hasAuth": true
         },
-        "lastModified": "2025-08-16T21:35:08.328Z"
+        "lastModified": "2025-08-16T21:55:01.342Z"
       },
       {
         "path": "customer-dashboard.html",
@@ -2148,142 +2148,7 @@
           "hasVAPI": true,
           "hasAuth": true
         },
-        "lastModified": "2025-08-16T21:35:08.328Z"
-      },
-      {
-        "path": "public/simple-vapi-webhook/web-call-dashboard.html",
-        "relativePath": "public/simple-vapi-webhook/web-call-dashboard.html",
-        "title": "DreamSeed Call Dashboard",
-        "description": "Initiate intelligent business formation calls from your browser...",
-        "category": "Dashboards",
-        "productionScore": 8,
-        "productionStatus": "🟢 Production Ready",
-        "issues": [
-          "Missing meta tags",
-          "Missing footer"
-        ],
-        "features": {
-          "hasNavigation": true,
-          "hasHeader": true,
-          "hasFooter": false,
-          "hasMetaTags": false,
-          "hasViewport": true,
-          "hasCSS": true,
-          "hasJS": true,
-          "isResponsive": true,
-          "hasSupabase": false,
-          "hasVAPI": true,
-          "hasAuth": false
-        },
-        "lastModified": "2025-08-16T21:35:08.329Z"
-      },
-      {
-        "path": "public/simple-vapi-webhook/dashboard-test.html",
-        "relativePath": "public/simple-vapi-webhook/dashboard-test.html",
-        "title": "DreamSeed End-to-End Tester",
-        "description": "Test the complete requirements framework from transcript to customer tracking...",
-        "category": "Dashboards",
-        "productionScore": 8,
-        "productionStatus": "🟢 Production Ready",
-        "issues": [
-          "Missing meta tags",
-          "Missing footer"
-        ],
-        "features": {
-          "hasNavigation": true,
-          "hasHeader": true,
-          "hasFooter": false,
-          "hasMetaTags": false,
-          "hasViewport": true,
-          "hasCSS": true,
-          "hasJS": true,
-          "isResponsive": true,
-          "hasSupabase": false,
-          "hasVAPI": false,
-          "hasAuth": false
-        },
-        "lastModified": "2025-08-16T21:35:08.331Z"
-      },
-      {
-        "path": "public/simple-vapi-webhook/customer-dashboard.html",
-        "relativePath": "public/simple-vapi-webhook/customer-dashboard.html",
-        "title": "DreamSeed - Your Business Formation Dashboard",
-        "description": "Continue your business formation journey with expert guidance....",
-        "category": "Dashboards",
-        "productionScore": 8,
-        "productionStatus": "🟢 Production Ready",
-        "issues": [
-          "Missing meta tags",
-          "Missing footer"
-        ],
-        "features": {
-          "hasNavigation": true,
-          "hasHeader": true,
-          "hasFooter": false,
-          "hasMetaTags": false,
-          "hasViewport": true,
-          "hasCSS": true,
-          "hasJS": true,
-          "isResponsive": true,
-          "hasSupabase": false,
-          "hasVAPI": true,
-          "hasAuth": false
-        },
-        "lastModified": "2025-08-16T21:35:08.331Z"
-      },
-      {
-        "path": "public/simple-vapi-webhook/call-dashboard.html",
-        "relativePath": "public/simple-vapi-webhook/call-dashboard.html",
-        "title": "DreamSeed Call Dashboard",
-        "description": "Initiate business formation consultation calls...",
-        "category": "Dashboards",
-        "productionScore": 8,
-        "productionStatus": "🟢 Production Ready",
-        "issues": [
-          "Missing meta tags",
-          "Missing footer"
-        ],
-        "features": {
-          "hasNavigation": true,
-          "hasHeader": true,
-          "hasFooter": false,
-          "hasMetaTags": false,
-          "hasViewport": true,
-          "hasCSS": true,
-          "hasJS": true,
-          "isResponsive": true,
-          "hasSupabase": false,
-          "hasVAPI": true,
-          "hasAuth": false
-        },
-        "lastModified": "2025-08-16T21:35:08.331Z"
-      },
-      {
-        "path": "public/simple-vapi-webhook/admin-dashboard.html",
-        "relativePath": "public/simple-vapi-webhook/admin-dashboard.html",
-        "title": "DreamSeed Admin - Customer Dashboard Links",
-        "description": "Generate personalized dashboard and call links for customers...",
-        "category": "Dashboards",
-        "productionScore": 8,
-        "productionStatus": "🟢 Production Ready",
-        "issues": [
-          "Missing meta tags",
-          "Missing footer"
-        ],
-        "features": {
-          "hasNavigation": true,
-          "hasHeader": true,
-          "hasFooter": false,
-          "hasMetaTags": false,
-          "hasViewport": true,
-          "hasCSS": true,
-          "hasJS": true,
-          "isResponsive": true,
-          "hasSupabase": false,
-          "hasVAPI": false,
-          "hasAuth": false
-        },
-        "lastModified": "2025-08-16T21:35:08.331Z"
+        "lastModified": "2025-08-16T21:55:01.342Z"
       },
       {
         "path": "requirements-framework/templates/info-tracker-dashboard.html",
@@ -2310,7 +2175,142 @@
           "hasVAPI": false,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.331Z"
+        "lastModified": "2025-08-16T21:55:01.342Z"
+      },
+      {
+        "path": "public/simple-vapi-webhook/web-call-dashboard.html",
+        "relativePath": "public/simple-vapi-webhook/web-call-dashboard.html",
+        "title": "DreamSeed Call Dashboard",
+        "description": "Initiate intelligent business formation calls from your browser...",
+        "category": "Dashboards",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:55:01.343Z"
+      },
+      {
+        "path": "public/simple-vapi-webhook/dashboard-test.html",
+        "relativePath": "public/simple-vapi-webhook/dashboard-test.html",
+        "title": "DreamSeed End-to-End Tester",
+        "description": "Test the complete requirements framework from transcript to customer tracking...",
+        "category": "Dashboards",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": false,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:55:01.344Z"
+      },
+      {
+        "path": "public/simple-vapi-webhook/customer-dashboard.html",
+        "relativePath": "public/simple-vapi-webhook/customer-dashboard.html",
+        "title": "DreamSeed - Your Business Formation Dashboard",
+        "description": "Continue your business formation journey with expert guidance....",
+        "category": "Dashboards",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:55:01.345Z"
+      },
+      {
+        "path": "public/simple-vapi-webhook/call-dashboard.html",
+        "relativePath": "public/simple-vapi-webhook/call-dashboard.html",
+        "title": "DreamSeed Call Dashboard",
+        "description": "Initiate business formation consultation calls...",
+        "category": "Dashboards",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": true,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:55:01.345Z"
+      },
+      {
+        "path": "public/simple-vapi-webhook/admin-dashboard.html",
+        "relativePath": "public/simple-vapi-webhook/admin-dashboard.html",
+        "title": "DreamSeed Admin - Customer Dashboard Links",
+        "description": "Generate personalized dashboard and call links for customers...",
+        "category": "Dashboards",
+        "productionScore": 8,
+        "productionStatus": "🟢 Production Ready",
+        "issues": [
+          "Missing meta tags",
+          "Missing footer"
+        ],
+        "features": {
+          "hasNavigation": true,
+          "hasHeader": true,
+          "hasFooter": false,
+          "hasMetaTags": false,
+          "hasViewport": true,
+          "hasCSS": true,
+          "hasJS": true,
+          "isResponsive": true,
+          "hasSupabase": false,
+          "hasVAPI": false,
+          "hasAuth": false
+        },
+        "lastModified": "2025-08-16T21:55:01.345Z"
       },
       {
         "path": "public/simple-vapi-webhook/dashboard.html",
@@ -2339,7 +2339,7 @@
           "hasVAPI": false,
           "hasAuth": false
         },
-        "lastModified": "2025-08-16T21:35:08.330Z"
+        "lastModified": "2025-08-16T21:55:01.344Z"
       }
     ]
   },

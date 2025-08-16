@@ -373,13 +373,20 @@
             </div>
             
             <div class="voice-interface">
-                <button id="voiceButton" class="voice-button" onclick="startVoiceConsultation()">
-                    <span id="voiceIcon">🎤</span>
-                    <span id="voiceText">Start Voice Consultation</span>
-                </button>
+                <!-- VAPI Widget - Simple and reliable -->
+                <div style="margin: 2rem 0;">
+                    <vapi-widget 
+                        public-key="3359a2eb-02e4-4f31-a5aa-37c2a020a395"
+                        assistant-id="af397e88-c286-416f-9f74-e7665401bdb7"
+                        show-public-key-invalid-message="false"
+                        button-label="🎤 Start Voice Consultation"
+                        show-widget-assistant-id="false"
+                        style="margin: 2rem auto; display: block;">
+                    </vapi-widget>
+                </div>
                 
                 <div class="voice-status" id="voiceStatus">
-                    Ready to start your consultation. Click the button above to begin.
+                    Ready to start your consultation. Click the voice button above to begin speaking with our AI consultant.
                 </div>
             </div>
             
@@ -415,6 +422,12 @@
                     Go to Dashboard →
                 </a>
             </div>
+            
+            <!-- Debug Panel -->
+            <div style="background: rgba(0,0,0,0.5); padding: 1rem; border-radius: 10px; margin-top: 2rem; font-family: monospace; font-size: 0.8rem;">
+                <div style="color: #ffc107; margin-bottom: 0.5rem;">🔧 Debug Information:</div>
+                <div id="debugLog">Loading debug info...</div>
+            </div>
         </div>
     </div>
 
@@ -422,6 +435,29 @@
         let voiceActive = false;
         let consultationType = 'guided';
         let currentStage = 1;
+        let debugMessages = [];
+        
+        // Debug logging function
+        function debugLog(message, isError = false) {
+            const timestamp = new Date().toLocaleTimeString();
+            const logMessage = `[${timestamp}] ${message}`;
+            
+            if (isError) {
+                console.error(logMessage);
+            } else {
+                console.log(logMessage);
+            }
+            
+            debugMessages.push(logMessage);
+            if (debugMessages.length > 10) {
+                debugMessages.shift(); // Keep only last 10 messages
+            }
+            
+            const debugEl = document.getElementById('debugLog');
+            if (debugEl) {
+                debugEl.innerHTML = debugMessages.join('<br>');
+            }
+        }
         
         // Load user data and populate summary
         function loadUserSummary() {
@@ -497,43 +533,8 @@
             }
         }
         
-        function startVoiceConsultation() {
-            const button = document.getElementById('voiceButton');
-            const status = document.getElementById('voiceStatus');
-            const icon = document.getElementById('voiceIcon');
-            
-            if (!voiceActive) {
-                // Start voice consultation
-                voiceActive = true;
-                button.classList.add('active');
-                button.disabled = true;
-                icon.textContent = '🔊';
-                document.getElementById('voiceText').textContent = 'Connecting...';
-                status.textContent = 'Connecting to AI consultant...';
-                
-                // Simulate connection process
-                setTimeout(() => {
-                    status.textContent = 'Connected! You can start speaking now.';
-                    document.getElementById('voiceText').textContent = 'Speaking...';
-                    
-                    // Prepare user context for VAPI
-                    const userContext = prepareUserContext();
-                    
-                    // In a real implementation, this would initialize VAPI
-                    initializeVAPI(userContext);
-                    
-                }, 2000);
-                
-                // Simulate consultation completion
-                setTimeout(() => {
-                    completeConsultation();
-                }, 30000); // 30 seconds for demo
-                
-            } else {
-                // End consultation
-                endConsultation();
-            }
-        }
+        // Voice consultation now handled by VAPI widget
+        // The widget automatically handles call start/stop
         
         function prepareUserContext() {
             const userData = JSON.parse(localStorage.getItem('dreamSeedUserData') || '{}');
@@ -567,30 +568,14 @@
             };
         }
         
-        function initializeVAPI(userContext) {
-            // This would be the actual VAPI initialization
-            console.log('VAPI Context:', userContext);
-            
-            // For demo purposes, we'll show the consultation is active
-            // In production, this would call VAPI SDK with the user context
-            
-            // Example of what would happen:
-            // vapi.start({
-            //     assistantId: getAssistantId(userContext),
-            //     metadata: userContext
-            // });
-        }
+        // initializeVAPI no longer needed - VAPI widget handles everything
         
         function completeConsultation() {
             const status = document.getElementById('voiceStatus');
-            const button = document.getElementById('voiceButton');
             const dashboardBtn = document.getElementById('dashboardBtn');
             
+            debugLog('✅ Consultation completed');
             status.textContent = `Stage ${currentStage} consultation completed! Ready for next step.`;
-            button.classList.remove('active');
-            button.disabled = false;
-            document.getElementById('voiceIcon').textContent = '✅';
-            document.getElementById('voiceText').textContent = 'Consultation Complete';
             
             // Update progress
             currentStage++;
@@ -610,34 +595,80 @@
             dashboardBtn.style.display = 'inline-block';
         }
         
-        function endConsultation() {
-            voiceActive = false;
-            const button = document.getElementById('voiceButton');
-            const status = document.getElementById('voiceStatus');
-            
-            button.classList.remove('active');
-            button.disabled = false;
-            document.getElementById('voiceIcon').textContent = '🎤';
-            updateVoiceButtonText();
-            status.textContent = 'Consultation ended. You can start again anytime.';
-        }
-        
         // Initialize page
         window.addEventListener('DOMContentLoaded', function() {
+            debugLog('🚀 Page loaded, initializing...');
             loadUserSummary();
             updateVoiceButtonText();
             
             // Check if user has no data (direct access)
             const userData = JSON.parse(localStorage.getItem('dreamSeedUserData') || '{}');
             if (!userData.firstName) {
+                debugLog('⚠️ No user data found, showing redirect prompt');
                 // Redirect to onboarding if no user data
                 if (confirm('No user data found. Would you like to start the onboarding process?')) {
                     window.location.href = '/welcome.html';
                 }
+            } else {
+                debugLog('✅ User data found: ' + userData.firstName);
             }
         });
     </script>
 
+    <!-- VAPI Widget Script -->
+    <script
+        src="https://unpkg.com/@vapi-ai/client-sdk-react/dist/embed/widget.umd.js"
+        async
+        type="text/javascript">
+    </script>
+    
+    <script>
+        window.addEventListener('DOMContentLoaded', function() {
+            debugLog('🚀 Page loaded with VAPI widget');
+            
+            // Check if VAPI widget loads properly
+            setTimeout(() => {
+                const widget = document.querySelector('vapi-widget');
+                
+                if (widget && widget.shadowRoot) {
+                    debugLog('✅ VAPI Widget found and configured');
+                    
+                    // Listen to widget events
+                    widget.addEventListener('call-start', function() {
+                        debugLog('🎤 Voice call started');
+                        document.getElementById('voiceStatus').textContent = 'Call connected! You can start speaking now.';
+                        updateStageForCallStart();
+                    });
+                    
+                    widget.addEventListener('call-end', function() {
+                        debugLog('📞 Voice call ended');
+                        document.getElementById('voiceStatus').textContent = 'Call ended. Thank you for speaking with us!';
+                        completeConsultation();
+                    });
+                    
+                    widget.addEventListener('error', function(event) {
+                        debugLog('❌ VAPI Widget error: ' + (event.detail?.message || 'Unknown error'), true);
+                        document.getElementById('voiceStatus').textContent = 'Connection error. Please try again.';
+                    });
+                    
+                } else {
+                    debugLog('⚠️ VAPI Widget not found, may still be loading...', true);
+                    document.getElementById('voiceStatus').textContent = 'Voice system loading... Please wait a moment.';
+                }
+            }, 3000); // Wait 3 seconds for widget to load
+        });
+        
+        function updateStageForCallStart() {
+            // Update current stage when call starts
+            const userProfile = JSON.parse(localStorage.getItem('dreamSeedProfile') || '{}');
+            if (!userProfile.call_1_started) {
+                userProfile.call_1_started = true;
+                userProfile.call_1_started_at = new Date().toISOString();
+                localStorage.setItem('dreamSeedProfile', JSON.stringify(userProfile));
+            }
+        }
+    </script>
+    
     <!-- DreamSeed Unified Navigation -->
     <script src="/components/unified-header.js"></script>
 </body>
