@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DreamSeed - Voice Assistant (Standalone)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        
+        .container {
+            background: rgba(255,255,255,0.1);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+        
+        .widget-container {
+            background: rgba(255,255,255,0.1);
+            padding: 40px;
+            border-radius: 20px;
+            margin: 30px 0;
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+        
+        .note {
+            background: rgba(39, 174, 96, 0.2);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border: 1px solid rgba(39, 174, 96, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎤 DreamSeed Voice Assistant</h1>
+        <p>Natural conversation with our AI business consultant</p>
+        
+        <div class="note">
+            <h3>📞 How to Use:</h3>
+            <p><strong>1.</strong> Click the voice widget below</p>
+            <p><strong>2.</strong> Allow microphone access when prompted</p>
+            <p><strong>3.</strong> Start talking naturally about your business needs</p>
+            <p><strong>4.</strong> The AI will respond with voice - just like Siri!</p>
+        </div>
+        
+        <div class="widget-container">
+            <h3>🚀 Start Your Consultation</h3>
+            
+            <!-- VAPI Widget with hardcoded keys for standalone deployment -->
+            <vapi-widget 
+                public-key="360c27df-9f83-4b80-bd33-e17dbcbf4971"
+                assistant-id="af397e88-c286-416f-9f74-e7665401bdb7">
+            </vapi-widget>
+        </div>
+        
+        <div style="margin-top: 30px; font-size: 0.9em; opacity: 0.8;">
+            <p><strong>Business Formation Topics:</strong></p>
+            <p>• LLC formation and requirements</p>
+            <p>• State selection and registration</p>
+            <p>• Business name availability</p>
+            <p>• Operating agreements and EIN setup</p>
+            <p>• DreamSeed service packages and pricing</p>
+        </div>
+    </div>
+
+    <!-- VAPI Widget Script -->
+    <script
+        src="https://unpkg.com/@vapi-ai/client-sdk-react/dist/embed/widget.umd.js"
+        async
+        type="text/javascript">
+    </script>
+    
+    <script>
+        window.addEventListener('DOMContentLoaded', function() {
+            console.log('Standalone VAPI Widget loaded with hardcoded keys');
+            
+            const widget = document.querySelector('vapi-widget');
+            if (widget) {
+                console.log('VAPI Widget found and configured');
+                
+                widget.addEventListener('call-start', function() {
+                    console.log('🎤 Voice call started');
+                });
+                
+                widget.addEventListener('call-end', function() {
+                    console.log('📞 Voice call ended');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

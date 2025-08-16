@@ -5,12 +5,9 @@
   "private": true,
   "main": "server.js",
   "scripts": {
-    "dev": "node server.js",
-    "build": "echo 'No build required for Express app'",
-    "start": "node server.js",
-    "lint": "echo 'No linting configured'",
-    "test": "echo \"No tests yet\" && exit 0",
-    "vercel-build": "echo 'Build complete'"
+    "build": "echo 'Static site - no build required'",
+    "start": "echo 'Static site deployed'",
+    "test": "echo \"No tests yet\" && exit 0"
   },
   "keywords": [
     "dreamseed",
@@ -25,12 +22,7 @@
   ],
   "author": "DreamSeed Team",
   "license": "MIT",
-  "dependencies": {
-    "@supabase/supabase-js": "^2.55.0",
-    "cookie-parser": "^1.4.7",
-    "dotenv": "^16.0.3",
-    "express": "^4.18.2"
-  },
+  "dependencies": {},
   "devDependencies": {},
   "engines": {
     "node": ">=18.0.0"
