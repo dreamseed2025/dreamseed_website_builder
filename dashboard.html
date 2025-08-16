@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DreamSeed - Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .welcome-section {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .welcome-section h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .role-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .role-badge.admin {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+        }
+        
+        .role-badge.customer {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .dashboard-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .card-icon {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+        
+        .card-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #ffd700;
+        }
+        
+        .card-description {
+            opacity: 0.9;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        .quick-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 50px;
+        }
+        
+        .loading-spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .error-message {
+            background: rgba(231, 76, 60, 0.3);
+            border: 1px solid #e74c3c;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .profile-section {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .profile-section h3 {
+            color: #ffd700;
+            margin-bottom: 15px;
+        }
+        
+        .profile-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .profile-item:last-child {
+            border-bottom: none;
+        }
+        
+        .admin-section {
+            background: rgba(231, 76, 60, 0.2);
+            border: 2px solid #e74c3c;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .admin-section h3 {
+            color: #ff6b6b;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="logo">
+            <span>🌱</span>
+            <span>DreamSeed</span>
+        </div>
+        
+        <div class="user-menu">
+            <div class="user-info">
+                <div class="user-avatar" id="user-avatar">?</div>
+                <div>
+                    <div id="user-name">Loading...</div>
+                    <div id="user-role" class="role-badge">Loading...</div>
+                </div>
+            </div>
+            <button class="btn btn-secondary" onclick="logout()">Logout</button>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Loading State -->
+        <div id="loading-section" class="loading">
+            <div class="loading-spinner"></div>
+            <p>Loading your dashboard...</p>
+        </div>
+        
+        <!-- Error State -->
+        <div id="error-section" class="error-message" style="display: none;">
+            <h3>Authentication Required</h3>
+            <p>Please log in to access your dashboard.</p>
+            <a href="/auth/login.html" class="btn btn-primary">Login</a>
+        </div>
+        
+        <!-- Welcome Section -->
+        <div id="welcome-section" class="welcome-section" style="display: none;">
+            <h1>Welcome back!</h1>
+            <p id="welcome-message">Loading...</p>
+        </div>
+        
+        <!-- Profile Section -->
+        <div id="profile-section" class="profile-section" style="display: none;">
+            <h3>👤 Your Profile</h3>
+            <div id="profile-content"></div>
+        </div>
+        
+        <!-- Admin Section -->
+        <div id="admin-section" class="admin-section" style="display: none;">
+            <h3>🔧 Admin Tools</h3>
+            <p>You have administrative access to the platform.</p>
+            <div class="quick-actions">
+                <a href="/api/admin/users" class="btn btn-secondary" target="_blank">View All Users</a>
+                <a href="/public/simple-vapi-webhook/admin-dashboard.html" class="btn btn-secondary">VAPI Admin</a>
+            </div>
+        </div>
+        
+        <!-- Dashboard Grid -->
+        <div id="dashboard-grid" class="dashboard-grid" style="display: none;">
+            <!-- Customer Cards -->
+            <div class="dashboard-card customer-card">
+                <div class="card-icon">🎤</div>
+                <div class="card-title">Voice Calls</div>
+                <div class="card-description">Start your business formation journey with AI-powered voice calls</div>
+                <div class="quick-actions">
+                    <a href="/public/simple-vapi-webhook/web-call-fixed.html" class="btn btn-primary">Web Call</a>
+                    <a href="/public/simple-vapi-webhook/web-call-proxy.html" class="btn btn-secondary">Phone Call</a>
+                </div>
+            </div>
+            
+            <div class="dashboard-card customer-card">
+                <div class="card-icon">📊</div>
+                <div class="card-title">Progress Tracker</div>
+                <div class="card-description">Monitor your business formation progress and next steps</div>
+                <div class="quick-actions">
+                    <a href="/public/simple-vapi-webhook/customer-dashboard.html" class="btn btn-primary">View Progress</a>
+                </div>
+            </div>
+            
+            <div class="dashboard-card customer-card">
+                <div class="card-icon">🌐</div>
+                <div class="card-title">Website Builder</div>
+                <div class="card-description">Create a professional website for your new business</div>
+                <div class="quick-actions">
+                    <a href="/" class="btn btn-primary">Build Website</a>
+                </div>
+            </div>
+            
+            <!-- Admin Cards -->
+            <div class="dashboard-card admin-card" style="display: none;">
+                <div class="card-icon">👥</div>
+                <div class="card-title">Customer Management</div>
+                <div class="card-description">Manage customers, view progress, and track calls</div>
+                <div class="quick-actions">
+                    <a href="/public/simple-vapi-webhook/admin-dashboard.html" class="btn btn-primary">Admin Panel</a>
+                    <a href="/public/simple-vapi-webhook/stage-monitor.html" class="btn btn-secondary">Monitor</a>
+                </div>
+            </div>
+            
+            <div class="dashboard-card admin-card" style="display: none;">
+                <div class="card-icon">📞</div>
+                <div class="card-title">Call Analytics</div>
+                <div class="card-description">View call history, analytics, and system performance</div>
+                <div class="quick-actions">
+                    <a href="/public/simple-vapi-webhook/call-dashboard.html" class="btn btn-primary">Analytics</a>
+                    <a href="/public/simple-vapi-webhook/info-tracker.html" class="btn btn-secondary">Data Tracker</a>
+                </div>
+            </div>
+            
+            <div class="dashboard-card admin-card" style="display: none;">
+                <div class="card-icon">⚙️</div>
+                <div class="card-title">System Tools</div>
+                <div class="card-description">Debug tools, testing interfaces, and system configuration</div>
+                <div class="quick-actions">
+                    <a href="/public/simple-vapi-webhook/system-home.html" class="btn btn-primary">System Home</a>
+                    <a href="/public/simple-vapi-webhook/vapi-fix-guide.html" class="btn btn-secondary">Debug Guide</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Supabase Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <script>
+        let supabase;
+        let currentUser = null;
+        
+        // Initialize Supabase
+        async function initSupabase() {
+            try {
+                const response = await fetch('/api/auth-config');
+                if (response.ok) {
+                    const config = await response.json();
+                    supabase = window.supabase.createClient(config.supabaseUrl, config.supabaseAnonKey);
+                    return true;
+                } else {
+                    throw new Error('Could not load auth configuration');
+                }
+            } catch (error) {
+                console.error('Supabase initialization error:', error);
+                return false;
+            }
+        }
+        
+        // Check authentication and load user data
+        async function checkAuth() {
+            try {
+                const { data: { user }, error } = await supabase.auth.getUser();
+                
+                if (error || !user) {
+                    throw new Error('Not authenticated');
+                }
+                
+                // Get additional user data from API
+                const response = await fetch('/api/auth/user', {
+                    headers: {
+                        'Authorization': `Bearer ${(await supabase.auth.getSession()).data.session?.access_token}`
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to get user data');
+                }
+                
+                const userData = await response.json();
+                currentUser = userData.user;
+                
+                return currentUser;
+                
+            } catch (error) {
+                console.error('Auth check error:', error);
+                return null;
+            }
+        }
+        
+        // Display user dashboard
+        function displayDashboard(user) {
+            // Hide loading
+            document.getElementById('loading-section').style.display = 'none';
+            
+            // Update header
+            document.getElementById('user-name').textContent = user.name;
+            document.getElementById('user-avatar').textContent = user.name.charAt(0).toUpperCase();
+            
+            const roleElement = document.getElementById('user-role');
+            roleElement.textContent = user.role === 'admin' ? '🔧 Administrator' : '👤 Customer';
+            roleElement.className = `role-badge ${user.role}`;
+            
+            // Welcome section
+            document.getElementById('welcome-section').style.display = 'block';
+            document.getElementById('welcome-message').textContent = 
+                `Nice to see you, ${user.name}! ${user.role === 'admin' ? 'You have full access to the platform.' : 'Ready to continue your business journey?'}`;
+            
+            // Profile section
+            if (user.profile) {
+                document.getElementById('profile-section').style.display = 'block';
+                const profileContent = document.getElementById('profile-content');
+                profileContent.innerHTML = `
+                    <div class="profile-item">
+                        <strong>Email:</strong>
+                        <span>${user.email}</span>
+                    </div>
+                    <div class="profile-item">
+                        <strong>Phone:</strong>
+                        <span>${user.profile.customer_phone || 'Not provided'}</span>
+                    </div>
+                    <div class="profile-item">
+                        <strong>Business:</strong>
+                        <span>${user.profile.business_name || 'Not specified'}</span>
+                    </div>
+                    <div class="profile-item">
+                        <strong>Business Type:</strong>
+                        <span>${user.profile.business_type || 'Not specified'}</span>
+                    </div>
+                    <div class="profile-item">
+                        <strong>State:</strong>
+                        <span>${user.profile.state_of_operation || 'Not specified'}</span>
+                    </div>
+                    <div class="profile-item">
+                        <strong>Status:</strong>
+                        <span>${user.profile.status || 'Active'}</span>
+                    </div>
+                `;
+            }
+            
+            // Admin section
+            if (user.role === 'admin') {
+                document.getElementById('admin-section').style.display = 'block';
+                document.querySelectorAll('.admin-card').forEach(card => {
+                    card.style.display = 'block';
+                });
+            }
+            
+            // Show dashboard
+            document.getElementById('dashboard-grid').style.display = 'grid';
+        }
+        
+        // Display error
+        function displayError() {
+            document.getElementById('loading-section').style.display = 'none';
+            document.getElementById('error-section').style.display = 'block';
+        }
+        
+        // Logout function
+        async function logout() {
+            try {
+                await supabase.auth.signOut();
+                window.location.href = '/auth/login.html';
+            } catch (error) {
+                console.error('Logout error:', error);
+                // Force redirect even if logout fails
+                window.location.href = '/auth/login.html';
+            }
+        }
+        
+        // Initialize everything
+        async function init() {
+            const supabaseReady = await initSupabase();
+            
+            if (!supabaseReady) {
+                displayError();
+                return;
+            }
+            
+            const user = await checkAuth();
+            
+            if (user) {
+                displayDashboard(user);
+            } else {
+                displayError();
+            }
+        }
+        
+        // Start initialization when page loads
+        window.addEventListener('DOMContentLoaded', init);
+        
+        // Listen for auth state changes
+        if (typeof window !== 'undefined') {
+            // Handle auth redirects
+            window.addEventListener('load', async () => {
+                if (supabase) {
+                    await supabase.auth.getSession();
+                }
+            });
+        }
+    </script>
+</body>
+</html>

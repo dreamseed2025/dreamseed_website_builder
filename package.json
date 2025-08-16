@@ -5,15 +5,12 @@
   "private": true,
   "main": "server.js",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "vapi:start": "cd public/simple-vapi-webhook && npm start",
-    "vapi:dev": "cd public/simple-vapi-webhook && npm run dev",
-    "vapi:install": "cd public/simple-vapi-webhook && npm install",
+    "dev": "node server.js",
+    "build": "echo 'No build required for Express app'",
+    "start": "node server.js",
+    "lint": "echo 'No linting configured'",
     "test": "echo \"No tests yet\" && exit 0",
-    "version": "echo \"DreamSeed Platform v2.0.0 - Business Formation & Website Builder\""
+    "vercel-build": "echo 'Build complete'"
   },
   "keywords": [
     "dreamseed",
@@ -30,6 +27,8 @@
   "license": "MIT",
   "dependencies": {
     "@supabase/supabase-js": "^2.55.0",
+    "cookie-parser": "^1.4.7",
+    "express": "^5.1.0",
     "next": "^14.2.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
@@ -59,7 +58,9 @@
     "website-builder": {
       "enabled": true,
       "port": 3000,
-      "templates": ["modern-saas-01"],
+      "templates": [
+        "modern-saas-01"
+      ],
       "deployment": "vercel"
     },
     "vapi-system": {

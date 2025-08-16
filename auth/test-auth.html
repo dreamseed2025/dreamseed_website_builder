@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DreamSeed - Auth System Test</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        
+        .test-section {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #3498db;
+        }
+        
+        .test-section h3 {
+            color: #3498db;
+            margin-top: 0;
+        }
+        
+        .status {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        
+        .status.success {
+            background: rgba(39, 174, 96, 0.3);
+            border: 1px solid #27ae60;
+        }
+        
+        .status.error {
+            background: rgba(231, 76, 60, 0.3);
+            border: 1px solid #e74c3c;
+        }
+        
+        .status.loading {
+            background: rgba(52, 152, 219, 0.3);
+            border: 1px solid #3498db;
+        }
+        
+        button {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 5px;
+            transition: transform 0.2s;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+        }
+        
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .code-block {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+        
+        .auth-demo {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        
+        .auth-element {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .api-test {
+            margin: 10px 0;
+        }
+        
+        .api-test button {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            margin-right: 10px;
+        }
+        
+        .api-result {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-family: monospace;
+            font-size: 0.8em;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔐 Authentication System Test</h1>
+        
+        <!-- System Status -->
+        <div class="test-section">
+            <h3>🚀 System Status</h3>
+            <div id="system-status" class="status loading">Checking system status...</div>
+            <button onclick="checkSystemStatus()">Refresh Status</button>
+        </div>
+        
+        <!-- Auth State -->
+        <div class="test-section">
+            <h3>👤 Authentication State</h3>
+            <div id="auth-status" class="status loading">Checking authentication...</div>
+            <div id="user-info" class="code-block" style="display: none;"></div>
+            <button onclick="checkAuthState()">Check Auth</button>
+            <button onclick="testLogin()">Test Login</button>
+            <button onclick="testLogout()">Test Logout</button>
+        </div>
+        
+        <!-- Auth Elements Demo -->
+        <div class="test-section">
+            <h3>🎨 Auth UI Elements Demo</h3>
+            <p>These elements automatically show/hide based on authentication state:</p>
+            
+            <div class="auth-demo">
+                <div class="auth-element">
+                    <h4>Guest Only</h4>
+                    <div data-auth="guest">
+                        <p>✅ You can see this because you're not logged in</p>
+                        <a href="/auth/login.html">Login</a>
+                    </div>
+                </div>
+                
+                <div class="auth-element">
+                    <h4>Authenticated Only</h4>
+                    <div data-auth="required">
+                        <p>✅ You can see this because you're logged in</p>
+                        <button onclick="dreamSeedAuth.logout()">Logout</button>
+                    </div>
+                </div>
+                
+                <div class="auth-element">
+                    <h4>Admin Only</h4>
+                    <div data-auth="admin">
+                        <p>✅ You're an administrator</p>
+                        <a href="/admin-dashboard.html">Admin Panel</a>
+                    </div>
+                </div>
+                
+                <div class="auth-element">
+                    <h4>Customer Only</h4>
+                    <div data-auth="customer">
+                        <p>✅ You're a customer</p>
+                        <a href="/customer-dashboard.html">My Dashboard</a>
+                    </div>
+                </div>
+                
+                <div class="auth-element">
+                    <h4>Auto Auth UI</h4>
+                    <div data-auth="ui"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- API Testing -->
+        <div class="test-section">
+            <h3>🔌 API Endpoint Testing</h3>
+            
+            <div class="api-test">
+                <h4>Public Endpoints:</h4>
+                <button onclick="testAPI('/api/auth-config', 'GET')">Auth Config</button>
+                <button onclick="testAPI('/', 'GET')">Health Check</button>
+                <div id="api-public" class="api-result"></div>
+            </div>
+            
+            <div class="api-test">
+                <h4>Authenticated Endpoints:</h4>
+                <button onclick="testAPI('/api/auth/user', 'GET', true)">Current User</button>
+                <button onclick="testAPI('/api/customer/test@example.com', 'GET', true)">Customer Data</button>
+                <div id="api-auth" class="api-result"></div>
+            </div>
+            
+            <div class="api-test">
+                <h4>Admin Endpoints:</h4>
+                <button onclick="testAPI('/api/admin/users', 'GET', true)">Admin Users</button>
+                <div id="api-admin" class="api-result"></div>
+            </div>
+        </div>
+        
+        <!-- Test Scenarios -->
+        <div class="test-section">
+            <h3>🧪 Test Scenarios</h3>
+            <button onclick="runFullTest()">Run Full Test Suite</button>
+            <button onclick="testRequireAuth()">Test Require Auth</button>
+            <button onclick="testRequireAdmin()">Test Require Admin</button>
+            <div id="test-results" class="api-result"></div>
+        </div>
+        
+        <!-- Setup Instructions -->
+        <div class="test-section">
+            <h3>⚙️ Setup Requirements</h3>
+            <div id="setup-status"></div>
+            <button onclick="checkSetup()">Check Setup</button>
+        </div>
+    </div>
+
+    <!-- Load Authentication System -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/auth/auth-helper.js"></script>
+    
+    <script>
+        // Global test state
+        let testResults = [];
+        
+        // Add test result
+        function addTestResult(test, status, message, data = null) {
+            testResults.push({
+                test,
+                status,
+                message,
+                data,
+                timestamp: new Date().toISOString()
+            });
+            
+            console.log(`[${status.toUpperCase()}] ${test}: ${message}`, data);
+        }
+        
+        // Show status message
+        function showStatus(elementId, message, type = 'loading') {
+            const element = document.getElementById(elementId);
+            if (element) {
+                element.className = `status ${type}`;
+                element.textContent = message;
+            }
+        }
+        
+        // Check system status
+        async function checkSystemStatus() {
+            showStatus('system-status', 'Checking system status...', 'loading');
+            
+            try {
+                const response = await fetch('/api/auth-config');
+                if (response.ok) {
+                    const config = await response.json();
+                    showStatus('system-status', '✅ Authentication system is running', 'success');
+                    addTestResult('System Status', 'success', 'Auth config loaded', config);
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+            } catch (error) {
+                showStatus('system-status', `❌ System error: ${error.message}`, 'error');
+                addTestResult('System Status', 'error', error.message);
+            }
+        }
+        
+        // Check authentication state
+        async function checkAuthState() {
+            showStatus('auth-status', 'Checking authentication...', 'loading');
+            
+            try {
+                await dreamSeedAuth.init();
+                
+                if (dreamSeedAuth.isAuthenticated()) {
+                    const user = dreamSeedAuth.getCurrentUser();
+                    showStatus('auth-status', `✅ Authenticated as ${user.name} (${user.role})`, 'success');
+                    
+                    document.getElementById('user-info').style.display = 'block';
+                    document.getElementById('user-info').textContent = JSON.stringify(user, null, 2);
+                    
+                    addTestResult('Authentication', 'success', 'User is authenticated', user);
+                } else {
+                    showStatus('auth-status', '❌ Not authenticated', 'error');
+                    document.getElementById('user-info').style.display = 'none';
+                    addTestResult('Authentication', 'error', 'User not authenticated');
+                }
+            } catch (error) {
+                showStatus('auth-status', `❌ Auth error: ${error.message}`, 'error');
+                addTestResult('Authentication', 'error', error.message);
+            }
+        }
+        
+        // Test login redirect
+        function testLogin() {
+            addTestResult('Login Test', 'info', 'Redirecting to login page');
+            window.location.href = '/auth/login.html?redirect=' + encodeURIComponent(window.location.pathname);
+        }
+        
+        // Test logout
+        async function testLogout() {
+            try {
+                await dreamSeedAuth.logout();
+                showStatus('auth-status', '✅ Logged out successfully', 'success');
+                addTestResult('Logout Test', 'success', 'User logged out');
+                setTimeout(checkAuthState, 1000);
+            } catch (error) {
+                showStatus('auth-status', `❌ Logout error: ${error.message}`, 'error');
+                addTestResult('Logout Test', 'error', error.message);
+            }
+        }
+        
+        // Test API endpoints
+        async function testAPI(endpoint, method = 'GET', requireAuth = false) {
+            const resultId = endpoint.includes('admin') ? 'api-admin' : 
+                            endpoint.includes('auth') ? 'api-auth' : 'api-public';
+            
+            const resultEl = document.getElementById(resultId);
+            resultEl.innerHTML = `<div class="status loading">Testing ${endpoint}...</div>`;
+            
+            try {
+                let options = { method };
+                
+                if (requireAuth) {
+                    const token = await dreamSeedAuth.getToken();
+                    if (token) {
+                        options.headers = {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json'
+                        };
+                    }
+                }
+                
+                const response = await fetch(endpoint, options);
+                const data = await response.json();
+                
+                if (response.ok) {
+                    resultEl.innerHTML = `
+                        <div class="status success">✅ ${endpoint} - Success (${response.status})</div>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                    addTestResult(`API ${endpoint}`, 'success', `HTTP ${response.status}`, data);
+                } else {
+                    resultEl.innerHTML = `
+                        <div class="status error">❌ ${endpoint} - Error (${response.status})</div>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    `;
+                    addTestResult(`API ${endpoint}`, 'error', `HTTP ${response.status}`, data);
+                }
+            } catch (error) {
+                resultEl.innerHTML = `
+                    <div class="status error">❌ ${endpoint} - ${error.message}</div>
+                `;
+                addTestResult(`API ${endpoint}`, 'error', error.message);
+            }
+        }
+        
+        // Test require auth
+        function testRequireAuth() {
+            const result = dreamSeedAuth.requireAuth();
+            addTestResult('Require Auth', result ? 'success' : 'info', 
+                         result ? 'Auth requirement passed' : 'Redirected to login');
+        }
+        
+        // Test require admin
+        function testRequireAdmin() {
+            const result = dreamSeedAuth.requireAdmin();
+            addTestResult('Require Admin', result ? 'success' : 'error', 
+                         result ? 'Admin requirement passed' : 'Admin access denied');
+        }
+        
+        // Run full test suite
+        async function runFullTest() {
+            const testEl = document.getElementById('test-results');
+            testEl.innerHTML = '<div class="status loading">Running full test suite...</div>';
+            
+            testResults = []; // Clear previous results
+            
+            // Test system status
+            await checkSystemStatus();
+            await new Promise(r => setTimeout(r, 500));
+            
+            // Test auth state
+            await checkAuthState();
+            await new Promise(r => setTimeout(r, 500));
+            
+            // Test public APIs
+            await testAPI('/api/auth-config', 'GET');
+            await testAPI('/', 'GET');
+            await new Promise(r => setTimeout(r, 500));
+            
+            // Test authenticated APIs if logged in
+            if (dreamSeedAuth.isAuthenticated()) {
+                await testAPI('/api/auth/user', 'GET', true);
+                await new Promise(r => setTimeout(r, 500));
+                
+                if (dreamSeedAuth.isAdmin()) {
+                    await testAPI('/api/admin/users', 'GET', true);
+                }
+            }
+            
+            // Show results
+            testEl.innerHTML = `
+                <div class="status success">✅ Test suite completed (${testResults.length} tests)</div>
+                <pre>${JSON.stringify(testResults, null, 2)}</pre>
+            `;
+        }
+        
+        // Check setup requirements
+        async function checkSetup() {
+            const setupEl = document.getElementById('setup-status');
+            setupEl.innerHTML = '<div class="status loading">Checking setup...</div>';
+            
+            const checks = [];
+            
+            // Check Supabase config
+            try {
+                const response = await fetch('/api/auth-config');
+                const config = await response.json();
+                
+                checks.push({
+                    name: 'Supabase URL',
+                    status: config.supabaseUrl ? 'success' : 'error',
+                    value: config.supabaseUrl ? '✅ Configured' : '❌ Missing'
+                });
+                
+                checks.push({
+                    name: 'Supabase Anon Key',
+                    status: config.supabaseAnonKey ? 'success' : 'error',
+                    value: config.supabaseAnonKey ? '✅ Configured' : '❌ Missing'
+                });
+            } catch (error) {
+                checks.push({
+                    name: 'Auth Config',
+                    status: 'error',
+                    value: `❌ ${error.message}`
+                });
+            }
+            
+            // Check auth helper
+            checks.push({
+                name: 'Auth Helper',
+                status: window.dreamSeedAuth ? 'success' : 'error',
+                value: window.dreamSeedAuth ? '✅ Loaded' : '❌ Not loaded'
+            });
+            
+            // Check Supabase client
+            checks.push({
+                name: 'Supabase Client',
+                status: window.supabase ? 'success' : 'error',
+                value: window.supabase ? '✅ Loaded' : '❌ Not loaded'
+            });
+            
+            const setupHtml = checks.map(check => `
+                <div class="status ${check.status}">
+                    <strong>${check.name}:</strong> ${check.value}
+                </div>
+            `).join('');
+            
+            setupEl.innerHTML = setupHtml;
+        }
+        
+        // Initialize page
+        window.addEventListener('DOMContentLoaded', async () => {
+            console.log('Auth test page loaded');
+            
+            // Wait for auth helper to initialize
+            setTimeout(async () => {
+                await checkSystemStatus();
+                await checkAuthState();
+                await checkSetup();
+                
+                // Listen for auth changes
+                dreamSeedAuth.onAuthChange((user, event) => {
+                    console.log('Auth changed:', event, user);
+                    checkAuthState();
+                });
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

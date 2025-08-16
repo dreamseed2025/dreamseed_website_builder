@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Database Test</title>
+</head>
+<body>
+    <h1>Direct Database Test</h1>
+    
+    <div id="status">Loading...</div>
+    
+    <button onclick="testUsersTable()">Test Users Table</button>
+    <button onclick="testDirectInsert()">Test Direct Insert</button>
+    
+    <div id="results"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        let supabase;
+        
+        async function init() {
+            try {
+                const response = await fetch('/api/auth-config');
+                const config = await response.json();
+                
+                supabase = window.supabase.createClient(config.supabaseUrl, config.supabaseAnonKey);
+                
+                document.getElementById('status').innerHTML = '✅ Connected to Supabase';
+                
+            } catch (error) {
+                document.getElementById('status').innerHTML = `❌ Error: ${error.message}`;
+            }
+        }
+        
+        async function testUsersTable() {
+            const results = document.getElementById('results');
+            results.innerHTML = '<p>Testing users table structure...</p>';
+            
+            try {
+                // Try to select from users table to see the columns
+                const { data, error } = await supabase
+                    .from('users')
+                    .select('id, auth_user_id, account_type, email_confirmed')
+                    .limit(1);
+                
+                if (error) {
+                    results.innerHTML = `❌ Users table error: ${error.message}`;
+                } else {
+                    results.innerHTML = `✅ Users table accessible. Columns: ${Object.keys(data[0] || {}).join(', ')}`;
+                }
+                
+            } catch (error) {
+                results.innerHTML = `❌ Exception: ${error.message}`;
+            }
+        }
+        
+        async function testDirectInsert() {
+            const results = document.getElementById('results');
+            results.innerHTML = '<p>Testing direct insert to users table...</p>';
+            
+            try {
+                // Try to insert directly to users table
+                const testUser = {
+                    customer_email: 'test-direct@example.com',
+                    customer_name: 'Test Direct User',
+                    account_type: 'customer',
+                    email_confirmed: false,
+                    status: 'in_progress'
+                };
+                
+                const { data, error } = await supabase
+                    .from('users')
+                    .insert(testUser)
+                    .select();
+                
+                if (error) {
+                    results.innerHTML = `❌ Insert error: ${error.message}<br>Details: ${JSON.stringify(error)}`;
+                } else {
+                    results.innerHTML = `✅ Direct insert successful: ${JSON.stringify(data)}`;
+                }
+                
+            } catch (error) {
+                results.innerHTML = `❌ Exception: ${error.message}`;
+            }
+        }
+        
+        init();
+    </script>
+</body>
+</html>

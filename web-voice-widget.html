@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DreamSeed - VAPI Widget Voice Assistant</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        
+        .container {
+            background: rgba(255,255,255,0.1);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+        
+        .widget-container {
+            background: rgba(255,255,255,0.1);
+            padding: 40px;
+            border-radius: 20px;
+            margin: 30px 0;
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+        
+        .instructions {
+            background: rgba(39, 174, 96, 0.2);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border: 1px solid rgba(39, 174, 96, 0.5);
+        }
+        
+        .note {
+            background: rgba(241, 196, 15, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 1px solid rgba(241, 196, 15, 0.5);
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎤 DreamSeed Voice Assistant</h1>
+        <p>Natural conversation with our AI business consultant</p>
+        
+        <div class="instructions">
+            <h3>📞 How to Use:</h3>
+            <p><strong>1.</strong> Click the voice widget below</p>
+            <p><strong>2.</strong> Allow microphone access when prompted</p>
+            <p><strong>3.</strong> Start talking naturally about your business needs</p>
+            <p><strong>4.</strong> The AI will respond with voice - just like Siri!</p>
+        </div>
+        
+        <div class="widget-container">
+            <h3>🚀 Start Your Consultation</h3>
+            
+            <!-- VAPI Widget with dynamic config -->
+            <vapi-widget 
+                id="vapiWidget"
+                mode="voice"
+                enable-voice="true"
+                voice-enabled="true"
+                call-type="web"
+                audio-enabled="true">
+            </vapi-widget>
+        </div>
+        
+        <div class="note">
+            <strong>💡 Note:</strong> This widget uses VAPI's official embedded component with your actual assistant ID and public key. It should provide the same natural conversation experience as the VAPI dashboard.
+        </div>
+        
+        <div style="margin-top: 30px; font-size: 0.9em; opacity: 0.8;">
+            <p><strong>Business Formation Topics:</strong></p>
+            <p>• LLC formation and requirements</p>
+            <p>• State selection and registration</p>
+            <p>• Business name availability</p>
+            <p>• Operating agreements and EIN setup</p>
+            <p>• DreamSeed service packages and pricing</p>
+        </div>
+    </div>
+
+    <!-- VAPI Widget Script -->
+    <script
+        src="https://unpkg.com/@vapi-ai/client-sdk-react/dist/embed/widget.umd.js"
+        async
+        type="text/javascript">
+    </script>
+    
+    <script>
+        // Load VAPI configuration and set widget attributes
+        window.addEventListener('DOMContentLoaded', async function() {
+            console.log('Loading VAPI configuration...');
+            
+            try {
+                // Fetch VAPI config from server
+                const response = await fetch('/api/vapi-config');
+                const config = await response.json();
+                
+                // Set widget attributes dynamically
+                const widget = document.getElementById('vapiWidget');
+                if (widget && config.publicKey && config.assistantId) {
+                    widget.setAttribute('public-key', config.publicKey);
+                    widget.setAttribute('assistant-id', config.assistantId);
+                    console.log('✅ VAPI Widget configured with:', {
+                        publicKey: config.publicKey,
+                        assistantId: config.assistantId
+                    });
+                } else {
+                    console.error('❌ Missing VAPI configuration');
+                }
+                
+                // Optional: Listen for widget events
+                widget.addEventListener('call-start', function() {
+                    console.log('🎤 Voice call started');
+                });
+                
+                widget.addEventListener('call-end', function() {
+                    console.log('📞 Voice call ended');
+                });
+                
+            } catch (error) {
+                console.error('Failed to load VAPI config:', error);
+            }
+        });
+    </script>
+</body>
+</html>

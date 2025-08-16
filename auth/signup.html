@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DreamSeed - Create Account</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .auth-container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+        }
+        
+        .logo {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: white;
+        }
+        
+        .subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        label {
+            display: block;
+            color: white;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="password"],
+        select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+        
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #ffd700;
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        select {
+            cursor: pointer;
+        }
+        
+        select option {
+            background: #333;
+            color: white;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px 0;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            box-shadow: 0 10px 30px rgba(238, 90, 36, 0.4);
+        }
+        
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(238, 90, 36, 0.6);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .divider {
+            margin: 30px 0;
+            position: relative;
+            text-align: center;
+        }
+        
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .divider span {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0 15px;
+            color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+        }
+        
+        .error-message {
+            background: rgba(231, 76, 60, 0.3);
+            border: 1px solid #e74c3c;
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            margin: 15px 0;
+            display: none;
+        }
+        
+        .success-message {
+            background: rgba(39, 174, 96, 0.3);
+            border: 1px solid #27ae60;
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            margin: 15px 0;
+            display: none;
+        }
+        
+        .links {
+            margin-top: 20px;
+        }
+        
+        .links a {
+            color: #ffd700;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        
+        .links a:hover {
+            text-decoration: underline;
+        }
+        
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .auth-options {
+            margin-top: 20px;
+        }
+        
+        .social-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 12px;
+            border-radius: 10px;
+            margin: 5px 0;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1em;
+        }
+        
+        .social-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .password-requirements {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            text-align: left;
+            font-size: 0.9em;
+        }
+        
+        .password-requirements h4 {
+            color: #ffd700;
+            margin-bottom: 10px;
+        }
+        
+        .password-requirements ul {
+            color: rgba(255, 255, 255, 0.8);
+            padding-left: 20px;
+        }
+        
+        /* Payment Plan Styles */
+        .payment-plan-info {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 15px 0;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .plan-details h4 {
+            color: #ffd700;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        .plan-details ul {
+            color: rgba(255, 255, 255, 0.9);
+            padding-left: 20px;
+            margin: 15px 0;
+        }
+        
+        .plan-details li {
+            margin: 8px 0;
+            list-style-type: none;
+            position: relative;
+        }
+        
+        .plan-details li:before {
+            content: "✓";
+            color: #27ae60;
+            font-weight: bold;
+            position: absolute;
+            left: -20px;
+        }
+        
+        .plan-price {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 10px;
+        }
+        
+        .plan-price .price {
+            font-size: 2em;
+            font-weight: bold;
+            color: #ffd700;
+        }
+        
+        .plan-price .billing {
+            display: block;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+        
+        .password-requirements li {
+            margin-bottom: 5px;
+        }
+        
+        .account-type {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .account-type h4 {
+            color: #ffd700;
+            margin-bottom: 10px;
+        }
+        
+        .account-type-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        
+        .account-type-option {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .account-type-option:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .account-type-option.selected {
+            border-color: #ffd700;
+            background: rgba(255, 215, 0, 0.2);
+        }
+        
+        .account-type-option h5 {
+            color: white;
+            margin-bottom: 5px;
+        }
+        
+        .account-type-option p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.8em;
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="logo">🌱</div>
+        <h1 style="color: white; margin-bottom: 5px;">Create Account</h1>
+        <p class="subtitle">Join DreamSeed Business Formation</p>
+        
+        <div class="error-message" id="error-message"></div>
+        <div class="success-message" id="success-message"></div>
+        
+        <!-- Account Type Selection -->
+        <div class="account-type">
+            <h4>I am a:</h4>
+            <div class="account-type-options">
+                <div class="account-type-option selected" onclick="selectAccountType('customer')" data-type="customer">
+                    <h5>👤 Customer</h5>
+                    <p>Starting a business</p>
+                </div>
+                <div class="account-type-option" onclick="selectAccountType('admin')" data-type="admin">
+                    <h5>🔧 Administrator</h5>
+                    <p>Managing the platform</p>
+                </div>
+            </div>
+        </div>
+        
+        <form id="signup-form">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input type="text" id="firstName" name="firstName" placeholder="John" required>
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" id="lastName" name="lastName" placeholder="Doe" required>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="your@email.com" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" placeholder="+1 (555) 123-4567" required>
+            </div>
+            
+            <!-- Customer-specific fields -->
+            <div id="customer-fields">
+                <div class="form-group">
+                    <label for="businessName">Business Name (Optional)</label>
+                    <input type="text" id="businessName" name="businessName" placeholder="Your Business Name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="businessType">Business Type</label>
+                    <select id="businessType" name="businessType">
+                        <option value="">Select business type...</option>
+                        <option value="LLC">LLC</option>
+                        <option value="Corporation">Corporation</option>
+                        <option value="Partnership">Partnership</option>
+                        <option value="Sole Proprietorship">Sole Proprietorship</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="state">State of Operation</label>
+                    <select id="state" name="state">
+                        <option value="">Select state...</option>
+                        <option value="AL">Alabama</option>
+                        <option value="AK">Alaska</option>
+                        <option value="AZ">Arizona</option>
+                        <option value="AR">Arkansas</option>
+                        <option value="CA">California</option>
+                        <option value="CO">Colorado</option>
+                        <option value="CT">Connecticut</option>
+                        <option value="DE">Delaware</option>
+                        <option value="FL">Florida</option>
+                        <option value="GA">Georgia</option>
+                        <!-- Add more states as needed -->
+                    </select>
+                </div>
+                
+                <!-- Payment Plan Selection -->
+                <div class="form-group">
+                    <label for="paymentPlan">Choose Your Plan</label>
+                    <select id="paymentPlan" name="paymentPlan" required>
+                        <option value="">Select a plan...</option>
+                        <option value="basic">Basic Plan - $299 (LLC Formation)</option>
+                        <option value="premium">Premium Plan - $599 (LLC + EIN + Operating Agreement)</option>
+                        <option value="enterprise">Enterprise Plan - $999 (Full Service + Legal Review)</option>
+                    </select>
+                </div>
+                
+                <!-- Payment Plan Details -->
+                <div class="payment-plan-info" id="paymentPlanInfo" style="display: none;">
+                    <div class="plan-details">
+                        <h4 id="planTitle">Plan Details</h4>
+                        <ul id="planFeatures"></ul>
+                        <div class="plan-price">
+                            <span class="price" id="planPrice">$0</span>
+                            <span class="billing">one-time payment</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Create a strong password" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required>
+            </div>
+            
+            <div class="password-requirements">
+                <h4>Password Requirements:</h4>
+                <ul>
+                    <li>At least 8 characters long</li>
+                    <li>Include uppercase and lowercase letters</li>
+                    <li>Include at least one number</li>
+                    <li>Include at least one special character</li>
+                </ul>
+            </div>
+            
+            <button type="submit" class="btn btn-primary" id="signup-btn">
+                Create Account
+            </button>
+        </form>
+        
+        <div class="divider">
+            <span>or continue with</span>
+        </div>
+        
+        <div class="auth-options">
+            <button class="social-btn" onclick="signUpWithGoogle()">
+                📧 Continue with Google
+            </button>
+            <button class="social-btn" onclick="signUpWithGitHub()">
+                🐙 Continue with GitHub
+            </button>
+        </div>
+        
+        <div class="links">
+            <a href="/auth/login.html">Already have an account? Sign In</a>
+        </div>
+        
+        <div class="links" style="margin-top: 20px;">
+            <a href="/">← Back to Home</a>
+        </div>
+    </div>
+
+    <!-- Supabase Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <script>
+        let supabase;
+        let selectedAccountType = 'customer';
+        let selectedPaymentPlan = '';
+        
+        // Payment plan data
+        const paymentPlans = {
+            basic: {
+                title: 'Basic Plan',
+                price: 299,
+                features: [
+                    'LLC Formation Documents',
+                    'State Filing Included',
+                    'Basic Operating Agreement',
+                    'Email Support',
+                    'Digital Document Delivery'
+                ]
+            },
+            premium: {
+                title: 'Premium Plan', 
+                price: 599,
+                features: [
+                    'Everything in Basic Plan',
+                    'EIN (Tax ID) Application',
+                    'Comprehensive Operating Agreement',
+                    'Business Banking Setup Guide',
+                    'Priority Phone Support',
+                    'Registered Agent Service (1 Year)',
+                    'Business License Research'
+                ]
+            },
+            enterprise: {
+                title: 'Enterprise Plan',
+                price: 999,
+                features: [
+                    'Everything in Premium Plan',
+                    'Attorney Review & Consultation',
+                    'Custom Operating Agreement',
+                    'Trademark Search & Filing',
+                    'Business Contract Templates',
+                    'Ongoing Legal Support (3 Months)',
+                    'Express Processing (24-48 Hours)'
+                ]
+            }
+        };
+        
+        // Initialize Supabase connection
+        async function initSupabase() {
+            try {
+                const response = await fetch('/api/auth-config');
+                if (response.ok) {
+                    const config = await response.json();
+                    supabase = window.supabase.createClient(config.supabaseUrl, config.supabaseAnonKey);
+                    console.log('Supabase initialized successfully');
+                } else {
+                    throw new Error('Could not load auth configuration');
+                }
+            } catch (error) {
+                console.error('Supabase initialization error:', error);
+                showMessage('Authentication system unavailable. Please contact support.', 'error');
+            }
+        }
+        
+        // Show message to user
+        function showMessage(message, type = 'error') {
+            const errorEl = document.getElementById('error-message');
+            const successEl = document.getElementById('success-message');
+            
+            errorEl.style.display = 'none';
+            successEl.style.display = 'none';
+            
+            if (type === 'error') {
+                errorEl.textContent = message;
+                errorEl.style.display = 'block';
+            } else {
+                successEl.textContent = message;
+                successEl.style.display = 'block';
+            }
+            
+            if (type === 'success') {
+                setTimeout(() => {
+                    successEl.style.display = 'none';
+                }, 5000);
+            }
+        }
+        
+        // Update button state
+        function setLoading(loading) {
+            const btn = document.getElementById('signup-btn');
+            if (loading) {
+                btn.innerHTML = '<span class="loading-spinner"></span>Creating Account...';
+                btn.disabled = true;
+            } else {
+                btn.innerHTML = 'Create Account';
+                btn.disabled = false;
+            }
+        }
+        
+        // Select account type
+        function selectAccountType(type) {
+            selectedAccountType = type;
+            
+            // Update UI
+            document.querySelectorAll('.account-type-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            document.querySelector(`[data-type="${type}"]`).classList.add('selected');
+            
+            // Show/hide customer fields
+            const customerFields = document.getElementById('customer-fields');
+            if (type === 'customer') {
+                customerFields.style.display = 'block';
+            } else {
+                customerFields.style.display = 'none';
+            }
+        }
+        
+        // Validate password
+        function validatePassword(password) {
+            const minLength = password.length >= 8;
+            const hasUpper = /[A-Z]/.test(password);
+            const hasLower = /[a-z]/.test(password);
+            const hasNumber = /\d/.test(password);
+            const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+            
+            return minLength && hasUpper && hasLower && hasNumber && hasSpecial;
+        }
+        
+        // Handle form submission
+        document.getElementById('signup-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            if (!supabase) {
+                showMessage('Authentication system not ready. Please refresh the page.', 'error');
+                return;
+            }
+            
+            // Get form data
+            const formData = new FormData(e.target);
+            const firstName = formData.get('firstName');
+            const lastName = formData.get('lastName');
+            const email = formData.get('email');
+            const phone = formData.get('phone');
+            const password = formData.get('password');
+            const confirmPassword = formData.get('confirmPassword');
+            const businessName = formData.get('businessName');
+            const businessType = formData.get('businessType');
+            const state = formData.get('state');
+            
+            // Validation
+            if (password !== confirmPassword) {
+                showMessage('Passwords do not match', 'error');
+                return;
+            }
+            
+            if (!validatePassword(password)) {
+                showMessage('Password does not meet requirements', 'error');
+                return;
+            }
+            
+            setLoading(true);
+            
+            try {
+                // Create user account
+                const { data: authData, error: authError } = await supabase.auth.signUp({
+                    email: email,
+                    password: password,
+                    options: {
+                        data: {
+                            first_name: firstName,
+                            last_name: lastName,
+                            full_name: `${firstName} ${lastName}`,
+                            phone: phone,
+                            account_type: selectedAccountType,
+                            business_name: businessName,
+                            payment_plan: selectedPaymentPlan,
+                            subscription_type: selectedPaymentPlan || 'basic',
+                            business_type: businessType,
+                            state_of_operation: state
+                        }
+                    }
+                });
+                
+                if (authError) {
+                    throw authError;
+                }
+                
+                // If customer, also create record in users table
+                if (selectedAccountType === 'customer') {
+                    try {
+                        const { error: profileError } = await supabase
+                            .from('users')
+                            .insert([
+                                {
+                                    customer_name: `${firstName} ${lastName}`,
+                                    customer_email: email,
+                                    customer_phone: phone,
+                                    business_name: businessName || null,
+                                    business_type: businessType || null,
+                                    state_of_operation: state || null,
+                                    status: 'new_signup',
+                                    current_call_stage: 1
+                                }
+                            ]);
+                        
+                        if (profileError) {
+                            console.error('Profile creation error:', profileError);
+                            // Don't fail the signup if profile creation fails
+                        }
+                    } catch (profileError) {
+                        console.error('Profile creation error:', profileError);
+                    }
+                }
+                
+                if (authData.user && !authData.user.email_confirmed_at) {
+                    showMessage('Account created! Please check your email to verify your account before signing in.', 'success');
+                    
+                    // Redirect to login page after delay
+                    setTimeout(() => {
+                        window.location.href = '/auth/login.html';
+                    }, 3000);
+                } else {
+                    showMessage('Account created successfully! Redirecting...', 'success');
+                    
+                    // Redirect to dashboard
+                    setTimeout(() => {
+                        window.location.href = selectedAccountType === 'admin' ? '/admin-dashboard.html' : '/customer-dashboard.html';
+                    }, 2000);
+                }
+                
+            } catch (error) {
+                console.error('Signup error:', error);
+                if (error.message.includes('already registered')) {
+                    showMessage('An account with this email already exists. Please sign in instead.', 'error');
+                } else {
+                    showMessage(error.message || 'Account creation failed. Please try again.', 'error');
+                }
+            } finally {
+                setLoading(false);
+            }
+        });
+        
+        // Social sign-up functions
+        async function signUpWithGoogle() {
+            if (!supabase) {
+                showMessage('Authentication system not ready', 'error');
+                return;
+            }
+            
+            try {
+                const { data, error } = await supabase.auth.signInWithOAuth({
+                    provider: 'google',
+                    options: {
+                        redirectTo: window.location.origin + '/auth/complete-profile.html'
+                    }
+                });
+                
+                if (error) throw error;
+                
+            } catch (error) {
+                console.error('Google sign-up error:', error);
+                showMessage('Google sign-up failed: ' + error.message, 'error');
+            }
+        }
+        
+        async function signUpWithGitHub() {
+            if (!supabase) {
+                showMessage('Authentication system not ready', 'error');
+                return;
+            }
+            
+            try {
+                const { data, error } = await supabase.auth.signInWithOAuth({
+                    provider: 'github',
+                    options: {
+                        redirectTo: window.location.origin + '/auth/complete-profile.html'
+                    }
+                });
+                
+                if (error) throw error;
+                
+            } catch (error) {
+                console.error('GitHub sign-up error:', error);
+                showMessage('GitHub sign-up failed: ' + error.message, 'error');
+            }
+        }
+        
+        // Initialize everything when page loads
+        // Handle payment plan selection
+        function handlePaymentPlanChange() {
+            const planSelect = document.getElementById('paymentPlan');
+            const planInfo = document.getElementById('paymentPlanInfo');
+            const planTitle = document.getElementById('planTitle');
+            const planFeatures = document.getElementById('planFeatures');
+            const planPrice = document.getElementById('planPrice');
+            
+            selectedPaymentPlan = planSelect.value;
+            
+            if (selectedPaymentPlan && paymentPlans[selectedPaymentPlan]) {
+                const plan = paymentPlans[selectedPaymentPlan];
+                
+                planTitle.textContent = plan.title;
+                planPrice.textContent = `$${plan.price}`;
+                
+                planFeatures.innerHTML = plan.features.map(feature => 
+                    `<li>${feature}</li>`
+                ).join('');
+                
+                planInfo.style.display = 'block';
+            } else {
+                planInfo.style.display = 'none';
+            }
+        }
+        
+        // Add event listener for payment plan selection
+        function initPaymentPlanHandler() {
+            const planSelect = document.getElementById('paymentPlan');
+            if (planSelect) {
+                planSelect.addEventListener('change', handlePaymentPlanChange);
+            }
+        }
+        
+        window.addEventListener('DOMContentLoaded', async () => {
+            await initSupabase();
+            selectAccountType('customer'); // Set default
+            initPaymentPlanHandler(); // Initialize payment plan handling
+        });
+    </script>
+</body>
+</html>

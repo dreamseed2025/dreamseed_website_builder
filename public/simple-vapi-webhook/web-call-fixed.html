@@ -147,8 +147,23 @@
         </div>
     </div>
 
-    <!-- Load the latest VAPI Web SDK -->
-    <script src="https://cdn.jsdelivr.net/npm/@vapi-ai/web@latest/dist/index.js"></script>
+    <!-- Load VAPI Web SDK with multiple fallbacks -->
+    <script src="https://cdn.jsdelivr.net/npm/@vapi-ai/web@1.0.52/dist/index.js"></script>
+    <script>
+        // Fallback SDK loading if CDN fails
+        if (typeof window.Vapi === 'undefined') {
+            console.log('Primary CDN failed, trying fallback...');
+            const script = document.createElement('script');
+            script.src = 'https://unpkg.com/@vapi-ai/web@1.0.52/dist/index.js';
+            script.onerror = function() {
+                console.log('Fallback CDN also failed, trying alternative...');
+                const script2 = document.createElement('script');
+                script2.src = 'https://cdn.skypack.dev/@vapi-ai/web@1.0.52';
+                document.head.appendChild(script2);
+            };
+            document.head.appendChild(script);
+        }
+    </script>
     
     <script>
         let vapi = null;
@@ -224,9 +239,17 @@
             try {
                 log('Checking VAPI SDK availability...');
                 
+                // Wait for VAPI SDK to load (give it time for fallbacks)
+                let attempts = 0;
+                while (typeof window.Vapi === 'undefined' && attempts < 10) {
+                    log(`Waiting for VAPI SDK... (attempt ${attempts + 1})`);
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                    attempts++;
+                }
+                
                 // Check if VAPI SDK is loaded
                 if (typeof window.Vapi === 'undefined') {
-                    throw new Error('VAPI SDK not loaded. Check your internet connection.');
+                    throw new Error('VAPI SDK failed to load after multiple attempts. Please refresh the page.');
                 }
                 
                 log('✅ VAPI SDK detected', 'success');

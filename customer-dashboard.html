@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DreamSeed - Customer Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .welcome-section {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .payment-status {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .status-unpaid {
+            background: rgba(231, 76, 60, 0.3);
+            border: 1px solid #e74c3c;
+        }
+        
+        .status-paid {
+            background: rgba(39, 174, 96, 0.3);
+            border: 1px solid #27ae60;
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .dashboard-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .card-icon {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+        
+        .card-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #ffd700;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 50px;
+        }
+        
+        .loading-spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="logo">
+            <span>🌱</span>
+            <span>DreamSeed</span>
+        </div>
+        
+        <div class="user-menu">
+            <div id="user-info">Loading...</div>
+            <button class="btn btn-secondary" onclick="logout()">Logout</button>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Loading State -->
+        <div id="loading-section" class="loading">
+            <div class="loading-spinner"></div>
+            <p>Loading your dashboard...</p>
+        </div>
+        
+        <!-- Dashboard Content -->
+        <div id="dashboard-content" style="display: none;">
+            <!-- Welcome Section -->
+            <div class="welcome-section">
+                <h1>Welcome to Your DreamSeed Dashboard!</h1>
+                <p id="welcome-message">Let's get your business formation started.</p>
+            </div>
+            
+            <!-- Payment Status Section -->
+            <div class="payment-status">
+                <h3>💳 Payment & Plan Status</h3>
+                <div id="payment-info">
+                    <div class="status-badge status-unpaid">Payment Pending</div>
+                    <p>Plan: <span id="subscription-plan">Loading...</span></p>
+                    <p>Amount: <span id="amount-due">$0</span></p>
+                </div>
+                <div style="margin-top: 20px;">
+                    <button class="btn btn-primary" onclick="proceedToPayment()">Complete Payment</button>
+                </div>
+            </div>
+            
+            <!-- Dashboard Cards -->
+            <div class="dashboard-grid">
+                <div class="dashboard-card">
+                    <div class="card-icon">📋</div>
+                    <div class="card-title">Business Formation Progress</div>
+                    <p>Track your LLC formation status and next steps</p>
+                    <div style="margin-top: 20px;">
+                        <a href="/public/simple-vapi-webhook/customer-dashboard.html" class="btn btn-primary">View Progress</a>
+                    </div>
+                </div>
+                
+                <div class="dashboard-card">
+                    <div class="card-icon">🎤</div>
+                    <div class="card-title">Voice Consultation</div>
+                    <p>Start your business formation journey with AI-guided calls</p>
+                    <div style="margin-top: 20px;">
+                        <a href="/web-voice-call.html" class="btn btn-primary">Start Web Call</a>
+                        <a href="/working-vapi-call.html" class="btn btn-secondary" style="margin-left: 10px;">Phone Call</a>
+                    </div>
+                </div>
+                
+                <div class="dashboard-card">
+                    <div class="card-icon">🌐</div>
+                    <div class="card-title">Website Builder</div>
+                    <p>Create a professional website for your new business</p>
+                    <div style="margin-top: 20px;">
+                        <a href="/" class="btn btn-primary">Build Website</a>
+                    </div>
+                </div>
+                
+                <div class="dashboard-card">
+                    <div class="card-icon">📞</div>
+                    <div class="card-title">Support</div>
+                    <p>Get help with your business formation process</p>
+                    <div style="margin-top: 20px;">
+                        <button class="btn btn-secondary">Contact Support</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Supabase Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/auth/auth-helper.js"></script>
+    
+    <script>
+        let supabase;
+        let currentUser = null;
+        
+        // Initialize and load dashboard
+        async function init() {
+            try {
+                // Wait for auth helper to initialize
+                await dreamSeedAuth.init();
+                
+                // Check authentication
+                if (!dreamSeedAuth.requireAuth()) {
+                    return;
+                }
+                
+                currentUser = dreamSeedAuth.getCurrentUser();
+                
+                if (currentUser) {
+                    await loadDashboard();
+                } else {
+                    window.location.href = '/auth/login.html';
+                }
+                
+            } catch (error) {
+                console.error('Dashboard initialization error:', error);
+                document.getElementById('loading-section').innerHTML = 
+                    '<div class="loading"><h3>Error loading dashboard</h3><p>' + error.message + '</p></div>';
+            }
+        }
+        
+        // Load dashboard data
+        async function loadDashboard() {
+            try {
+                // Update user info
+                document.getElementById('user-info').textContent = `Welcome, ${currentUser.name}!`;
+                document.getElementById('welcome-message').textContent = 
+                    `Ready to continue building ${currentUser.profile?.business_name || 'your business'}?`;
+                
+                // Load payment status
+                await loadPaymentStatus();
+                
+                // Show dashboard
+                document.getElementById('loading-section').style.display = 'none';
+                document.getElementById('dashboard-content').style.display = 'block';
+                
+            } catch (error) {
+                console.error('Load dashboard error:', error);
+            }
+        }
+        
+        // Load payment status
+        async function loadPaymentStatus() {
+            try {
+                const response = await dreamSeedAuth.apiRequest('/api/payment/status');
+                
+                if (response && response.ok) {
+                    const paymentData = await response.json();
+                    
+                    const statusBadge = document.querySelector('.status-badge');
+                    const subscriptionPlan = document.getElementById('subscription-plan');
+                    const amountDue = document.getElementById('amount-due');
+                    
+                    if (paymentData.payment_status === 'paid') {
+                        statusBadge.textContent = 'Payment Complete ✓';
+                        statusBadge.className = 'status-badge status-paid';
+                    } else {
+                        statusBadge.textContent = 'Payment Pending';
+                        statusBadge.className = 'status-badge status-unpaid';
+                    }
+                    
+                    subscriptionPlan.textContent = paymentData.subscription_type || 'Basic';
+                    amountDue.textContent = paymentData.amount_paid > 0 ? 
+                        `$${paymentData.amount_paid} (Paid)` : 
+                        getAmountForPlan(paymentData.subscription_type);
+                }
+            } catch (error) {
+                console.error('Load payment status error:', error);
+            }
+        }
+        
+        // Get amount for plan
+        function getAmountForPlan(plan) {
+            const amounts = {
+                'basic': '$299',
+                'premium': '$599', 
+                'enterprise': '$999'
+            };
+            return amounts[plan] || '$299';
+        }
+        
+        // Proceed to payment
+        function proceedToPayment() {
+            alert('Payment integration coming soon! You will be redirected to Stripe checkout.');
+            // TODO: Integrate with Stripe checkout
+        }
+        
+        // Logout function
+        async function logout() {
+            await dreamSeedAuth.logout();
+            window.location.href = '/auth/login.html';
+        }
+        
+        // Initialize when page loads
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DreamSeed - VAPI Voice Call</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+        }
+        
+        .container {
+            background: rgba(255,255,255,0.1);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .call-button {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: none;
+            font-size: 4em;
+            cursor: pointer;
+            margin: 30px;
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            color: white;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .call-button:hover {
+            transform: translateY(-5px);
+        }
+        
+        .call-button.active {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+        }
+        
+        .status {
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            font-size: 1.2em;
+        }
+        
+        .debug {
+            background: rgba(0,0,0,0.3);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-family: monospace;
+            text-align: left;
+            font-size: 0.9em;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎤 VAPI Voice Call</h1>
+        <p>Click for real voice conversation</p>
+        
+        <button class="call-button" id="callBtn">📞</button>
+        
+        <div class="status" id="status">Loading VAPI...</div>
+        
+        <div class="debug" id="debug"></div>
+    </div>
+
+    <!-- Try loading VAPI Web SDK directly -->
+    <script>
+        const publicKey = '360c27df-9f83-4b80-bd33-e17dbcbf4971';
+        const assistantId = 'af397e88-c286-416f-9f74-e7665401bdb7';
+        let vapi = null;
+        let isCallActive = false;
+        
+        function log(msg) {
+            const debug = document.getElementById('debug');
+            const time = new Date().toLocaleTimeString();
+            debug.innerHTML += `[${time}] ${msg}<br>`;
+            debug.scrollTop = debug.scrollHeight;
+            console.log(msg);
+        }
+        
+        function updateStatus(msg) {
+            document.getElementById('status').textContent = msg;
+        }
+        
+        // Load VAPI SDK dynamically
+        async function loadVAPI() {
+            log('Loading VAPI SDK...');
+            
+            return new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.src = 'https://unpkg.com/@vapi-ai/web@latest/dist/index.js';
+                script.onload = () => {
+                    log('✅ Script loaded');
+                    
+                    // Wait a bit for the SDK to initialize
+                    setTimeout(() => {
+                        if (window.Vapi) {
+                            log('✅ VAPI found on window');
+                            resolve();
+                        } else {
+                            log('❌ VAPI not found on window');
+                            reject(new Error('VAPI not found'));
+                        }
+                    }, 1000);
+                };
+                script.onerror = () => {
+                    log('❌ Script failed to load');
+                    reject(new Error('Script load failed'));
+                };
+                document.head.appendChild(script);
+            });
+        }
+        
+        // Initialize VAPI
+        async function initVAPI() {
+            try {
+                if (!window.Vapi) {
+                    throw new Error('VAPI SDK not available');
+                }
+                
+                log('Creating VAPI instance...');
+                vapi = new window.Vapi(publicKey);
+                
+                // Setup event listeners
+                vapi.on('call-start', () => {
+                    log('📞 Call started!');
+                    isCallActive = true;
+                    document.getElementById('callBtn').classList.add('active');
+                    updateStatus('🎤 Connected! Speak naturally...');
+                });
+                
+                vapi.on('call-end', () => {
+                    log('📞 Call ended');
+                    isCallActive = false;
+                    document.getElementById('callBtn').classList.remove('active');
+                    updateStatus('Call ended. Click to start again.');
+                });
+                
+                vapi.on('speech-start', () => {
+                    updateStatus('🎤 Listening...');
+                });
+                
+                vapi.on('speech-end', () => {
+                    updateStatus('🤖 AI thinking...');
+                });
+                
+                vapi.on('message', (msg) => {
+                    if (msg.type === 'assistant-message') {
+                        updateStatus('🔊 AI speaking...');
+                    }
+                });
+                
+                vapi.on('error', (error) => {
+                    log(`❌ Error: ${JSON.stringify(error)}`);
+                    updateStatus('Error - check debug log');
+                });
+                
+                log('✅ VAPI initialized');
+                updateStatus('Ready! Click to start voice call');
+                
+            } catch (error) {
+                log(`❌ Init error: ${error.message}`);
+                updateStatus('Failed to initialize');
+            }
+        }
+        
+        // Call button handler
+        document.getElementById('callBtn').addEventListener('click', async function() {
+            if (!vapi) {
+                log('VAPI not initialized');
+                return;
+            }
+            
+            if (!isCallActive) {
+                try {
+                    log('Starting voice call...');
+                    updateStatus('🔄 Starting call...');
+                    
+                    await vapi.start(assistantId);
+                    
+                    log('✅ Call command sent');
+                } catch (error) {
+                    log(`❌ Start error: ${error.message}`);
+                    updateStatus('Failed to start call');
+                }
+            } else {
+                log('Ending call...');
+                vapi.stop();
+            }
+        });
+        
+        // Initialize on load
+        window.addEventListener('DOMContentLoaded', async () => {
+            try {
+                await loadVAPI();
+                await initVAPI();
+            } catch (error) {
+                log(`❌ Load failed: ${error.message}`);
+                updateStatus('VAPI SDK failed to load');
+                
+                // Fallback message
+                setTimeout(() => {
+                    log('💡 Tip: VAPI voice may require HTTPS deployment');
+                    updateStatus('Try deploying to HTTPS for voice calls');
+                }, 2000);
+            }
+        });
+    </script>
+</body>
+</html>
