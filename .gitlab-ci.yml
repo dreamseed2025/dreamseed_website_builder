@@ -13,17 +13,17 @@ cache:
   paths:
     - node_modules/
 
-# Build stage
+# Build stage  
 build:
   stage: build
   script:
-    - echo "Installing dependencies..."
-    - npm install
+    - echo "Static site - no build required"
     - echo "Build complete"
   artifacts:
     paths:
-      - node_modules/
-      - .env
+      - "*.html"
+      - auth/
+      - sql/
     expire_in: 1 hour
 
 # Deploy to production server
@@ -50,9 +50,7 @@ deploy:
       ssh $SERVER_USER@$SERVER_HOST << EOF
         cd $SERVER_PATH
         git pull origin main
-        npm install --production
-        pm2 restart server || pm2 start server.js --name dreamseed-vapi
-        echo "Deployment complete!"
+        echo "Static site deployed successfully!"
       EOF
   environment:
     name: production
