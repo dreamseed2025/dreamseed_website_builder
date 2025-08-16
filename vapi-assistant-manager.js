@@ -16,22 +16,31 @@ class VAPIAssistantManager {
 
     /**
      * Get the appropriate assistant ID for a user
+     * @param {string} userIdOrEmail - User ID (preferred) or email as fallback
      */
-    async getAssistantForUser(userEmail) {
+    async getAssistantForUser(userIdOrEmail) {
         try {
-            console.log('Getting assistant for user:', userEmail);
+            console.log('Getting assistant for user:', userIdOrEmail);
             
             if (!this.supabase) {
                 console.log('No Supabase connection, using shared assistant');
                 return this.sharedAssistantId;
             }
 
-            // Get user data and assistant assignment
-            const { data: users, error } = await this.supabase
+            // Determine if we have user_id or email
+            const isUUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(userIdOrEmail);
+            const query = this.supabase
                 .from('users')
-                .select('auth_user_id, account_type, payment_status, subscription_type, individual_assistant_id, assistant_type')
-                .eq('customer_email', userEmail)
-                .limit(1);
+                .select('id, auth_user_id, customer_email, account_type, payment_status, subscription_type, individual_assistant_id, assistant_type');
+            
+            // Use appropriate lookup method
+            if (isUUID) {
+                query.eq('id', userIdOrEmail);  // Primary user ID lookup
+            } else {
+                query.eq('customer_email', userIdOrEmail);  // Email fallback
+            }
+            
+            const { data: users, error } = await query.limit(1);
 
             if (error || !users || users.length === 0) {
                 console.log('User not found, using shared assistant');
@@ -113,10 +122,13 @@ class VAPIAssistantManager {
                 maxDurationSeconds: 1800, // 30 minutes
                 backgroundSound: "office",
                 metadata: {
-                    userId: user.auth_user_id,
-                    userEmail: user.customer_email,
-                    subscriptionType: user.subscription_type,
-                    createdAt: new Date().toISOString()
+                    // Standardized ID structure
+                    user_id: user.id,                    // users.id (PRIMARY)
+                    auth_user_id: user.auth_user_id,     // users.auth_user_id (auth)
+                    user_email: user.customer_email,
+                    subscription_type: user.subscription_type,
+                    assistant_type: 'individual',
+                    created_at: new Date().toISOString()
                 }
             };
 
