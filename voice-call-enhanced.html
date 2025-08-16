@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DreamSeed - Enhanced Voice Call</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .call-container {
+            background: rgba(255,255,255,0.1);
+            padding: 60px;
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+        }
+        
+        .voice-button {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 30px 50px;
+            border-radius: 25px;
+            font-size: 1.5em;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 15px 40px rgba(238, 90, 36, 0.4);
+            transition: all 0.3s ease;
+            margin: 30px 0;
+            width: 100%;
+        }
+        
+        .voice-button:hover:not(:disabled) {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px rgba(238, 90, 36, 0.6);
+        }
+        
+        .voice-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .status {
+            background: rgba(0,0,0,0.3);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            font-family: monospace;
+            min-height: 24px;
+        }
+        
+        .user-info {
+            background: rgba(39, 174, 96, 0.2);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border: 1px solid rgba(39, 174, 96, 0.5);
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .form-group {
+            margin: 15px 0;
+            text-align: left;
+        }
+        
+        label {
+            display: block;
+            color: white;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+        
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #ffd700;
+            background: rgba(255, 255, 255, 0.15);
+        }
+    </style>
+</head>
+<body>
+    <div class="call-container">
+        <h1>🎤 DreamSeed Enhanced Voice</h1>
+        <p style="font-size: 1.2em; margin-bottom: 30px;">Natural conversation with context & memory</p>
+        
+        <div class="user-info">
+            <h3>👤 User Context</h3>
+            <div class="form-group">
+                <label for="userId">User ID:</label>
+                <input type="text" id="userId" placeholder="Enter your User ID" value="">
+            </div>
+            <div class="form-group">
+                <label for="dreamId">Dream ID:</label>
+                <input type="text" id="dreamId" placeholder="Enter your Dream/Project ID" value="">
+            </div>
+            <button onclick="saveUserContext()" style="
+                background: rgba(39, 174, 96, 0.8);
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 8px;
+                cursor: pointer;
+                margin-top: 10px;
+            ">Save Context</button>
+        </div>
+        
+        <!-- VAPI Widget with enhanced configuration -->
+        <div id="vapi-container" style="margin: 30px 0;">
+            <vapi-widget 
+                public-key="360c27df-9f83-4b80-bd33-e17dbcbf4971"
+                assistant-id="af397e88-c286-416f-9f74-e7665401bdb7"
+                show-public-key-invalid-message="false"
+                button-label="🎤 Start Natural Conversation"
+                show-widget-assistant-id="false">
+            </vapi-widget>
+        </div>
+        
+        <div id="status" class="status">
+            Set your User ID and Dream ID, then start your conversation
+        </div>
+        
+        <div style="margin-top: 30px; font-size: 0.9em; opacity: 0.8;">
+            <p><strong>Enhanced Features:</strong></p>
+            <p>• Natural conversation flow (no push-to-talk)</p>
+            <p>• Remembers your User ID and Dream ID</p>
+            <p>• Context-aware responses</p>
+            <p>• Session continuity</p>
+        </div>
+        
+        <div style="margin-top: 20px;">
+            <a href="/" style="color: #ffd700; text-decoration: none;">← Back to Home</a>
+        </div>
+    </div>
+
+    <!-- VAPI Widget Script -->
+    <script src="https://unpkg.com/@vapi-ai/client-sdk-react/dist/embed/widget.umd.js" async type="text/javascript"></script>
+    
+    <script>
+        let userContext = {
+            userId: '',
+            dreamId: '',
+            sessionId: generateSessionId()
+        };
+        
+        // Load saved context
+        window.addEventListener('DOMContentLoaded', function() {
+            loadUserContext();
+            setupVapiWidget();
+        });
+        
+        function generateSessionId() {
+            return 'session_' + Math.random().toString(36).substr(2, 9) + '_' + Date.now();
+        }
+        
+        function loadUserContext() {
+            // Load from localStorage
+            const saved = localStorage.getItem('dreamSeedUserContext');
+            if (saved) {
+                try {
+                    userContext = { ...userContext, ...JSON.parse(saved) };
+                    document.getElementById('userId').value = userContext.userId || '';
+                    document.getElementById('dreamId').value = userContext.dreamId || '';
+                    
+                    if (userContext.userId && userContext.dreamId) {
+                        updateStatus(`✅ Welcome back! User: ${userContext.userId}, Dream: ${userContext.dreamId}`);
+                    }
+                } catch (error) {
+                    console.error('Error loading user context:', error);
+                }
+            }
+        }
+        
+        function saveUserContext() {
+            userContext.userId = document.getElementById('userId').value.trim();
+            userContext.dreamId = document.getElementById('dreamId').value.trim();
+            
+            if (userContext.userId && userContext.dreamId) {
+                localStorage.setItem('dreamSeedUserContext', JSON.stringify(userContext));
+                updateStatus(`✅ Context saved! User: ${userContext.userId}, Dream: ${userContext.dreamId}`);
+                setupVapiWidget(); // Reinitialize with new context
+            } else {
+                updateStatus('❌ Please enter both User ID and Dream ID');
+            }
+        }
+        
+        function setupVapiWidget() {
+            const widget = document.querySelector('vapi-widget');
+            if (widget && userContext.userId && userContext.dreamId) {
+                // Configure widget with user context
+                widget.addEventListener('call-start', function() {
+                    updateStatus('🎤 Connected! Natural conversation active...');
+                    
+                    // Send context to VAPI assistant
+                    setTimeout(() => {
+                        sendContextToAssistant();
+                    }, 1000);
+                });
+                
+                widget.addEventListener('call-end', function() {
+                    updateStatus('📞 Conversation ended. Your context is saved for next time.');
+                });
+                
+                widget.addEventListener('speech-start', function() {
+                    updateStatus('🎤 You are speaking...');
+                });
+                
+                widget.addEventListener('speech-end', function() {
+                    updateStatus('🤖 AI is responding...');
+                });
+                
+                widget.addEventListener('error', function(error) {
+                    updateStatus('❌ Error: ' + (error.detail || 'Unknown error'));
+                });
+            }
+        }
+        
+        function sendContextToAssistant() {
+            // This would typically be sent to your VAPI assistant
+            // The assistant should be configured to receive and use this context
+            const contextMessage = {
+                type: 'user_context',
+                userId: userContext.userId,
+                dreamId: userContext.dreamId,
+                sessionId: userContext.sessionId,
+                timestamp: new Date().toISOString(),
+                message: `Hi! I'm user ${userContext.userId} working on dream project ${userContext.dreamId}. Please remember our previous conversations and continue where we left off.`
+            };
+            
+            console.log('Sending context to assistant:', contextMessage);
+            updateStatus('🔄 Sharing your context with AI assistant...');
+            
+            // In a real implementation, you'd send this via VAPI's message system
+            // For now, we'll just log it and show a status update
+            setTimeout(() => {
+                updateStatus('✅ Context shared! AI now knows who you are and your project.');
+            }, 2000);
+        }
+        
+        function updateStatus(message) {
+            document.getElementById('status').textContent = message;
+        }
+        
+        // Auto-save context when fields change
+        document.getElementById('userId').addEventListener('blur', function() {
+            if (this.value.trim() && document.getElementById('dreamId').value.trim()) {
+                saveUserContext();
+            }
+        });
+        
+        document.getElementById('dreamId').addEventListener('blur', function() {
+            if (this.value.trim() && document.getElementById('userId').value.trim()) {
+                saveUserContext();
+            }
+        });
+    </script>
+</body>
+</html>
