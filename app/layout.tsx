@@ -8,23 +8,22 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+      </head>
       <body>
-        <nav className="navbar">
-          <div className="nav-container">
-            <Link href="/" className="nav-logo">
-              🌱 DreamSeed
-            </Link>
-            <div className="nav-links">
-              <Link href="/" className="nav-link">
-                Home
-              </Link>
-              <Link href="/dashboard" className="nav-link">
-                Dashboard
-              </Link>
-            </div>
-          </div>
-        </nav>
-        <main className="main-content">
+        <header>
+          <nav className="container">
+            <div className="logo">🌱 Dream Seed</div>
+            <ul className="nav-links">
+              <li><Link href="/">Home</Link></li>
+              <li><Link href="#services">Services</Link></li>
+              <li><Link href="/dashboard">Dashboard</Link></li>
+              <li><Link href="#contact">Contact</Link></li>
+            </ul>
+          </nav>
+        </header>
+        <main>
           {children}
         </main>
       </body>
