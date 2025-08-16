@@ -1,6 +1,5 @@
 {
   "version": 2,
-  "public": true,
   "functions": {
     "app/api/check-domains/route.ts": {
       "maxDuration": 30
