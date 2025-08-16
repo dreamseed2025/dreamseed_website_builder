@@ -1,11 +1,55 @@
 'use client'
 
+import { useEffect, useState } from 'react'
+import { createSupabaseClient } from '@/lib/supabase'
+import { useRouter } from 'next/navigation'
+import type { User } from '@supabase/supabase-js'
+
 export default function Dashboard() {
+  const [user, setUser] = useState<User | null>(null)
+  const [loading, setLoading] = useState(true)
+  const supabase = createSupabaseClient()
+  const router = useRouter()
+
+  useEffect(() => {
+    const getUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser()
+      setUser(user)
+      setLoading(false)
+    }
+
+    getUser()
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_OUT') {
+        router.push('/login')
+      }
+      setUser(session?.user || null)
+    })
+
+    return () => subscription.unsubscribe()
+  }, [supabase.auth, router])
+
+  const handleSignOut = async () => {
+    await supabase.auth.signOut()
+  }
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p>Loading your dashboard...</p>
+        </div>
+      </div>
+    )
+  }
   const toolCategories = [
     {
       title: "🎯 VAPI Core Tools",
       description: "Main VAPI integration and call management",
       tools: [
+        { name: "VAPI Dashboard", url: "/vapi-dashboard", description: "Interactive voice assistant interface with transcript and controls" },
         { name: "Main VAPI Webhook", url: "/simple-vapi-webhook", description: "Core webhook handler and server" },
         { name: "VAPI System Home", url: "/simple-vapi-webhook/system-home.html", description: "Central system dashboard" },
         { name: "Server Status", url: "/simple-vapi-webhook/server.js", description: "Main server file" },
@@ -106,8 +150,15 @@ export default function Dashboard() {
   return (
     <div className="container">
       <div className="header">
-        <h1>🛠️ DreamSeed Tools Dashboard</h1>
-        <p>Complete directory of all VAPI tools, dashboards, and utilities</p>
+        <div className="header-top">
+          <div>
+            <h1>🛠️ Welcome back, {user?.email?.split('@')[0] || 'User'}!</h1>
+            <p>Your personalized DreamSeed business dashboard</p>
+          </div>
+          <button onClick={handleSignOut} className="sign-out-btn">
+            Sign Out
+          </button>
+        </div>
         <div className="stats">
           <span className="stat">
             📁 {toolCategories.length} Categories
@@ -155,6 +206,13 @@ export default function Dashboard() {
           box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
         
+        .header-top {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          margin-bottom: 20px;
+        }
+        
         .header h1 {
           margin: 0 0 8px 0;
           color: #1a1a1a;
@@ -162,9 +220,24 @@ export default function Dashboard() {
         }
         
         .header p {
-          margin: 0 0 20px 0;
+          margin: 0;
           color: #666;
           font-size: 18px;
+        }
+        
+        .sign-out-btn {
+          background: #ef4444;
+          color: white;
+          border: none;
+          padding: 8px 16px;
+          border-radius: 6px;
+          cursor: pointer;
+          font-size: 14px;
+          transition: background 0.2s;
+        }
+        
+        .sign-out-btn:hover {
+          background: #dc2626;
         }
         
         .stats {
