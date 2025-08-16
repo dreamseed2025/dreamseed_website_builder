@@ -111,16 +111,25 @@
         </div>
     </div>
 
-    <!-- VAPI Web SDK -->
-    <script src="https://unpkg.com/@vapi-ai/web@latest/dist/index.umd.js"></script>
+    <!-- VAPI Web SDK with fallback -->
+    <script src="https://cdn.jsdelivr.net/npm/@vapi-ai/web@latest/dist/index.umd.js"></script>
+    <script>
+        // Fallback if CDN fails
+        if (!window.Vapi) {
+            const script = document.createElement('script');
+            script.src = 'https://unpkg.com/@vapi-ai/web@1.0.0/dist/index.umd.js';
+            document.head.appendChild(script);
+        }
+    </script>
     
     <script>
         let vapi = null;
         let isCallActive = false;
         
-        // Initialize VAPI client
-        window.addEventListener('DOMContentLoaded', function() {
+        // Initialize VAPI client with retry
+        function initializeVapi() {
             try {
+                console.log('Checking for VAPI...', window.Vapi);
                 if (window.Vapi) {
                     vapi = new window.Vapi("360c27df-9f83-4b80-bd33-e17dbcbf4971");
                     updateStatus("✅ Voice system ready");
@@ -152,13 +161,42 @@
                         updateButton();
                     });
                     
+                    return true;
                 } else {
-                    updateStatus("❌ Voice system not available");
+                    return false;
                 }
             } catch (error) {
                 console.error('VAPI initialization error:', error);
-                updateStatus("❌ Failed to initialize voice system");
+                updateStatus("❌ Failed to initialize voice system: " + error.message);
+                return false;
             }
+        }
+
+        // Try to initialize with retries
+        window.addEventListener('DOMContentLoaded', function() {
+            updateStatus("🔄 Loading voice system...");
+            
+            let retries = 0;
+            const maxRetries = 10;
+            
+            function tryInit() {
+                if (initializeVapi()) {
+                    return; // Success
+                }
+                
+                retries++;
+                if (retries < maxRetries) {
+                    setTimeout(tryInit, 500); // Wait 500ms and try again
+                } else {
+                    updateStatus("❌ Voice system failed to load after multiple attempts");
+                    // Show manual fallback
+                    document.getElementById('voiceBtn').onclick = function() {
+                        alert('Voice system unavailable. Please try:\n1. Refresh the page\n2. Check your internet connection\n3. Try a different browser');
+                    };
+                }
+            }
+            
+            tryInit();
         });
         
         function toggleVoiceCall() {
