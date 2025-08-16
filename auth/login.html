@@ -274,20 +274,13 @@
         
         // Initialize Supabase connection
         async function initSupabase() {
-            try {
-                // Try to get config from server
-                const response = await fetch('/api/auth-config');
-                if (response.ok) {
-                    const config = await response.json();
-                    supabase = window.supabase.createClient(config.supabaseUrl, config.supabaseAnonKey);
-                    showMessage('Authentication system ready', 'success');
-                } else {
-                    throw new Error('Could not load auth configuration');
-                }
-            } catch (error) {
-                console.error('Supabase initialization error:', error);
-                showMessage('Authentication system unavailable. Please contact support.', 'error');
-            }
+            // For static deployment, show a simple message
+            showMessage('Authentication temporarily disabled for static deployment. Use voice widget instead!', 'error');
+            
+            // Redirect to main page after 3 seconds
+            setTimeout(() => {
+                window.location.href = '/';
+            }, 3000);
         }
         
         // Show message to user
