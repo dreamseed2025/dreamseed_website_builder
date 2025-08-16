@@ -1,130 +1,147 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-
-interface Dream {
-  id: string
-  dream_name: string
-  customer_name: string
-  customer_email: string
-  entity_type: string
-  state_of_operation: string
-  completion_percentage: number
-  created_at: string
-  stage: number
-}
-
 export default function Dashboard() {
-  const [dreams, setDreams] = useState<Dream[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-
-  useEffect(() => {
-    loadDreams()
-  }, [])
-
-  async function loadDreams() {
-    try {
-      const response = await fetch('/api/all')
-      if (!response.ok) {
-        throw new Error('Failed to fetch dreams')
-      }
-      const data = await response.json()
-      setDreams(data)
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to load dreams')
-    } finally {
-      setLoading(false)
+  const toolCategories = [
+    {
+      title: "🎯 VAPI Core Tools",
+      description: "Main VAPI integration and call management",
+      tools: [
+        { name: "Main VAPI Webhook", url: "/simple-vapi-webhook", description: "Core webhook handler and server" },
+        { name: "VAPI System Home", url: "/simple-vapi-webhook/system-home.html", description: "Central system dashboard" },
+        { name: "Server Status", url: "/simple-vapi-webhook/server.js", description: "Main server file" },
+        { name: "Dynamic VAPI Integration", url: "/simple-vapi-webhook/dynamic-vapi-integration.js", description: "Dynamic call handling" },
+        { name: "Intelligent Call System", url: "/simple-vapi-webhook/intelligent-call-system.js", description: "AI-powered call routing" }
+      ]
+    },
+    {
+      title: "📊 Dashboards & Monitoring",
+      description: "Real-time monitoring and analytics interfaces",
+      tools: [
+        { name: "Admin Dashboard", url: "/simple-vapi-webhook/admin-dashboard.html", description: "Administrative interface" },
+        { name: "Customer Dashboard", url: "/simple-vapi-webhook/customer-dashboard.html", description: "Customer view interface" },
+        { name: "Call Dashboard", url: "/simple-vapi-webhook/call-dashboard.html", description: "Call tracking and management" },
+        { name: "Web Call Dashboard", url: "/simple-vapi-webhook/web-call-dashboard.html", description: "Web-based call interface" },
+        { name: "Stage Monitor", url: "/simple-vapi-webhook/stage-monitor.html", description: "Call stage monitoring" },
+        { name: "Info Tracker", url: "/simple-vapi-webhook/info-tracker.html", description: "Information tracking dashboard" },
+        { name: "Webhook Monitor", url: "/simple-vapi-webhook/webhook-monitor.js", description: "Real-time webhook monitoring" }
+      ]
+    },
+    {
+      title: "📞 Call Management",
+      description: "Voice call handling and processing tools",
+      tools: [
+        { name: "Inbound Call Handler", url: "/simple-vapi-webhook/inbound-call-handler.js", description: "Handle incoming calls" },
+        { name: "Inbound Call Tester", url: "/simple-vapi-webhook/inbound-call-tester.html", description: "Test inbound call system" },
+        { name: "Background Call Processor", url: "/simple-vapi-webhook/background-call-processor.js", description: "Process calls in background" },
+        { name: "Retroactive Processor", url: "/simple-vapi-webhook/retroactive-processor.js", description: "Process historical calls" },
+        { name: "Web Call Button", url: "/simple-vapi-webhook/web-call-button.html", description: "Web-based call button" },
+        { name: "Web Call Debug", url: "/simple-vapi-webhook/web-call-debug.html", description: "Debug web calls" },
+        { name: "Web Call Proxy", url: "/simple-vapi-webhook/web-call-proxy.html", description: "Call proxy interface" }
+      ]
+    },
+    {
+      title: "🤖 AI & Data Processing",
+      description: "AI transcript analysis and data extraction",
+      tools: [
+        { name: "AI Transcript Analyzer", url: "/simple-vapi-webhook/ai-transcript-analyzer.js", description: "AI-powered transcript analysis" },
+        { name: "Dream DNA Extractor", url: "/simple-vapi-webhook/dream-dna-extractor.js", description: "Extract business DNA from calls" },
+        { name: "Truth Table Extractor", url: "/simple-vapi-webhook/truth-table-extractor.js", description: "Extract structured data" },
+        { name: "Enhanced Processor", url: "/simple-vapi-webhook/enhanced-processor.js", description: "Advanced data processing" },
+        { name: "Simple Flow Demo", url: "/simple-vapi-webhook/simple-flow-demo.js", description: "Demo flow processing" }
+      ]
+    },
+    {
+      title: "🧪 Testing & QA",
+      description: "Testing tools and quality assurance",
+      tools: [
+        { name: "Test Interface", url: "/simple-vapi-webhook/test-interface.html", description: "Main testing interface" },
+        { name: "Dashboard Test", url: "/simple-vapi-webhook/dashboard-test.html", description: "Dashboard testing tool" },
+        { name: "End-to-End Test", url: "/simple-vapi-webhook/end-to-end-test.js", description: "Complete system testing" },
+        { name: "Test Complete System", url: "/simple-vapi-webhook/test-complete-system.js", description: "Full system test suite" },
+        { name: "Test Direct Call", url: "/simple-vapi-webhook/test-direct-call.js", description: "Direct call testing" },
+        { name: "Test Dynamic VAPI", url: "/simple-vapi-webhook/test-dynamic-vapi.js", description: "Dynamic VAPI testing" },
+        { name: "Automated End-to-End Test", url: "/simple-vapi-webhook/automated-end-to-end-test.js", description: "Automated testing suite" },
+        { name: "Comprehensive Test Suite", url: "/simple-vapi-webhook/comprehensive-test-suite.sh", description: "Complete test runner" }
+      ]
+    },
+    {
+      title: "📚 Documentation & Setup",
+      description: "Setup guides and documentation",
+      tools: [
+        { name: "VAPI Setup Guide", url: "/simple-vapi-webhook/VAPI_SETUP_GUIDE.md", description: "Complete setup instructions" },
+        { name: "Quick Setup", url: "/simple-vapi-webhook/VAPI_QUICK_SETUP.md", description: "Quick start guide" },
+        { name: "Troubleshooting Guide", url: "/simple-vapi-webhook/VAPI_TROUBLESHOOTING.md", description: "Common issues and solutions" },
+        { name: "Integration Complete", url: "/simple-vapi-webhook/INTEGRATION_COMPLETE.md", description: "Integration completion guide" },
+        { name: "Dynamic VAPI Status", url: "/simple-vapi-webhook/DYNAMIC_VAPI_STATUS.md", description: "System status documentation" },
+        { name: "Complete Testing Guide", url: "/simple-vapi-webhook/COMPLETE_TESTING_GUIDE.md", description: "Comprehensive testing guide" },
+        { name: "Table of Contents", url: "/simple-vapi-webhook/TABLE_OF_CONTENTS.md", description: "Full documentation index" },
+        { name: "VAPI Fix Guide", url: "/simple-vapi-webhook/vapi-fix-guide.html", description: "Common fixes and solutions" }
+      ]
+    },
+    {
+      title: "⚙️ Configuration & Forms",
+      description: "Configuration files and customer forms",
+      tools: [
+        { name: "Customer Onboarding Form", url: "/simple-vapi-webhook/customer-onboarding-form.html", description: "Customer intake form" },
+        { name: "Call Prompts (JSON)", url: "/simple-vapi-webhook/call1-prompt.json", description: "Call 1 prompt configuration" },
+        { name: "Improved Call Prompts", url: "/simple-vapi-webhook/improved-call1-prompt.json", description: "Enhanced call prompts" },
+        { name: "Test Request JSON", url: "/simple-vapi-webhook/test-request.json", description: "Sample test requests" },
+        { name: "Calls Data", url: "/simple-vapi-webhook/calls-data.json", description: "Call data storage" },
+        { name: "Start Server Script", url: "/simple-vapi-webhook/start-server.sh", description: "Server startup script" }
+      ]
+    },
+    {
+      title: "🎛️ VAPI Agent Configs",
+      description: "VAPI agent configuration and prompts",
+      tools: [
+        { name: "Agent Setup Guide", url: "/simple-vapi-webhook/vapi-agent-configs/VAPI_SETUP_GUIDE.md", description: "Agent configuration guide" },
+        { name: "Call 1 Agent Prompt", url: "/simple-vapi-webhook/vapi-agent-configs/call-1-agent-prompt.md", description: "First call agent configuration" },
+        { name: "Call 2 Agent Prompt", url: "/simple-vapi-webhook/vapi-agent-configs/call-2-agent-prompt.md", description: "Second call agent configuration" },
+        { name: "Call 3 Agent Prompt", url: "/simple-vapi-webhook/vapi-agent-configs/call-3-agent-prompt.md", description: "Third call agent configuration" },
+        { name: "Call 4 Agent Prompt", url: "/simple-vapi-webhook/vapi-agent-configs/call-4-agent-prompt.md", description: "Fourth call agent configuration" }
+      ]
     }
-  }
-
-  if (loading) {
-    return (
-      <div className="container">
-        <div className="header">
-          <h1>🌱 DreamSeed - Dashboard</h1>
-          <p>Loading dreams...</p>
-        </div>
-      </div>
-    )
-  }
-
-  if (error) {
-    return (
-      <div className="container">
-        <div className="header">
-          <h1>🌱 DreamSeed - Dashboard</h1>
-          <p className="error">Error: {error}</p>
-        </div>
-      </div>
-    )
-  }
+  ]
 
   return (
     <div className="container">
       <div className="header">
-        <h1>🌱 DreamSeed - Dashboard</h1>
-        <p>Complete view of customer dreams from voice AI to launched business</p>
+        <h1>🛠️ DreamSeed Tools Dashboard</h1>
+        <p>Complete directory of all VAPI tools, dashboards, and utilities</p>
         <div className="stats">
           <span className="stat">
-            📊 Total Dreams: {dreams.length}
+            📁 {toolCategories.length} Categories
           </span>
           <span className="stat">
-            ✅ Active: {dreams.filter(d => d.completion_percentage < 100).length}
+            🔧 {toolCategories.reduce((total, cat) => total + cat.tools.length, 0)} Tools
           </span>
           <span className="stat">
-            🎉 Completed: {dreams.filter(d => d.completion_percentage === 100).length}
+            🚀 Full VAPI Integration
           </span>
         </div>
       </div>
 
-      <div className="dreams-grid">
-        {dreams.length === 0 ? (
-          <div className="empty-state">
-            <h3>No dreams yet</h3>
-            <p>Customer dreams will appear here as they complete VAPI calls</p>
-          </div>
-        ) : (
-          dreams.map((dream) => (
-            <div key={dream.id} className="dream-card">
-              <div className="dream-name">
-                {dream.dream_name || 'Untitled Dream'}
-              </div>
-              <div className="customer-name">
-                👤 {dream.customer_name || 'Unknown Customer'}
-              </div>
-              
-              <div className="progress-bar">
-                <div 
-                  className="progress-fill" 
-                  style={{ width: `${dream.completion_percentage || 0}%` }}
-                />
-              </div>
-              <div className="progress-text">
-                {dream.completion_percentage || 0}% Complete
-              </div>
-              
-              <div className="details">
-                📧 {dream.customer_email || 'No email'}<br/>
-                🏢 {dream.entity_type || 'LLC'} in {dream.state_of_operation || 'Unknown'}<br/>
-                📅 Started: {new Date(dream.created_at).toLocaleDateString()}<br/>
-                🎯 Stage: {dream.stage || 1}/4
-              </div>
-              
-              <div className="next-action">
-                {dream.completion_percentage === 100 
-                  ? '🎉 Dream completed!' 
-                  : `⏳ Next: Call ${(dream.stage || 1) + 1}`
-                }
-              </div>
+      <div className="tools-grid">
+        {toolCategories.map((category, index) => (
+          <div key={index} className="category-section">
+            <h2 className="category-title">{category.title}</h2>
+            <p className="category-description">{category.description}</p>
+            <div className="tools-list">
+              {category.tools.map((tool, toolIndex) => (
+                <a key={toolIndex} href={tool.url} className="tool-card" target="_blank" rel="noopener noreferrer">
+                  <div className="tool-name">{tool.name}</div>
+                  <div className="tool-description">{tool.description}</div>
+                  <div className="tool-url">{tool.url}</div>
+                </a>
+              ))}
             </div>
-          ))
-        )}
+          </div>
+        ))}
       </div>
 
       <style jsx>{`
         .container {
-          max-width: 1200px;
+          max-width: 1400px;
           margin: 0 auto;
           padding: 20px;
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -134,20 +151,20 @@ export default function Dashboard() {
           background: white;
           padding: 30px;
           border-radius: 12px;
-          margin-bottom: 24px;
+          margin-bottom: 30px;
           box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
         
         .header h1 {
           margin: 0 0 8px 0;
           color: #1a1a1a;
-          font-size: 28px;
+          font-size: 32px;
         }
         
         .header p {
           margin: 0 0 20px 0;
           color: #666;
-          font-size: 16px;
+          font-size: 18px;
         }
         
         .stats {
@@ -164,97 +181,91 @@ export default function Dashboard() {
           color: #495057;
         }
         
-        .dreams-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-          gap: 20px;
+        .tools-grid {
+          display: flex;
+          flex-direction: column;
+          gap: 30px;
         }
         
-        .dream-card {
+        .category-section {
           background: white;
-          padding: 24px;
           border-radius: 12px;
+          padding: 24px;
           box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-          transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
         
-        .dream-card:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+        .category-title {
+          margin: 0 0 8px 0;
+          color: #2563eb;
+          font-size: 24px;
+          font-weight: 600;
         }
         
-        .dream-name {
-          font-size: 18px;
+        .category-description {
+          margin: 0 0 20px 0;
+          color: #666;
+          font-size: 16px;
+        }
+        
+        .tools-list {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+          gap: 16px;
+        }
+        
+        .tool-card {
+          background: #f8f9fa;
+          border: 1px solid #e9ecef;
+          border-radius: 8px;
+          padding: 16px;
+          text-decoration: none;
+          color: inherit;
+          transition: all 0.2s ease;
+          display: block;
+        }
+        
+        .tool-card:hover {
+          background: #e9ecef;
+          border-color: #2563eb;
+          transform: translateY(-1px);
+          box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+        }
+        
+        .tool-name {
           font-weight: 600;
           color: #1a1a1a;
+          margin-bottom: 4px;
+          font-size: 16px;
+        }
+        
+        .tool-description {
+          color: #666;
+          font-size: 14px;
           margin-bottom: 8px;
+          line-height: 1.4;
         }
         
-        .customer-name {
-          color: #666;
-          margin-bottom: 16px;
-          font-size: 14px;
-        }
-        
-        .progress-bar {
-          width: 100%;
-          height: 8px;
-          background: #e9ecef;
-          border-radius: 4px;
-          margin: 12px 0 8px 0;
-          overflow: hidden;
-        }
-        
-        .progress-fill {
-          height: 100%;
-          background: linear-gradient(90deg, #28a745, #20c997);
-          border-radius: 4px;
-          transition: width 0.3s ease;
-        }
-        
-        .progress-text {
-          text-align: center;
+        .tool-url {
+          color: #2563eb;
           font-size: 12px;
-          font-weight: 500;
-          color: #495057;
-          margin-bottom: 16px;
+          font-family: monospace;
+          background: rgba(37, 99, 235, 0.1);
+          padding: 2px 6px;
+          border-radius: 4px;
         }
         
-        .details {
-          font-size: 14px;
-          color: #666;
-          line-height: 1.5;
-          margin-bottom: 16px;
-        }
-        
-        .next-action {
-          background: #e8f5e8;
-          padding: 12px;
-          border-radius: 8px;
-          font-size: 14px;
-          font-weight: 500;
-          color: #155724;
-          text-align: center;
-        }
-        
-        .empty-state {
-          grid-column: 1 / -1;
-          text-align: center;
-          padding: 60px 20px;
-          color: #666;
-        }
-        
-        .empty-state h3 {
-          margin: 0 0 8px 0;
-          color: #495057;
-        }
-        
-        .error {
-          color: #dc3545;
-          background: #f8d7da;
-          padding: 12px;
-          border-radius: 8px;
-          margin-top: 16px;
+        @media (max-width: 768px) {
+          .tools-list {
+            grid-template-columns: 1fr;
+          }
+          
+          .stats {
+            flex-direction: column;
+          }
+          
+          .header h1 {
+            font-size: 24px;
+          }
         }
       `}</style>
     </div>
