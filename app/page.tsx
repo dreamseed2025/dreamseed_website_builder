@@ -92,6 +92,9 @@ export default function Home() {
           font-weight: 600;
           transition: all 0.2s ease;
           display: inline-block;
+          cursor: pointer;
+          position: relative;
+          z-index: 10;
         }
         
         .btn-primary {
