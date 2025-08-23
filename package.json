@@ -12,6 +12,8 @@
     "lint": "next lint",
     "test": "node test-voice-widget.cjs",
     "test:browser": "echo \"Open voice-widget-browser-test.html in your browser\"",
+    "test:flows": "./tests/run-tests.sh",
+    "test:local": "TEST_URL=http://localhost:3000 ./tests/run-tests.sh",
     "db:check": "node check-database-status.js",
     "db:setup": "node setup-complete-database.js",
     "db:verify": "node verify-database-setup.js",
