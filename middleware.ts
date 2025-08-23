@@ -2,18 +2,7 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 export async function middleware(req: NextRequest) {
-  const { pathname } = req.nextUrl
-  
-  // Public routes that don't require auth
-  const publicRoutes = ['/', '/login', '/auth/callback', '/voice-widget-demo', '/realtime-voice-demo', '/voice-widget-browser-test', '/vapi-web-demo']
-  const apiRoutes = ['/api/']
-  
-  // Allow all API routes and public routes
-  if (publicRoutes.includes(pathname) || apiRoutes.some(route => pathname.startsWith(route))) {
-    return NextResponse.next()
-  }
-  
-  // For now, allow all routes (we'll add auth back later)
+  // Temporarily allow all requests to debug deployment issues
   return NextResponse.next()
 }
 
