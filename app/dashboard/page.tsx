@@ -8,6 +8,9 @@ import type { User } from '@supabase/supabase-js'
 export default function Dashboard() {
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
+  const [customers, setCustomers] = useState([])
+  const [recentCalls, setRecentCalls] = useState([])
+  const [loadingCustomers, setLoadingCustomers] = useState(true)
   const supabase = createSupabaseClient()
   const router = useRouter()
 
@@ -30,6 +33,64 @@ export default function Dashboard() {
     return () => subscription.unsubscribe()
   }, [supabase.auth, router])
 
+  // Load customer progress data
+  useEffect(() => {
+    const loadCustomerData = async () => {
+      try {
+        setLoadingCustomers(true)
+        
+        // Get customers with their progress
+        const { data: customersData, error: customersError } = await supabase
+          .from('users')
+          .select('*')
+          .order('updated_at', { ascending: false })
+          .limit(10)
+        
+        if (customersError) throw customersError
+        setCustomers(customersData || [])
+        
+        // Get recent call transcripts
+        const { data: transcriptsData, error: transcriptsError } = await supabase
+          .from('call_transcripts')
+          .select(`
+            *,
+            users(customer_name, customer_phone, business_name)
+          `)
+          .order('created_at', { ascending: false })
+          .limit(5)
+        
+        if (transcriptsError) throw transcriptsError
+        setRecentCalls(transcriptsData || [])
+        
+      } catch (error) {
+        console.error('Error loading customer data:', error)
+      } finally {
+        setLoadingCustomers(false)
+      }
+    }
+
+    if (user) {
+      loadCustomerData()
+      
+      // Set up real-time subscription for customer updates
+      const subscription = supabase
+        .channel('customer-progress')
+        .on(
+          'postgres_changes',
+          { event: '*', schema: 'public', table: 'users' },
+          () => loadCustomerData()
+        )
+        .on(
+          'postgres_changes', 
+          { event: '*', schema: 'public', table: 'call_transcripts' },
+          () => loadCustomerData()
+        )
+        .subscribe()
+
+      return () => subscription.unsubscribe()
+    }
+  }, [user, supabase])
+
   const handleSignOut = async () => {
     await supabase.auth.signOut()
   }
@@ -46,10 +107,18 @@ export default function Dashboard() {
   }
   const toolCategories = [
     {
+      title: "🚀 Business Tools",
+      description: "Essential tools for building your business",
+      tools: [
+        { name: "Domain Checker", url: "/domain-checker", description: "Check domain availability with multiple methods and get pricing info" },
+        { name: "Voice Domain Assistant", url: "/voice-domain-assistant", description: "Find domains using voice commands - just speak what you're looking for" },
+        { name: "VAPI Dashboard", url: "/vapi-dashboard", description: "Interactive voice assistant interface with transcript and controls" }
+      ]
+    },
+    {
       title: "🎯 VAPI Core Tools",
       description: "Main VAPI integration and call management",
       tools: [
-        { name: "VAPI Dashboard", url: "/vapi-dashboard", description: "Interactive voice assistant interface with transcript and controls" },
         { name: "Main VAPI Webhook", url: "/simple-vapi-webhook", description: "Core webhook handler and server" },
         { name: "VAPI System Home", url: "/simple-vapi-webhook/system-home.html", description: "Central system dashboard" },
         { name: "Server Status", url: "/simple-vapi-webhook/server.js", description: "Main server file" },
@@ -170,6 +239,97 @@ export default function Dashboard() {
             🚀 Full VAPI Integration
           </span>
         </div>
+      </div>
+
+      {/* Live Customer Progress Section */}
+      <div className="customer-progress-section">
+        <h2 className="section-title">📞 Live Customer Progress</h2>
+        
+        {loadingCustomers ? (
+          <div className="loading-state">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-2"></div>
+            <p>Loading customer data...</p>
+          </div>
+        ) : (
+          <div className="progress-grid">
+            {/* Customer Progress Cards */}
+            <div className="progress-column">
+              <h3>🚀 Active Customers</h3>
+              {customers.length === 0 ? (
+                <div className="empty-state">No customers yet</div>
+              ) : (
+                customers.map((customer, index) => (
+                  <div key={index} className="customer-card">
+                    <div className="customer-header">
+                      <span className="customer-name">{customer.customer_name || 'Unknown'}</span>
+                      <span className="customer-phone">{customer.customer_phone}</span>
+                    </div>
+                    <div className="business-info">
+                      <div className="business-name">{customer.business_name || 'Business TBD'}</div>
+                      <div className="business-details">
+                        {customer.entity_type && <span className="entity-type">{customer.entity_type}</span>}
+                        {customer.state_of_operation && <span className="state">{customer.state_of_operation}</span>}
+                      </div>
+                    </div>
+                    <div className="call-progress">
+                      <span className={`call-badge ${customer.call_1_completed ? 'completed' : 'pending'}`}>
+                        Call 1 {customer.call_1_completed ? '✅' : '⏳'}
+                      </span>
+                      <span className={`call-badge ${customer.call_2_completed ? 'completed' : 'pending'}`}>
+                        Call 2 {customer.call_2_completed ? '✅' : '⏳'}
+                      </span>
+                      <span className={`call-badge ${customer.call_3_completed ? 'completed' : 'pending'}`}>
+                        Call 3 {customer.call_3_completed ? '✅' : '⏳'}
+                      </span>
+                      <span className={`call-badge ${customer.call_4_completed ? 'completed' : 'pending'}`}>
+                        Call 4 {customer.call_4_completed ? '✅' : '⏳'}
+                      </span>
+                    </div>
+                    <div className="customer-meta">
+                      <span className="urgency">Urgency: {customer.urgency_level || 'Unknown'}</span>
+                      <span className="last-update">
+                        Updated: {customer.updated_at ? new Date(customer.updated_at).toLocaleDateString() : 'Never'}
+                      </span>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+
+            {/* Recent Calls */}
+            <div className="progress-column">
+              <h3>📋 Recent Call Transcripts</h3>
+              {recentCalls.length === 0 ? (
+                <div className="empty-state">No recent calls</div>
+              ) : (
+                recentCalls.map((call, index) => (
+                  <div key={index} className="call-card">
+                    <div className="call-header">
+                      <span className="call-stage">Call {call.call_stage}</span>
+                      <span className="call-date">
+                        {new Date(call.created_at).toLocaleDateString()}
+                      </span>
+                    </div>
+                    <div className="call-customer">
+                      {call.users?.customer_name || 'Unknown'} - {call.users?.customer_phone}
+                    </div>
+                    <div className="call-summary">
+                      {call.semantic_summary || 'Processing summary...'}
+                    </div>
+                    <div className="call-meta">
+                      <span className="transcript-length">
+                        {call.full_transcript?.length || 0} chars
+                      </span>
+                      <span className="vector-status">
+                        {call.full_transcript_vector ? '🧠 Vectorized' : '⏳ Processing'}
+                      </span>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="tools-grid">
@@ -327,7 +487,224 @@ export default function Dashboard() {
           border-radius: 4px;
         }
         
+        /* Customer Progress Styles */
+        .customer-progress-section {
+          background: white;
+          border-radius: 12px;
+          padding: 24px;
+          margin-bottom: 30px;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .section-title {
+          margin: 0 0 20px 0;
+          color: #2563eb;
+          font-size: 28px;
+          font-weight: 600;
+        }
+        
+        .loading-state {
+          text-align: center;
+          padding: 40px;
+          color: #666;
+        }
+        
+        .progress-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 30px;
+        }
+        
+        .progress-column h3 {
+          margin: 0 0 16px 0;
+          color: #1a1a1a;
+          font-size: 20px;
+          font-weight: 600;
+        }
+        
+        .empty-state {
+          padding: 20px;
+          text-align: center;
+          color: #666;
+          background: #f8f9fa;
+          border-radius: 8px;
+          border: 2px dashed #e9ecef;
+        }
+        
+        /* Customer Cards */
+        .customer-card {
+          background: #f8f9fa;
+          border: 1px solid #e9ecef;
+          border-radius: 8px;
+          padding: 16px;
+          margin-bottom: 12px;
+          transition: all 0.2s ease;
+        }
+        
+        .customer-card:hover {
+          background: #e9ecef;
+          border-color: #2563eb;
+          transform: translateY(-1px);
+          box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+        }
+        
+        .customer-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 8px;
+        }
+        
+        .customer-name {
+          font-weight: 600;
+          color: #1a1a1a;
+          font-size: 16px;
+        }
+        
+        .customer-phone {
+          font-size: 12px;
+          color: #666;
+          font-family: monospace;
+          background: rgba(37, 99, 235, 0.1);
+          padding: 2px 6px;
+          border-radius: 4px;
+        }
+        
+        .business-info {
+          margin-bottom: 12px;
+        }
+        
+        .business-name {
+          font-weight: 500;
+          color: #2563eb;
+          margin-bottom: 4px;
+        }
+        
+        .business-details {
+          display: flex;
+          gap: 8px;
+        }
+        
+        .entity-type, .state {
+          font-size: 12px;
+          background: #e0f2fe;
+          color: #0369a1;
+          padding: 2px 6px;
+          border-radius: 4px;
+        }
+        
+        .call-progress {
+          display: flex;
+          gap: 6px;
+          margin-bottom: 12px;
+          flex-wrap: wrap;
+        }
+        
+        .call-badge {
+          font-size: 11px;
+          padding: 4px 8px;
+          border-radius: 12px;
+          font-weight: 500;
+        }
+        
+        .call-badge.completed {
+          background: #dcfce7;
+          color: #166534;
+          border: 1px solid #bbf7d0;
+        }
+        
+        .call-badge.pending {
+          background: #fef3c7;
+          color: #92400e;
+          border: 1px solid #fde68a;
+        }
+        
+        .customer-meta {
+          display: flex;
+          justify-content: space-between;
+          font-size: 12px;
+          color: #666;
+        }
+        
+        /* Call Cards */
+        .call-card {
+          background: #f1f5f9;
+          border: 1px solid #e2e8f0;
+          border-radius: 8px;
+          padding: 14px;
+          margin-bottom: 12px;
+          transition: all 0.2s ease;
+        }
+        
+        .call-card:hover {
+          background: #e2e8f0;
+          border-color: #059669;
+          transform: translateY(-1px);
+          box-shadow: 0 4px 12px rgba(5, 150, 105, 0.15);
+        }
+        
+        .call-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 8px;
+        }
+        
+        .call-stage {
+          font-weight: 600;
+          color: #059669;
+          background: #ecfdf5;
+          padding: 3px 8px;
+          border-radius: 12px;
+          font-size: 12px;
+        }
+        
+        .call-date {
+          font-size: 11px;
+          color: #666;
+        }
+        
+        .call-customer {
+          font-weight: 500;
+          color: #1a1a1a;
+          margin-bottom: 8px;
+          font-size: 14px;
+        }
+        
+        .call-summary {
+          color: #374151;
+          font-size: 13px;
+          line-height: 1.4;
+          margin-bottom: 8px;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+        
+        .call-meta {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          font-size: 11px;
+          color: #666;
+        }
+        
+        .transcript-length {
+          background: #f3f4f6;
+          padding: 2px 6px;
+          border-radius: 4px;
+        }
+        
+        .vector-status {
+          font-weight: 500;
+        }
+        
         @media (max-width: 768px) {
+          .progress-grid {
+            grid-template-columns: 1fr;
+          }
+          
           .tools-list {
             grid-template-columns: 1fr;
           }
@@ -338,6 +715,16 @@ export default function Dashboard() {
           
           .header h1 {
             font-size: 24px;
+          }
+          
+          .customer-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 4px;
+          }
+          
+          .call-progress {
+            gap: 4px;
           }
         }
       `}</style>

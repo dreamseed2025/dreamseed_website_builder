@@ -1,0 +1,45 @@
+{
+  "type": "end-of-call-report",
+  "callId": "test-truth-table-123456",
+  "call": {
+    "customer": {
+      "number": "+15551234567"
+    }
+  },
+  "message": {
+    "messages": [
+      {
+        "role": "assistant",
+        "content": "Hi there! This is Sarah from DreamSeed. What's your full name?"
+      },
+      {
+        "role": "user", 
+        "content": "My name is John Smith and I want to start a tech consulting LLC in Texas."
+      },
+      {
+        "role": "assistant",
+        "content": "Great! What's your email address?"
+      },
+      {
+        "role": "user",
+        "content": "It's john.smith@techconsult.com and this is very urgent - I need to launch in 30 days."
+      },
+      {
+        "role": "assistant", 
+        "content": "Perfect! What type of business are you starting?"
+      },
+      {
+        "role": "user",
+        "content": "I'm starting TechConsult Pro LLC to help restaurants implement AI solutions. I'll be working with local businesses in Dallas."
+      },
+      {
+        "role": "assistant",
+        "content": "Excellent! What's your timeline for getting started?"
+      },
+      {
+        "role": "user",
+        "content": "I need this done ASAP. I have 3 clients ready to sign contracts worth $50k total once I get my LLC paperwork done."
+      }
+    ]
+  }
+}

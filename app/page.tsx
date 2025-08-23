@@ -11,7 +11,7 @@ export default function Home() {
           <div className="hero-content">
             <h1>Launch Your Dream Business With One Click</h1>
             <p>Skip the paperwork and get started today with our AI-powered business builder.</p>
-            <Link href="#pricing" className="cta-button">Get Started Now</Link>
+            <Link href="/login" className="cta-button">Get Started Now</Link>
           </div>
         </div>
       </section>

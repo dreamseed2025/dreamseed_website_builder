@@ -1,8 +1,12 @@
 {
   "permissions": {
-    "defaultMode": "acceptEdits",
     "allow": [
-      "Bash(mv:*)"
-    ]
+      "Bash(mv:*)",
+      "Bash(SUPABASE_URL=https://kxldodhrhqbwyvgyuqfd.supabase.co SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt4bGRvZGhyaHFid3l2Z3l1cWZkIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1NTEyMDA3OCwiZXhwIjoyMDcwNjk2MDc4fQ.ByC7SLkJ2zeyhDN0nyWUNw-otETetisbjKM1sSCfS2Q node -e \"\nconst { createClient } = require(''@supabase/supabase-js'');\n\nconst supabase = createClient(\n  process.env.SUPABASE_URL,\n  process.env.SUPABASE_SERVICE_ROLE_KEY\n);\n\nasync function checkLatestUser() {\n  const { data: user, error } = await supabase\n    .from(''users'')\n    .select(''*'')\n    .eq(''customer_email'', ''john@techsolutions.com'')\n    .single();\n    \n  if (error) {\n    console.log(''❌ Error:'', error.message);\n  } else {\n    console.log(''📋 Latest extracted data for john@techsolutions.com:'');\n    console.log(''👤 Name:'', user.customer_name || ''Not extracted'');\n    console.log(''🏢 Business:'', user.business_name || ''Not extracted'');\n    console.log(''📧 Email:'', user.customer_email);\n    console.log(''📱 Phone:'', user.customer_phone || ''Not extracted'');\n    console.log(''🏛️ Entity Type:'', user.entity_type || ''Not extracted'');\n    console.log(''⚡ Urgency:'', user.urgency_level || ''Not extracted'');\n    console.log(''📞 Call 1 Done:'', user.call_1_completed);\n  }\n}\n\ncheckLatestUser();\n\")",
+      "Bash(kill:*)",
+      "Bash(ngrok:*)",
+      "Bash(node:*)"
+    ],
+    "defaultMode": "acceptEdits"
   }
 }

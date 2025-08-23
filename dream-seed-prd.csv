@@ -1,0 +1,22 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2822
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 Epic,Story ID,Name,Context,Problem,Requirements,Test Cases\
+Convince & Convert (Marketing Site),A1,Trust-Build Landing,"New visitors need a clear, credible reason to start their business with Dream Seed.","Visitors don\'92t quickly grasp the value or next step; conversion suffers.","- Landing page shows headline and primary CTA 'Start my dream'\
+- Social proof visible (testimonials, ratings, logos)\
+- Pricing summary with link to detailed pricing\
+- CTA leads to signup flow\
+- Page loads in <2.5s on 4G\
+- Mobile-friendly (viewport 360px\'961920px)","- Verify CTA scroll/focus to signup\
+- Lighthouse performance & mobile layout check\
+- A/B content toggles render without layout shift"\
+Convince & Convert (Marketing Site),A2,Pricing & Plan Selection,"Prospects need clarity on cost and what\'92s included before subscribing.","Confusion over features and plan outcomes causes drop-off.","- Pricing page lists at least 2 plans with inclusions\
+- Plan selection persists into signup\
+- Displays monthly cost, renewal terms, refund policy link\
+- Taxes/fees disclaimer shown pre-checkout","- Plan selection passes to checkout\
+- Legal links visible and accessible\
+- Price reflects currency from site setting"}

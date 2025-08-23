@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuicTest Solutions LLC - Launch Your Business Right</title>
+    <meta name="description" content="QuicTest Solutions LLC provides comprehensive business formation and testing services, helping entrepreneurs launch their companies with confidence and efficiency.">
+    <meta name="keywords" content="business formation, LLC setup, corporation formation, business testing, entrepreneur services">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background: #0066CC;
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+        
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #0066CC, #004499);
+            color: white;
+            padding: 120px 0 80px;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        .tagline {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .hero-description {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            opacity: 0.9;
+        }
+        
+        .cta-button {
+            background: white;
+            color: #0066CC;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        /* Services Section */
+        .services {
+            padding: 80px 0;
+            background: #F0F8FF;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #0066CC;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .service-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .service-card h3 {
+            color: #0066CC;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        /* About Section */
+        .about {
+            padding: 80px 0;
+        }
+        
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        
+        .about-text {
+            font-size: 1.1rem;
+        }
+        
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .stat-card {
+            text-align: center;
+            padding: 1rem;
+            border-radius: 8px;
+            background: #F0F8FF;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #0066CC;
+        }
+        
+        /* Contact Section */
+        .contact {
+            padding: 80px 0;
+            background: #0066CC;
+            color: white;
+        }
+        
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+        
+        .contact-info h3 {
+            margin-bottom: 1rem;
+        }
+        
+        .contact-item {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .contact-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            color: #333;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+        
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+        
+        /* Footer */
+        footer {
+            background: #004499;
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .about-content,
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <div class="logo">QuicTest Solutions LLC</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <h1>QuicTest Solutions LLC</h1>
+            <p class="tagline">Launch Your Business Right</p>
+            <p class="hero-description">
+                We combine business formation expertise with comprehensive testing services to ensure your company launches successfully the first time
+            </p>
+            <a href="#contact" class="cta-button">Start Your Business Today</a>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <h2 class="section-title">Our Services</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>LLC Formation</h3>
+                    <p>Complete LLC setup with all required documents, state filing, and compliance guidance. Get your Limited Liability Company established quickly and correctly.</p>
+                    <p><strong>Starting at $299</strong></p>
+                </div>
+                <div class="service-card">
+                    <h3>Corporation Formation</h3>
+                    <p>Professional corporation setup with comprehensive documentation, state registration, and ongoing compliance support for your growing business.</p>
+                    <p><strong>Comprehensive packages available</strong></p>
+                </div>
+                <div class="service-card">
+                    <h3>Business Testing Services</h3>
+                    <p>Thorough testing and validation of your business structure, processes, and compliance to ensure everything is launch-ready.</p>
+                    <p><strong>Custom solutions</strong></p>
+                </div>
+                <div class="service-card">
+                    <h3>Compliance Consulting</h3>
+                    <p>Expert guidance on business regulations, ongoing compliance requirements, and best practices to keep your company in good standing.</p>
+                    <p><strong>Professional expertise</strong></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title">About QuicTest Solutions</h2>
+            <div class="about-content">
+                <div>
+                    <h3>Our Mission</h3>
+                    <p class="about-text">
+                        To simplify business formation and help entrepreneurs launch successful companies with confidence. We eliminate the complexity and uncertainty of business formation by providing expert guidance and testing services.
+                    </p>
+                    <p class="about-text">
+                        Founded by Sarah, an experienced entrepreneur who understands the challenges of starting a business and wanted to create a streamlined solution for fellow entrepreneurs.
+                    </p>
+                    <div class="about-stats">
+                        <div class="stat-card">
+                            <div class="stat-number">500+</div>
+                            <div>Businesses Formed</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">98%</div>
+                            <div>Success Rate</div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3>Our Values</h3>
+                    <ul style="font-size: 1.1rem; line-height: 2;">
+                        <li><strong>Integrity:</strong> Honest, transparent business practices</li>
+                        <li><strong>Innovation:</strong> Modern solutions for traditional processes</li>
+                        <li><strong>Customer Success:</strong> Your success is our priority</li>
+                        <li><strong>Excellence:</strong> High-quality service every time</li>
+                    </ul>
+                    
+                    <h3 style="margin-top: 2rem;">Our Process</h3>
+                    <ol style="font-size: 1.1rem; line-height: 2;">
+                        <li>Consultation & Planning</li>
+                        <li>Document Preparation</li>
+                        <li>State Filing & Registration</li>
+                        <li>Compliance Setup</li>
+                        <li>Launch Support</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title" style="color: white;">Contact Us</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Get Started Today</h3>
+                    <p style="margin-bottom: 2rem;">Ready to launch your business? Contact us for a free consultation and let's get your company formation process started.</p>
+                    
+                    <div class="contact-item">
+                        <span>📧</span>
+                        <div>
+                            <strong>Email:</strong><br>
+                            <a href="mailto:jane@williamsmedia.com" style="color: white;">jane@williamsmedia.com</a>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <span>📱</span>
+                        <div>
+                            <strong>Phone:</strong><br>
+                            <a href="tel:+15559876543" style="color: white;">+1 (555) 987-6543</a>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <span>📍</span>
+                        <div>
+                            <strong>Address:</strong><br>
+                            123 Business District<br>
+                            Miami, FL 33101
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <span>⏰</span>
+                        <div>
+                            <strong>Business Hours:</strong><br>
+                            Monday-Friday: 9AM-6PM EST<br>
+                            Saturday: 10AM-4PM EST
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <h3>Send us a Message</h3>
+                    <form>
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="business">Business Type</label>
+                            <input type="text" id="business" name="business" placeholder="LLC, Corporation, etc.">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" placeholder="Tell us about your business formation needs..."></textarea>
+                        </div>
+                        <button type="submit" class="cta-button" style="width: 100%;">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 QuicTest Solutions LLC. All rights reserved.</p>
+            <p>Professional business formation services in Florida and nationwide.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Contact form submission
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your message! We will contact you within 24 hours to discuss your business formation needs.');
+        });
+    </script>
+</body>
+</html>

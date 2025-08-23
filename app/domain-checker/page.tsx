@@ -6,8 +6,6 @@ import { useRouter } from 'next/navigation'
 interface DomainResult {
   domain: string
   available: boolean
-  method: string
-  confidence?: string
   price?: number
   currency?: string
   error?: string
@@ -22,22 +20,22 @@ interface DomainSuggestion {
 }
 
 export default function DomainChecker() {
-  const [domains, setDomains] = useState('')
-  const [results, setResults] = useState<DomainResult[]>([])
+  const [domain, setDomain] = useState('')
+  const [result, setResult] = useState<DomainResult | null>(null)
   const [loading, setLoading] = useState(false)
-  const [method, setMethod] = useState('auto')
-  const [includeSuggestions, setIncludeSuggestions] = useState(true)
-  const [maxSuggestions, setMaxSuggestions] = useState(5)
+  const [generateKeywords, setGenerateKeywords] = useState('')
+  const [availableDomains, setAvailableDomains] = useState<DomainResult[]>([])
+  const [generating, setGenerating] = useState(false)
   const router = useRouter()
 
-  const checkDomains = async () => {
-    if (!domains.trim()) {
-      alert('Please enter at least one domain')
+  const checkDomain = async () => {
+    if (!domain.trim()) {
+      alert('Please enter a domain name')
       return
     }
 
     setLoading(true)
-    setResults([])
+    setResult(null)
 
     try {
       const response = await fetch('/api/check-domains', {
@@ -46,290 +44,748 @@ export default function DomainChecker() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          domains: domains.trim(),
-          method: method,
-          includeSuggestions: includeSuggestions,
-          maxSuggestions: maxSuggestions
+          domains: domain.trim(),
+          method: 'godaddy',
+          includeSuggestions: true,
+          maxSuggestions: 5
         }),
       })
 
       const data = await response.json()
       
-      if (response.ok) {
-        setResults(data.results || [])
+      if (response.ok && data.results && data.results.length > 0) {
+        setResult(data.results[0])
       } else {
-        alert(data.error || 'Failed to check domains')
+        alert(data.error || 'Failed to check domain')
       }
     } catch (error) {
-      alert('Error checking domains. Please try again.')
+      alert('Error checking domain. Please try again.')
       console.error('Domain check error:', error)
     } finally {
       setLoading(false)
     }
   }
 
-  const getStatusIcon = (result: DomainResult) => {
-    if (result.error) return '❌'
-    if (result.available === true) return '✅'
-    if (result.available === false) return '❌'
-    return '⚠️'
-  }
-
-  const getStatusText = (result: DomainResult) => {
-    if (result.error) return 'ERROR'
-    if (result.available === true) return 'AVAILABLE'
-    if (result.available === false) return 'TAKEN'
-    return 'UNKNOWN'
-  }
-
-  const getStatusColor = (result: DomainResult) => {
-    if (result.error) return 'text-red-600'
-    if (result.available === true) return 'text-green-600'
-    if (result.available === false) return 'text-red-600'
-    return 'text-yellow-600'
-  }
-
-  const formatPrice = (result: DomainResult) => {
-    if (result.price && result.currency) {
-      const price = result.price / 1000000 // Convert from micros
-      return ` — $${price.toFixed(2)} ${result.currency}`
+  const formatPrice = (price?: number, currency?: string) => {
+    if (price && currency) {
+      const formattedPrice = (price / 1000000).toFixed(2) // Convert from micros
+      return `$${formattedPrice}`
     }
-    return ''
+    return 'Available'
+  }
+
+  const generateDomainVariations = (keywords: string) => {
+    const words = keywords.toLowerCase().split(/\s+/).filter(word => word.length > 0)
+    const variations = new Set<string>()
+    
+    // Common business suffixes
+    const suffixes = ['app', 'hub', 'labs', 'pro', 'tech', 'online', 'digital', 'solutions', 'ventures', 'group', 'studio', 'agency', 'services', 'company', 'inc', 'llc']
+    
+    // Common business prefixes
+    const prefixes = ['get', 'my', 'the', 'go', 'try', 'use', 'new', 'smart', 'quick', 'easy', 'best', 'top', 'super', 'mega', 'ultra']
+    
+    // Popular TLDs to try
+    const tlds = ['com', 'net', 'org', 'io', 'co', 'app', 'dev', 'tech', 'ai']
+    
+    if (words.length === 0) return []
+
+    // Single word variations
+    if (words.length === 1) {
+      const word = words[0]
+      
+      // Add prefixes
+      prefixes.forEach(prefix => {
+        tlds.forEach(tld => variations.add(`${prefix}${word}.${tld}`))
+      })
+      
+      // Add suffixes
+      suffixes.forEach(suffix => {
+        tlds.forEach(tld => variations.add(`${word}${suffix}.${tld}`))
+      })
+      
+      // Original word with different TLDs
+      tlds.forEach(tld => variations.add(`${word}.${tld}`))
+    }
+    
+    // Multiple words
+    if (words.length >= 2) {
+      // Concatenated versions
+      const concatenated = words.join('')
+      tlds.forEach(tld => variations.add(`${concatenated}.${tld}`))
+      
+      // Hyphenated versions
+      const hyphenated = words.join('-')
+      tlds.forEach(tld => variations.add(`${hyphenated}.${tld}`))
+      
+      // With common suffixes
+      suffixes.slice(0, 8).forEach(suffix => {
+        tlds.forEach(tld => variations.add(`${concatenated}${suffix}.${tld}`))
+      })
+      
+      // With prefixes
+      prefixes.slice(0, 8).forEach(prefix => {
+        tlds.forEach(tld => variations.add(`${prefix}${concatenated}.${tld}`))
+      })
+    }
+    
+    return Array.from(variations).slice(0, 50) // Limit to 50 variations
+  }
+
+  const generateAvailableDomains = async () => {
+    if (!generateKeywords.trim()) {
+      alert('Please enter keywords for domain generation')
+      return
+    }
+
+    setGenerating(true)
+    setAvailableDomains([])
+
+    try {
+      const variations = generateDomainVariations(generateKeywords)
+      const available: DomainResult[] = []
+      
+      // Check domains in batches to avoid overwhelming the API
+      const batchSize = 5
+      for (let i = 0; i < variations.length; i += batchSize) {
+        const batch = variations.slice(i, i + batchSize)
+        
+        // Check each domain in the batch
+        const batchPromises = batch.map(async (domainName) => {
+          try {
+            const response = await fetch('/api/check-domains', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                domains: domainName,
+                method: 'godaddy',
+                includeSuggestions: false,
+                maxSuggestions: 0
+              }),
+            })
+
+            const data = await response.json()
+            
+            if (response.ok && data.results && data.results.length > 0) {
+              const domainResult = data.results[0]
+              if (domainResult.available === true && !domainResult.error) {
+                return domainResult
+              }
+            }
+          } catch (error) {
+            console.error(`Error checking ${domainName}:`, error)
+          }
+          return null
+        })
+        
+        const batchResults = await Promise.all(batchPromises)
+        const availableInBatch = batchResults.filter(result => result !== null) as DomainResult[]
+        
+        if (availableInBatch.length > 0) {
+          setAvailableDomains(prev => [...prev, ...availableInBatch])
+        }
+        
+        // Add delay between batches to avoid rate limiting
+        if (i + batchSize < variations.length) {
+          await new Promise(resolve => setTimeout(resolve, 1000))
+        }
+      }
+      
+    } catch (error) {
+      alert('Error generating domain suggestions. Please try again.')
+      console.error('Domain generation error:', error)
+    } finally {
+      setGenerating(false)
+    }
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-4xl mx-auto px-4">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            🌐 Domain Availability Checker
-          </h1>
-          <p className="text-xl text-gray-600">
-            Check if your dream domain is available using multiple reliable methods
-          </p>
-          <button
-            onClick={() => router.push('/dashboard')}
-            className="mt-4 inline-flex items-center px-4 py-2 text-sm bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
-          >
+    <div className="container">
+      {/* Header */}
+      <div className="header">
+        <div className="header-top">
+          <div>
+            <h1>🌐 Domain Checker</h1>
+            <p>Check if your domain is available for purchase</p>
+          </div>
+          <button onClick={() => router.push('/dashboard')} className="back-btn">
             ← Back to Dashboard
           </button>
         </div>
+      </div>
 
-        {/* Input Form */}
-        <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
-          <div className="space-y-4">
-            <div>
-              <label htmlFor="domains" className="block text-sm font-medium text-gray-700 mb-2">
-                Domain Names
-              </label>
-              <input
-                id="domains"
-                type="text"
-                placeholder="example.com or multiple: domain1.com,domain2.net,domain3.org"
-                value={domains}
-                onChange={(e) => setDomains(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                onKeyPress={(e) => e.key === 'Enter' && checkDomains()}
-              />
-              <p className="text-sm text-gray-500 mt-1">
-                Enter one domain or multiple domains separated by commas
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-4">
-              <div>
-                <label htmlFor="method" className="block text-sm font-medium text-gray-700 mb-2">
-                  Check Method
-                </label>
-                <select
-                  id="method"
-                  value={method}
-                  onChange={(e) => setMethod(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                >
-                  <option value="auto">Auto (tries all methods)</option>
-                  <option value="godaddy">GoDaddy API (most accurate)</option>
-                  <option value="whois">WHOIS Lookup (reliable)</option>
-                  <option value="dns">DNS Check (fast)</option>
-                  <option value="http">HTTP Check (basic)</option>
-                </select>
-              </div>
-
-              <div>
-                <label htmlFor="maxSuggestions" className="block text-sm font-medium text-gray-700 mb-2">
-                  Smart Suggestions
-                </label>
-                <div className="space-y-2">
-                  <div className="flex items-center">
-                    <input
-                      id="includeSuggestions"
-                      type="checkbox"
-                      checked={includeSuggestions}
-                      onChange={(e) => setIncludeSuggestions(e.target.checked)}
-                      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                    />
-                    <label htmlFor="includeSuggestions" className="ml-2 text-sm text-gray-600">
-                      Show alternative TLDs when domain is taken
-                    </label>
-                  </div>
-                  {includeSuggestions && (
-                    <select
-                      id="maxSuggestions"
-                      value={maxSuggestions}
-                      onChange={(e) => setMaxSuggestions(parseInt(e.target.value))}
-                      className="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    >
-                      <option value={3}>Show 3 suggestions</option>
-                      <option value={5}>Show 5 suggestions</option>
-                      <option value={8}>Show 8 suggestions</option>
-                      <option value={10}>Show 10 suggestions</option>
-                    </select>
-                  )}
-                </div>
-              </div>
-            </div>
-
-            <button
-              onClick={checkDomains}
-              disabled={loading}
-              className={`w-full py-3 px-6 rounded-lg font-medium text-white transition-colors ${
-                loading
-                  ? 'bg-gray-400 cursor-not-allowed'
-                  : 'bg-blue-600 hover:bg-blue-700'
-              }`}
-            >
-              {loading ? (
-                <span className="flex items-center justify-center">
-                  <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                  </svg>
-                  Checking Domains...
-                </span>
-              ) : (
-                'Check Domain Availability'
-              )}
-            </button>
-          </div>
-        </div>
-
-        {/* Results */}
-        {results.length > 0 && (
-          <div className="bg-white rounded-xl shadow-lg p-6">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Results</h2>
-            <div className="space-y-3">
-              {results.map((result, index) => (
-                <div key={index} className="space-y-2">
-                  <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
-                    <div className="flex items-center space-x-3">
-                      <span className="text-2xl">{getStatusIcon(result)}</span>
-                      <div>
-                        <div className="font-medium text-gray-900">
-                          {result.domain}
-                        </div>
-                        <div className={`text-sm font-medium ${getStatusColor(result)}`}>
-                          {getStatusText(result)}
-                          {formatPrice(result)}
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div className="text-right">
-                      <div className="text-sm text-gray-500">
-                        Method: {result.method}
-                      </div>
-                      {result.confidence && (
-                        <div className="text-xs text-gray-400">
-                          Confidence: {result.confidence}
-                        </div>
-                      )}
-                      {result.error && (
-                        <div className="text-xs text-red-500">
-                          {result.error}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Suggestions */}
-                  {result.suggestions && result.suggestions.length > 0 && (
-                    <div className="ml-12 pl-4 border-l-2 border-blue-200 bg-blue-50 rounded-r-lg p-3">
-                      <div className="text-sm font-medium text-blue-900 mb-2">
-                        💡 Alternative suggestions:
-                      </div>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                        {result.suggestions.map((suggestion, suggestionIndex) => (
-                          <div
-                            key={suggestionIndex}
-                            className="flex items-center justify-between text-sm bg-white rounded px-3 py-2 border border-blue-200"
-                          >
-                            <div className="flex items-center space-x-2">
-                              <span className="text-green-500">✅</span>
-                              <span className="font-medium text-gray-700">
-                                {suggestion.domain}
-                              </span>
-                            </div>
-                            <div className="text-green-600 font-medium">
-                              {suggestion.price && suggestion.currency 
-                                ? `$${(suggestion.price / 1000000).toFixed(2)} ${suggestion.currency}`
-                                : 'Available'
-                              }
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Info Section */}
-        <div className="mt-8 bg-blue-50 rounded-xl p-6">
-          <h3 className="text-lg font-semibold text-blue-900 mb-3">
-            How It Works
-          </h3>
-          <div className="grid md:grid-cols-3 gap-4 text-sm text-blue-800">
-            <div>
-              <h4 className="font-medium mb-2">Check Methods:</h4>
-              <ul className="space-y-1">
-                <li>• <strong>GoDaddy API:</strong> Most accurate, includes pricing</li>
-                <li>• <strong>WHOIS:</strong> Official registry lookup</li>
-                <li>• <strong>DNS:</strong> Fast domain resolution check</li>
-                <li>• <strong>HTTP:</strong> Website response test</li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-medium mb-2">Result Meanings:</h4>
-              <ul className="space-y-1">
-                <li>• <strong>✅ AVAILABLE:</strong> Domain can be registered</li>
-                <li>• <strong>❌ TAKEN:</strong> Domain is already registered</li>
-                <li>• <strong>⚠️ UNKNOWN:</strong> Unable to determine status</li>
-                <li>• <strong>❌ ERROR:</strong> Check failed or invalid domain</li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-medium mb-2">Smart Suggestions:</h4>
-              <ul className="space-y-1">
-                <li>• <strong>💡 Alternatives:</strong> Shows available TLD options</li>
-                <li>• <strong>Popular TLDs:</strong> .com, .net, .org, .io, .co, .app</li>
-                <li>• <strong>Real-time:</strong> Checks availability instantly</li>
-                <li>• <strong>Pricing:</strong> Shows registration costs</li>
-              </ul>
-            </div>
-          </div>
-          <div className="mt-4 p-3 bg-blue-100 rounded-lg">
-            <p className="text-sm text-blue-700">
-              <strong>Smart Suggestions:</strong> When a domain is taken, we automatically check popular 
-              alternative TLDs (.com, .net, .org, .io, .co, .app, etc.) and show you available options 
-              with real-time pricing. This helps you find the perfect domain even if your first choice isn't available.
-            </p>
-          </div>
+      {/* Search Form */}
+      <div className="search-section">
+        <div className="search-box">
+          <input
+            type="text"
+            placeholder="Enter domain name (e.g. mycompany.com)"
+            value={domain}
+            onChange={(e) => setDomain(e.target.value)}
+            onKeyPress={(e) => e.key === 'Enter' && checkDomain()}
+            className="domain-input"
+          />
+          <button
+            onClick={checkDomain}
+            disabled={loading}
+            className={`search-btn ${loading ? 'loading' : ''}`}
+          >
+            {loading ? (
+              <>
+                <div className="spinner"></div>
+                Checking...
+              </>
+            ) : (
+              'Check Domain'
+            )}
+          </button>
         </div>
       </div>
+
+      {/* Domain Generator */}
+      <div className="generator-section">
+        <h2>🚀 Generate Available Domains</h2>
+        <p>Enter keywords and we'll find creative domain names that are actually available</p>
+        
+        <div className="generator-box">
+          <input
+            type="text"
+            placeholder="Enter keywords (e.g. fitness, tech, consulting)"
+            value={generateKeywords}
+            onChange={(e) => setGenerateKeywords(e.target.value)}
+            onKeyPress={(e) => e.key === 'Enter' && generateAvailableDomains()}
+            className="generator-input"
+          />
+          <button
+            onClick={generateAvailableDomains}
+            disabled={generating}
+            className={`generate-btn ${generating ? 'loading' : ''}`}
+          >
+            {generating ? (
+              <>
+                <div className="spinner"></div>
+                Searching...
+              </>
+            ) : (
+              'Find Available Domains'
+            )}
+          </button>
+        </div>
+        
+        {generating && (
+          <div className="progress-info">
+            <p>🔍 Checking domain variations... This may take a minute</p>
+          </div>
+        )}
+      </div>
+
+      {/* Available Domains Results */}
+      {availableDomains.length > 0 && (
+        <div className="available-domains-section">
+          <h3>🎉 Available Domains Found ({availableDomains.length})</h3>
+          <div className="available-domains-grid">
+            {availableDomains.map((domain, index) => (
+              <div key={index} className="available-domain-card">
+                <div className="available-domain-name">{domain.domain}</div>
+                <div className="available-domain-price">
+                  {formatPrice(domain.price, domain.currency)}
+                  {domain.currency && ` ${domain.currency}`}
+                </div>
+                <div className="available-domain-method">via {domain.method}</div>
+              </div>
+            ))}
+          </div>
+          <div className="available-domains-note">
+            <p>💡 These domains were available when checked. Register quickly as availability can change!</p>
+          </div>
+        </div>
+      )}
+
+      {/* Results */}
+      {result && (
+        <div className="results-section">
+          {result.error ? (
+            <div className="error-result">
+              <div className="error-icon">❌</div>
+              <div className="error-content">
+                <h3>Error Checking Domain</h3>
+                <p>{result.error}</p>
+              </div>
+            </div>
+          ) : result.available ? (
+            <div className="available-result">
+              <div className="available-icon">✅</div>
+              <div className="available-content">
+                <h3>{result.domain} is Available!</h3>
+                <p className="price">
+                  {formatPrice(result.price, result.currency)} 
+                  {result.currency && ` ${result.currency}`}
+                </p>
+                <p className="subtext">This domain is ready for purchase</p>
+              </div>
+            </div>
+          ) : (
+            <div className="taken-result">
+              <div className="taken-icon">❌</div>
+              <div className="taken-content">
+                <h3>{result.domain} is Taken</h3>
+                <p className="subtext">This domain is already registered</p>
+              </div>
+            </div>
+          )}
+
+          {/* Alternatives */}
+          {!result.available && result.suggestions && result.suggestions.length > 0 && (
+            <div className="alternatives-section">
+              <h4>💡 Available Alternatives</h4>
+              <div className="alternatives-grid">
+                {result.suggestions.map((suggestion, index) => (
+                  <div key={index} className="alternative-card">
+                    <div className="alternative-domain">{suggestion.domain}</div>
+                    <div className="alternative-price">
+                      {formatPrice(suggestion.price, suggestion.currency)}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      <style jsx>{`
+        .container {
+          max-width: 800px;
+          margin: 0 auto;
+          padding: 20px;
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+          background: #f8f9fa;
+          min-height: 100vh;
+        }
+        
+        .header {
+          background: white;
+          padding: 30px;
+          border-radius: 12px;
+          margin-bottom: 30px;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .header-top {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+        }
+        
+        .header h1 {
+          margin: 0 0 8px 0;
+          color: #1a1a1a;
+          font-size: 32px;
+          font-weight: 600;
+        }
+        
+        .header p {
+          margin: 0;
+          color: #666;
+          font-size: 18px;
+        }
+        
+        .back-btn {
+          background: #f8f9fa;
+          color: #495057;
+          border: 1px solid #e9ecef;
+          padding: 8px 16px;
+          border-radius: 6px;
+          cursor: pointer;
+          font-size: 14px;
+          transition: all 0.2s;
+          text-decoration: none;
+        }
+        
+        .back-btn:hover {
+          background: #e9ecef;
+          border-color: #2563eb;
+        }
+        
+        .search-section {
+          background: white;
+          padding: 40px;
+          border-radius: 12px;
+          margin-bottom: 30px;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+          text-align: center;
+        }
+        
+        .generator-section {
+          background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+          padding: 40px;
+          border-radius: 12px;
+          margin-bottom: 30px;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+          text-align: center;
+          border: 1px solid #0ea5e9;
+        }
+        
+        .generator-section h2 {
+          margin: 0 0 8px 0;
+          color: #0c4a6e;
+          font-size: 24px;
+          font-weight: 600;
+        }
+        
+        .generator-section p {
+          margin: 0 0 24px 0;
+          color: #0369a1;
+          font-size: 16px;
+        }
+        
+        .generator-box {
+          display: flex;
+          gap: 12px;
+          max-width: 600px;
+          margin: 0 auto;
+        }
+        
+        .generator-input {
+          flex: 1;
+          padding: 16px 20px;
+          border: 2px solid #0ea5e9;
+          border-radius: 8px;
+          font-size: 16px;
+          transition: border-color 0.2s;
+          background: white;
+        }
+        
+        .generator-input:focus {
+          outline: none;
+          border-color: #0284c7;
+          box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+        }
+        
+        .generate-btn {
+          background: #0ea5e9;
+          color: white;
+          border: none;
+          padding: 16px 24px;
+          border-radius: 8px;
+          font-size: 16px;
+          font-weight: 500;
+          cursor: pointer;
+          transition: background 0.2s;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          white-space: nowrap;
+        }
+        
+        .generate-btn:hover:not(.loading) {
+          background: #0284c7;
+        }
+        
+        .generate-btn.loading {
+          background: #9ca3af;
+          cursor: not-allowed;
+        }
+        
+        .progress-info {
+          margin-top: 20px;
+          padding: 16px;
+          background: rgba(255, 255, 255, 0.8);
+          border-radius: 8px;
+          border: 1px solid #0ea5e9;
+        }
+        
+        .progress-info p {
+          margin: 0;
+          color: #0369a1;
+          font-size: 14px;
+          font-weight: 500;
+        }
+        
+        .available-domains-section {
+          background: white;
+          padding: 30px;
+          border-radius: 12px;
+          margin-bottom: 30px;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .available-domains-section h3 {
+          margin: 0 0 20px 0;
+          color: #16a34a;
+          font-size: 20px;
+          font-weight: 600;
+        }
+        
+        .available-domains-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+          gap: 16px;
+          margin-bottom: 20px;
+        }
+        
+        .available-domain-card {
+          background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+          border: 1px solid #16a34a;
+          border-radius: 8px;
+          padding: 20px;
+          text-align: center;
+          transition: all 0.2s;
+        }
+        
+        .available-domain-card:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(22, 163, 74, 0.15);
+        }
+        
+        .available-domain-name {
+          font-weight: 600;
+          color: #15803d;
+          font-size: 16px;
+          margin-bottom: 8px;
+        }
+        
+        .available-domain-price {
+          font-weight: 500;
+          color: #16a34a;
+          font-size: 14px;
+          margin-bottom: 4px;
+        }
+        
+        .available-domain-method {
+          font-size: 12px;
+          color: #16a34a;
+          opacity: 0.8;
+        }
+        
+        .available-domains-note {
+          background: #fef3c7;
+          border: 1px solid #f59e0b;
+          border-radius: 8px;
+          padding: 16px;
+          text-align: center;
+        }
+        
+        .available-domains-note p {
+          margin: 0;
+          color: #92400e;
+          font-size: 14px;
+        }
+        
+        .search-box {
+          display: flex;
+          gap: 12px;
+          max-width: 500px;
+          margin: 0 auto;
+        }
+        
+        .domain-input {
+          flex: 1;
+          padding: 16px 20px;
+          border: 2px solid #e9ecef;
+          border-radius: 8px;
+          font-size: 16px;
+          transition: border-color 0.2s;
+        }
+        
+        .domain-input:focus {
+          outline: none;
+          border-color: #2563eb;
+          box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+        
+        .search-btn {
+          background: #2563eb;
+          color: white;
+          border: none;
+          padding: 16px 24px;
+          border-radius: 8px;
+          font-size: 16px;
+          font-weight: 500;
+          cursor: pointer;
+          transition: background 0.2s;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          white-space: nowrap;
+        }
+        
+        .search-btn:hover:not(.loading) {
+          background: #1d4ed8;
+        }
+        
+        .search-btn.loading {
+          background: #9ca3af;
+          cursor: not-allowed;
+        }
+        
+        .spinner {
+          width: 16px;
+          height: 16px;
+          border: 2px solid #ffffff33;
+          border-top: 2px solid #ffffff;
+          border-radius: 50%;
+          animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+        
+        .results-section {
+          background: white;
+          border-radius: 12px;
+          overflow: hidden;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .available-result,
+        .taken-result,
+        .error-result {
+          display: flex;
+          align-items: center;
+          gap: 20px;
+          padding: 40px;
+          text-align: left;
+        }
+        
+        .available-result {
+          background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+          border-left: 4px solid #16a34a;
+        }
+        
+        .taken-result {
+          background: linear-gradient(135deg, #fef2f2 0%, #fecaca 100%);
+          border-left: 4px solid #dc2626;
+        }
+        
+        .error-result {
+          background: linear-gradient(135deg, #fef2f2 0%, #fecaca 100%);
+          border-left: 4px solid #dc2626;
+        }
+        
+        .available-icon,
+        .taken-icon,
+        .error-icon {
+          font-size: 48px;
+          flex-shrink: 0;
+        }
+        
+        .available-content h3,
+        .taken-content h3,
+        .error-content h3 {
+          margin: 0 0 8px 0;
+          font-size: 24px;
+          font-weight: 600;
+        }
+        
+        .available-content h3 {
+          color: #16a34a;
+        }
+        
+        .taken-content h3,
+        .error-content h3 {
+          color: #dc2626;
+        }
+        
+        .price {
+          font-size: 20px;
+          font-weight: 600;
+          color: #16a34a;
+          margin: 4px 0;
+        }
+        
+        .subtext {
+          margin: 4px 0 0 0;
+          color: #666;
+          font-size: 16px;
+        }
+        
+        .alternatives-section {
+          padding: 30px 40px;
+          border-top: 1px solid #e9ecef;
+          background: #f8f9fa;
+        }
+        
+        .alternatives-section h4 {
+          margin: 0 0 20px 0;
+          color: #2563eb;
+          font-size: 18px;
+          font-weight: 600;
+        }
+        
+        .alternatives-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+          gap: 12px;
+        }
+        
+        .alternative-card {
+          background: white;
+          border: 1px solid #e9ecef;
+          border-radius: 8px;
+          padding: 16px;
+          text-align: center;
+          transition: all 0.2s;
+        }
+        
+        .alternative-card:hover {
+          border-color: #2563eb;
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+        }
+        
+        .alternative-domain {
+          font-weight: 600;
+          color: #1a1a1a;
+          margin-bottom: 8px;
+          font-size: 14px;
+        }
+        
+        .alternative-price {
+          color: #16a34a;
+          font-weight: 500;
+          font-size: 14px;
+        }
+        
+        @media (max-width: 768px) {
+          .header-top {
+            flex-direction: column;
+            gap: 16px;
+            align-items: flex-start;
+          }
+          
+          .search-box {
+            flex-direction: column;
+          }
+          
+          .generator-box {
+            flex-direction: column;
+          }
+          
+          .available-domains-grid {
+            grid-template-columns: 1fr;
+          }
+          
+          .available-result,
+          .taken-result,
+          .error-result {
+            flex-direction: column;
+            text-align: center;
+            gap: 16px;
+          }
+          
+          .alternatives-section {
+            padding: 20px;
+          }
+          
+          .alternatives-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+      `}</style>
     </div>
   )
 }

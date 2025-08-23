@@ -6,9 +6,12 @@
   "type": "module",
   "main": "server.js",
   "scripts": {
-    "build": "echo 'Static site - no build required'",
-    "start": "echo 'Static site deployed'",
-    "test": "echo \"No tests yet\" && exit 0",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test": "node test-voice-widget.cjs",
+    "test:browser": "echo \"Open voice-widget-browser-test.html in your browser\"",
     "db:check": "node check-database-status.js",
     "db:setup": "node setup-complete-database.js",
     "db:verify": "node verify-database-setup.js",
@@ -25,14 +28,26 @@
     "website-builder",
     "next.js",
     "supabase",
-    "openai"
+    "openai",
+    "realtime-agents"
   ],
   "author": "DreamSeed Team",
   "license": "MIT",
   "dependencies": {
+    "@supabase/auth-helpers-nextjs": "^0.10.0",
+    "@supabase/auth-ui-react": "^0.4.7",
+    "@supabase/auth-ui-shared": "^0.1.8",
+    "@supabase/ssr": "^0.7.0",
     "@supabase/supabase-js": "^2.38.0",
+    "@swc/helpers": "^0.5.17",
+    "axios": "^1.11.0",
     "dotenv": "^16.3.1",
-    "glob": "^10.4.5"
+    "express": "^5.1.0",
+    "glob": "^10.4.5",
+    "next": "^14.2.0",
+    "openai": "^5.12.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   },
   "engines": {
     "node": ">=18.0.0"
@@ -62,10 +77,23 @@
       "customer-journey": true,
       "monitoring": true,
       "location": "public/simple-vapi-webhook"
+    },
+    "realtime-voice": {
+      "enabled": true,
+      "interrupt-handling": true,
+      "voice-activity-detection": true,
+      "low-latency": true,
+      "status": "ready-for-openai-realtime-agents"
     }
   },
   "workspaces": [
     "public/simple-vapi-webhook"
   ],
-  "changelog": "CHANGELOG.md"
+  "changelog": "CHANGELOG.md",
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "typescript": "^5.9.2"
+  }
 }

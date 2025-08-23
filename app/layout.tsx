@@ -18,6 +18,7 @@ export default function RootLayout({
             <ul className="nav-links">
               <li><Link href="/">Home</Link></li>
               <li><Link href="#services">Services</Link></li>
+              <li><Link href="/domain-checker">Domain Checker</Link></li>
               <li><Link href="/dashboard">Dashboard</Link></li>
               <li><Link href="#contact">Contact</Link></li>
             </ul>

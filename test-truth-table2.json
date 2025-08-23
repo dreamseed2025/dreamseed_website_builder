@@ -1,0 +1,45 @@
+{
+  "type": "end-of-call-report",
+  "callId": "test-truth-table-789",
+  "call": {
+    "customer": {
+      "number": "+15559876543"
+    }
+  },
+  "message": {
+    "messages": [
+      {
+        "role": "assistant",
+        "content": "Hi there! This is Sarah from DreamSeed. What's your full name?"
+      },
+      {
+        "role": "user", 
+        "content": "My name is Jane Williams and I want to start a marketing agency corporation in Florida."
+      },
+      {
+        "role": "assistant",
+        "content": "Great! What's your email address?"
+      },
+      {
+        "role": "user",
+        "content": "It's jane@williamsmedia.com and this is extremely urgent - I need to launch next week!"
+      },
+      {
+        "role": "assistant", 
+        "content": "Perfect! What type of business are you starting?"
+      },
+      {
+        "role": "user",
+        "content": "Williams Media Corp - we specialize in social media marketing for real estate agents. Based in Miami."
+      },
+      {
+        "role": "assistant",
+        "content": "Excellent! What's your timeline?"
+      },
+      {
+        "role": "user",
+        "content": "This is URGENT! I have a $75k contract waiting and need my corporation paperwork ASAP."
+      }
+    ]
+  }
+}

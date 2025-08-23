@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Voice Widget - DreamSeed</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        
+        .demo-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .demo-section h2 {
+            margin-top: 0;
+            color: #ffd700;
+        }
+        
+        .config-panel {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .config-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .config-group label {
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .config-group input, .config-group select {
+            padding: 8px 12px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 14px;
+        }
+        
+        .config-group input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .voice-widget {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff4757 0%, #ff6b7a 100%);
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(255, 71, 87, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .voice-widget:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(255, 71, 87, 0.6);
+        }
+        
+        .voice-widget.listening {
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        
+        .voice-widget.recording {
+            background: linear-gradient(135deg, #ffa726 0%, #ffb74d 100%);
+        }
+        
+        .voice-widget.processing {
+            background: linear-gradient(135deg, #4caf50 0%, #66bb6a 100%);
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .conversation {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .message {
+            margin-bottom: 10px;
+            padding: 8px 12px;
+            border-radius: 8px;
+        }
+        
+        .message.user {
+            background: rgba(255, 255, 255, 0.2);
+            margin-left: 20%;
+        }
+        
+        .message.assistant {
+            background: rgba(102, 126, 234, 0.3);
+            margin-right: 20%;
+        }
+        
+        .message-time {
+            font-size: 10px;
+            opacity: 0.7;
+            margin-top: 4px;
+        }
+        
+        .message-confidence {
+            font-size: 10px;
+            opacity: 0.7;
+            margin-top: 2px;
+        }
+        
+        .status {
+            text-align: center;
+            font-weight: bold;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #5a67d8;
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .error {
+            background: rgba(255, 71, 87, 0.3);
+            color: #ffebee;
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        
+        .system-message {
+            background: rgba(255, 193, 7, 0.2);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .audio-visualizer {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            height: 20px;
+            margin: 10px 0;
+        }
+        
+        .audio-bar {
+            width: 3px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 2px;
+            transition: height 0.1s ease;
+        }
+        
+        .feature-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 2px 6px;
+            border-radius: 8px;
+            font-size: 10px;
+            font-weight: 500;
+            margin-left: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎤 Enhanced Voice Widget Demo</h1>
+        
+        <div class="demo-section">
+            <h2>⚙️ Configuration</h2>
+            <div class="config-panel">
+                <div class="config-group">
+                    <label>User ID:</label>
+                    <input type="text" id="userId" value="demo-user-123" placeholder="Enter user ID">
+                </div>
+                <div class="config-group">
+                    <label>Dream ID:</label>
+                    <input type="text" id="dreamId" value="dream-456" placeholder="Enter dream ID">
+                </div>
+                <div class="config-group">
+                    <label>Business Name:</label>
+                    <input type="text" id="businessName" value="TechStart Solutions" placeholder="Enter business name">
+                </div>
+                <div class="config-group">
+                    <label>Business Type:</label>
+                    <select id="businessType">
+                        <option value="Software Consulting">Software Consulting</option>
+                        <option value="E-commerce">E-commerce</option>
+                        <option value="Healthcare">Healthcare</option>
+                        <option value="Education">Education</option>
+                        <option value="Finance">Finance</option>
+                    </select>
+                </div>
+                <div class="config-group">
+                    <label>Use Whisper:</label>
+                    <select id="useWhisper">
+                        <option value="true">Yes (Enhanced)</option>
+                        <option value="false">No (Browser Speech)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+        <div class="demo-section">
+            <h2>🎯 Dynamic System Message</h2>
+            <div id="systemMessage" class="system-message">
+                Loading system message...
+            </div>
+        </div>
+        
+        <div class="demo-section">
+            <h2>📊 Current Status</h2>
+            <div id="status" class="status">Ready to start voice conversation</div>
+            <div id="error" class="error" style="display: none;"></div>
+            <div id="audioVisualizer" class="audio-visualizer" style="display: none;">
+                <div class="audio-bar" style="height: 10px;"></div>
+                <div class="audio-bar" style="height: 15px;"></div>
+                <div class="audio-bar" style="height: 8px;"></div>
+                <div class="audio-bar" style="height: 20px;"></div>
+                <div class="audio-bar" style="height: 12px;"></div>
+            </div>
+        </div>
+        
+        <div class="demo-section">
+            <h2>💡 Example Phrases</h2>
+            <div class="controls">
+                <button class="btn btn-secondary" onclick="testPhrase('Help me form an LLC for my consulting business')">Business Formation</button>
+                <button class="btn btn-secondary" onclick="testPhrase('I need a domain name for my tech startup')">Domain Search</button>
+                <button class="btn btn-secondary" onclick="testPhrase('What are the steps to register my business in California?')">State Registration</button>
+                <button class="btn btn-secondary" onclick="testPhrase('What\'s the difference between an LLC and a corporation?')">Entity Types</button>
+            </div>
+        </div>
+        
+        <div class="demo-section">
+            <h2>💬 Conversation History</h2>
+            <div id="conversation" class="conversation">
+                <div class="message assistant">
+                    Hello! I'm your AI voice assistant for DreamSeed. I can help you with business formation, domain selection, and business planning.
+                    <div class="message-time">Just now</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Voice Widget Button -->
+    <button id="voiceWidget" class="voice-widget" onclick="toggleVoiceWidget()" title="Click to start voice conversation">
+        🎤
+    </button>
+    
+    <script>
+        let isListening = false;
+        let isRecording = false;
+        let recognition = null;
+        let synthesis = window.speechSynthesis;
+        let mediaRecorder = null;
+        let audioChunks = [];
+        let audioContext = null;
+        let analyser = null;
+        let microphone = null;
+        let animationFrame = null;
+        
+        // Configuration
+        let config = {
+            userId: 'demo-user-123',
+            dreamId: 'dream-456',
+            businessName: 'TechStart Solutions',
+            businessType: 'Software Consulting',
+            useWhisper: true
+        };
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            updateSystemMessage();
+            updateStatus('Voice widget ready - click the microphone to start!');
+            
+            // Add event listeners for config changes
+            document.getElementById('userId').addEventListener('input', updateConfig);
+            document.getElementById('dreamId').addEventListener('input', updateConfig);
+            document.getElementById('businessName').addEventListener('input', updateConfig);
+            document.getElementById('businessType').addEventListener('change', updateConfig);
+            document.getElementById('useWhisper').addEventListener('change', updateConfig);
+        });
+        
+        function updateConfig() {
+            config.userId = document.getElementById('userId').value;
+            config.dreamId = document.getElementById('dreamId').value;
+            config.businessName = document.getElementById('businessName').value;
+            config.businessType = document.getElementById('businessType').value;
+            config.useWhisper = document.getElementById('useWhisper').value === 'true';
+            updateSystemMessage();
+        }
+        
+        function updateSystemMessage() {
+            const systemMessage = generateDynamicSystemMessage();
+            document.getElementById('systemMessage').textContent = systemMessage;
+        }
+        
+        function generateDynamicSystemMessage() {
+            let systemMessage = `You are an AI voice assistant for DreamSeed, a business formation platform. You help users with business formation, domain selection, and business planning.`;
+
+            systemMessage += `\n\nUser Context:
+- User ID: ${config.userId}
+- Dream ID: ${config.dreamId}
+- Business Name: ${config.businessName}
+- Business Type: ${config.businessType}`;
+
+            systemMessage += `\n\nGuidelines:
+- Be conversational and friendly
+- Keep responses concise (1-2 sentences)
+- Ask follow-up questions to understand their needs
+- Provide actionable advice for business formation
+- If they mention domains, offer to help find available ones
+- If they mention business formation, guide them through the process
+- Personalize responses based on their business type and context`;
+
+            return systemMessage;
+        }
+        
+        function toggleVoiceWidget() {
+            if (config.useWhisper) {
+                if (isRecording) {
+                    stopRecording();
+                } else {
+                    startRecording();
+                }
+            } else {
+                if (isListening) {
+                    stopListening();
+                } else {
+                    startListening();
+                }
+            }
+        }
+        
+        async function startRecording() {
+            try {
+                isRecording = true;
+                updateStatus('🎤 Recording with Whisper...');
+                document.getElementById('voiceWidget').classList.add('recording');
+                document.getElementById('audioVisualizer').style.display = 'flex';
+                
+                const stream = await navigator.mediaDevices.getUserMedia({ 
+                    audio: {
+                        echoCancellation: true,
+                        noiseSuppression: true,
+                        autoGainControl: true,
+                        sampleRate: 16000
+                    } 
+                });
+                
+                // Start audio visualization
+                startAudioVisualization(stream);
+                
+                mediaRecorder = new MediaRecorder(stream, {
+                    mimeType: 'audio/webm;codecs=opus'
+                });
+                
+                audioChunks = [];
+                
+                mediaRecorder.ondataavailable = (event) => {
+                    if (event.data.size > 0) {
+                        audioChunks.push(event.data);
+                    }
+                };
+                
+                mediaRecorder.onstop = async () => {
+                    const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                    await processAudioWithWhisper(audioBlob);
+                    
+                    // Stop all tracks
+                    stream.getTracks().forEach(track => track.stop());
+                    isRecording = false;
+                    document.getElementById('voiceWidget').classList.remove('recording');
+                    document.getElementById('audioVisualizer').style.display = 'none';
+                    stopAudioVisualization();
+                };
+                
+                mediaRecorder.start();
+                
+            } catch (err) {
+                showError('Failed to start recording: ' + err.message);
+                isRecording = false;
+                document.getElementById('voiceWidget').classList.remove('recording');
+            }
+        }
+        
+        function stopRecording() {
+            if (mediaRecorder && isRecording) {
+                mediaRecorder.stop();
+            }
+        }
+        
+        function startAudioVisualization(stream) {
+            try {
+                audioContext = new AudioContext();
+                analyser = audioContext.createAnalyser();
+                analyser.fftSize = 256;
+                
+                microphone = audioContext.createMediaStreamSource(stream);
+                microphone.connect(analyser);
+                
+                const dataArray = new Uint8Array(analyser.frequencyBinCount);
+                
+                const updateAudioLevel = () => {
+                    if (analyser && isRecording) {
+                        analyser.getByteFrequencyData(dataArray);
+                        const average = dataArray.reduce((a, b) => a + b) / dataArray.length;
+                        updateAudioBars(average);
+                        animationFrame = requestAnimationFrame(updateAudioLevel);
+                    }
+                };
+                
+                updateAudioLevel();
+            } catch (err) {
+                console.error('Failed to start audio visualization:', err);
+            }
+        }
+        
+        function stopAudioVisualization() {
+            if (animationFrame) {
+                cancelAnimationFrame(animationFrame);
+            }
+            if (audioContext) {
+                audioContext.close();
+            }
+        }
+        
+        function updateAudioBars(level) {
+            const bars = document.querySelectorAll('.audio-bar');
+            bars.forEach((bar, index) => {
+                const height = Math.max(5, (level * 0.3) + (Math.random() * 10));
+                bar.style.height = height + 'px';
+            });
+        }
+        
+        async function processAudioWithWhisper(audioBlob) {
+            try {
+                updateStatus('🤖 Processing with OpenAI Whisper...');
+                document.getElementById('voiceWidget').classList.add('processing');
+                
+                // Simulate Whisper processing (in real implementation, this would call OpenAI API)
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                // For demo purposes, simulate transcription
+                const simulatedTranscripts = [
+                    "Help me form an LLC for my consulting business",
+                    "I need a domain name for my tech startup",
+                    "What are the steps to register my business in California",
+                    "What's the difference between an LLC and a corporation",
+                    "How do I get an EIN for my business"
+                ];
+                
+                const transcript = simulatedTranscripts[Math.floor(Math.random() * simulatedTranscripts.length)];
+                const confidence = 0.95; // Whisper typically has high confidence
+                
+                addMessage(transcript, 'user', confidence);
+                processUserInput(transcript);
+                
+            } catch (err) {
+                showError('Failed to process audio with Whisper: ' + err.message);
+            } finally {
+                document.getElementById('voiceWidget').classList.remove('processing');
+            }
+        }
+        
+        function startListening() {
+            if (!recognition && !initSpeechRecognition()) {
+                return;
+            }
+            
+            recognition.start();
+        }
+        
+        function stopListening() {
+            if (recognition) {
+                recognition.stop();
+            }
+        }
+        
+        function initSpeechRecognition() {
+            if ('webkitSpeechRecognition' in window) {
+                recognition = new webkitSpeechRecognition();
+            } else if ('SpeechRecognition' in window) {
+                recognition = new SpeechRecognition();
+            } else {
+                showError('Speech recognition is not supported in this browser');
+                return false;
+            }
+            
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.lang = 'en-US';
+            
+            recognition.onstart = () => {
+                isListening = true;
+                updateStatus('🎤 Listening with browser speech recognition...');
+                document.getElementById('voiceWidget').classList.add('listening');
+            };
+            
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                const confidence = event.results[0][0].confidence || 0.8;
+                addMessage(transcript, 'user', confidence);
+                processUserInput(transcript);
+            };
+            
+            recognition.onerror = (event) => {
+                showError(`Speech recognition error: ${event.error}`);
+                isListening = false;
+                document.getElementById('voiceWidget').classList.remove('listening');
+            };
+            
+            recognition.onend = () => {
+                isListening = false;
+                document.getElementById('voiceWidget').classList.remove('listening');
+                updateStatus('Ready for next input');
+            };
+            
+            return true;
+        }
+        
+        function addMessage(content, role, confidence = null) {
+            const conversation = document.getElementById('conversation');
+            const message = document.createElement('div');
+            message.className = `message ${role}`;
+            
+            let messageContent = content;
+            if (confidence) {
+                messageContent += `<div class="message-confidence">Confidence: ${Math.round(confidence * 100)}%</div>`;
+            }
+            messageContent += `<div class="message-time">${new Date().toLocaleTimeString()}</div>`;
+            
+            message.innerHTML = messageContent;
+            conversation.appendChild(message);
+            conversation.scrollTop = conversation.scrollHeight;
+        }
+        
+        function updateStatus(status) {
+            document.getElementById('status').textContent = status;
+        }
+        
+        function showError(error) {
+            const errorDiv = document.getElementById('error');
+            errorDiv.textContent = error;
+            errorDiv.style.display = 'block';
+            setTimeout(() => {
+                errorDiv.style.display = 'none';
+            }, 5000);
+        }
+        
+        function testPhrase(phrase) {
+            addMessage(phrase, 'user', 1.0);
+            processUserInput(phrase);
+        }
+        
+        function processUserInput(input) {
+            updateStatus('🤖 Generating AI response...');
+            
+            // Simulate AI processing with dynamic system message
+            setTimeout(() => {
+                const systemMessage = generateDynamicSystemMessage();
+                const responses = generateContextualResponses(input, systemMessage);
+                const response = responses[Math.floor(Math.random() * responses.length)];
+                
+                addMessage(response, 'assistant');
+                
+                // Speak the response
+                if (synthesis) {
+                    const utterance = new SpeechSynthesisUtterance(response);
+                    utterance.rate = 0.9;
+                    utterance.pitch = 1;
+                    synthesis.speak(utterance);
+                }
+                
+                updateStatus('Ready for next input');
+            }, 1500);
+        }
+        
+        function generateContextualResponses(input, systemMessage) {
+            const lowerInput = input.toLowerCase();
+            
+            // Context-aware responses based on business type and user input
+            if (lowerInput.includes('llc') || lowerInput.includes('form')) {
+                return [
+                    `Great choice! For your ${config.businessType} business, an LLC provides excellent liability protection and tax flexibility. I can help you file in your preferred state.`,
+                    `Perfect! An LLC is ideal for ${config.businessType}. Let me guide you through the formation process step by step.`,
+                    `Excellent! For ${config.businessName}, an LLC will protect your personal assets while offering tax benefits. What state are you planning to incorporate in?`
+                ];
+            } else if (lowerInput.includes('domain') || lowerInput.includes('website')) {
+                return [
+                    `I'd be happy to help you find the perfect domain for ${config.businessName}! Let me search for available options.`,
+                    `Great idea! A strong domain is crucial for your ${config.businessType} business. I can help you find and register the perfect one.`,
+                    `Perfect timing! Let me help you find a domain that matches your ${config.businessType} brand. What keywords are most important to you?`
+                ];
+            } else if (lowerInput.includes('california') || lowerInput.includes('state')) {
+                return [
+                    `California is a great choice for ${config.businessType}! The filing fee is $70 and processing takes 3-5 business days.`,
+                    `Excellent! California offers great opportunities for ${config.businessType} businesses. I can help you with the registration process.`,
+                    `Perfect! California has a streamlined process for ${config.businessType} LLCs. Let me walk you through the requirements.`
+                ];
+            } else {
+                return [
+                    `I understand you're working on ${config.businessName}. Let me provide some guidance based on your ${config.businessType} needs.`,
+                    `That's a great question for your ${config.businessType} business! I can help you navigate through this process.`,
+                    `Perfect! This is exactly the kind of support I provide for ${config.businessType} businesses like yours. Let me break this down for you.`
+                ];
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Widget Browser Test</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+        .test-section h3 {
+            margin-top: 0;
+            color: #555;
+        }
+        .test-result {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        .test-result.pass {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .test-result.fail {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .test-result.warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+        .test-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 14px;
+        }
+        .test-button:hover {
+            background: #0056b3;
+        }
+        .test-button:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+        .voice-test {
+            background: #e3f2fd;
+            border: 1px solid #bbdefb;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .voice-controls {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+            font-weight: 500;
+        }
+        .status.recording {
+            background: #ffebee;
+            color: #c62828;
+        }
+        .status.listening {
+            background: #e8f5e8;
+            color: #2e7d32;
+        }
+        .status.processing {
+            background: #fff3e0;
+            color: #ef6c00;
+        }
+        .conversation {
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            padding: 15px;
+            background: white;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+        .message {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .message.user {
+            background: #e3f2fd;
+            margin-left: 20px;
+        }
+        .message.assistant {
+            background: #f3e5f5;
+            margin-right: 20px;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4caf50, #8bc34a);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        .summary {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+        .summary h3 {
+            margin-top: 0;
+            color: #495057;
+        }
+        .summary-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+        .stat {
+            text-align: center;
+            padding: 15px;
+            background: white;
+            border-radius: 6px;
+            border: 1px solid #dee2e6;
+        }
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #007bff;
+        }
+        .stat-label {
+            color: #6c757d;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎤 Voice Widget Browser Test Suite</h1>
+        
+        <div class="test-section">
+            <h3>🔍 Environment & Browser Tests</h3>
+            <div id="environment-tests"></div>
+            <button class="test-button" onclick="runEnvironmentTests()">Run Environment Tests</button>
+        </div>
+
+        <div class="test-section">
+            <h3>🌐 API Connectivity Tests</h3>
+            <div id="api-tests"></div>
+            <button class="test-button" onclick="runAPITests()">Run API Tests</button>
+        </div>
+
+        <div class="test-section">
+            <h3>🎵 Voice Functionality Tests</h3>
+            <div id="voice-tests"></div>
+            <button class="test-button" onclick="runVoiceTests()">Run Voice Tests</button>
+        </div>
+
+        <div class="voice-test">
+            <h3>🎤 Live Voice Test</h3>
+            <p>Test the actual voice widget functionality:</p>
+            
+            <div class="voice-controls">
+                <button class="test-button" id="startListening" onclick="startListening()">Start Listening</button>
+                <button class="test-button" id="startRecording" onclick="startRecording()">Start Recording</button>
+                <button class="test-button" id="stopVoice" onclick="stopVoice()" disabled>Stop</button>
+                <button class="test-button" onclick="testAIResponse()">Test AI Response</button>
+                <button class="test-button" onclick="clearConversation()">Clear Conversation</button>
+            </div>
+
+            <div id="voiceStatus" class="status" style="display: none;"></div>
+            
+            <div class="progress-bar">
+                <div class="progress-fill" id="audioLevel"></div>
+            </div>
+
+            <div class="conversation" id="conversation">
+                <p style="text-align: center; color: #666;">Conversation will appear here...</p>
+            </div>
+        </div>
+
+        <div class="summary">
+            <h3>📊 Test Summary</h3>
+            <div class="summary-stats">
+                <div class="stat">
+                    <div class="stat-number" id="totalTests">0</div>
+                    <div class="stat-label">Total Tests</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number" id="passedTests">0</div>
+                    <div class="stat-label">Passed</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number" id="failedTests">0</div>
+                    <div class="stat-label">Failed</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number" id="successRate">0%</div>
+                    <div class="stat-label">Success Rate</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Test configuration
+        const TEST_CONFIG = {
+            baseUrl: 'http://localhost:3000',
+            testUserId: 'browser-test-user',
+            testDreamId: 'browser-test-dream'
+        };
+
+        // Test results tracking
+        let testResults = {
+            total: 0,
+            passed: 0,
+            failed: 0,
+            details: []
+        };
+
+        // Voice test variables
+        let mediaRecorder = null;
+        let recognition = null;
+        let isRecording = false;
+        let isListening = false;
+        let audioChunks = [];
+
+        // Utility functions
+        function addTestResult(containerId, name, passed, details = '') {
+            const container = document.getElementById(containerId);
+            const resultDiv = document.createElement('div');
+            resultDiv.className = `test-result ${passed ? 'pass' : 'fail'}`;
+            resultDiv.innerHTML = `
+                <strong>${passed ? '✅' : '❌'} ${name}</strong>
+                ${details ? `<br><small>${details}</small>` : ''}
+            `;
+            container.appendChild(resultDiv);
+
+            testResults.total++;
+            if (passed) {
+                testResults.passed++;
+            } else {
+                testResults.failed++;
+            }
+            testResults.details.push({ name, passed, details });
+            updateSummary();
+        }
+
+        function updateSummary() {
+            document.getElementById('totalTests').textContent = testResults.total;
+            document.getElementById('passedTests').textContent = testResults.passed;
+            document.getElementById('failedTests').textContent = testResults.failed;
+            const successRate = testResults.total > 0 ? Math.round((testResults.passed / testResults.total) * 100) : 0;
+            document.getElementById('successRate').textContent = `${successRate}%`;
+        }
+
+        // Environment Tests
+        async function runEnvironmentTests() {
+            const container = document.getElementById('environment-tests');
+            container.innerHTML = '';
+
+            // Test browser capabilities
+            addTestResult('environment-tests', 'Browser supports Web Audio API', 
+                'AudioContext' in window || 'webkitAudioContext' in window);
+
+            addTestResult('environment-tests', 'Browser supports MediaRecorder', 
+                'MediaRecorder' in window);
+
+            addTestResult('environment-tests', 'Browser supports Speech Recognition', 
+                'webkitSpeechRecognition' in window || 'SpeechRecognition' in window);
+
+            addTestResult('environment-tests', 'Browser supports Speech Synthesis', 
+                'speechSynthesis' in window);
+
+            addTestResult('environment-tests', 'Browser supports getUserMedia', 
+                'getUserMedia' in navigator || 'webkitGetUserMedia' in navigator);
+
+            // Test HTTPS/localhost
+            const isSecure = location.protocol === 'https:' || location.hostname === 'localhost';
+            addTestResult('environment-tests', 'Secure context (HTTPS or localhost)', isSecure);
+
+            // Test microphone permissions
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                addTestResult('environment-tests', 'Microphone access granted', true);
+                stream.getTracks().forEach(track => track.stop());
+            } catch (error) {
+                addTestResult('environment-tests', 'Microphone access granted', false, error.message);
+            }
+        }
+
+        // API Tests
+        async function runAPITests() {
+            const container = document.getElementById('api-tests');
+            container.innerHTML = '';
+
+            // Test server connectivity
+            try {
+                const response = await fetch(`${TEST_CONFIG.baseUrl}/`);
+                addTestResult('api-tests', 'Server is reachable', 
+                    response.status === 200 || response.status === 404, 
+                    `Status: ${response.status}`);
+            } catch (error) {
+                addTestResult('api-tests', 'Server is reachable', false, error.message);
+            }
+
+            // Test OpenAI Chat API
+            try {
+                const response = await fetch(`${TEST_CONFIG.baseUrl}/api/openai-chat`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        message: 'Test message',
+                        systemMessage: 'You are a test assistant.',
+                        userId: TEST_CONFIG.testUserId,
+                        dreamId: TEST_CONFIG.testDreamId
+                    })
+                });
+
+                const data = await response.json();
+                addTestResult('api-tests', 'OpenAI Chat API responds', 
+                    response.status === 200, 
+                    `Status: ${response.status}, Response: ${data.response?.substring(0, 50) || data.error || 'No response'}`);
+            } catch (error) {
+                addTestResult('api-tests', 'OpenAI Chat API responds', false, error.message);
+            }
+
+            // Test VAPI Config API
+            try {
+                const response = await fetch(`${TEST_CONFIG.baseUrl}/api/vapi-config`);
+                const data = await response.json();
+                addTestResult('api-tests', 'VAPI Config API responds', 
+                    response.status === 200 || response.status === 404, 
+                    `Status: ${response.status}, ${data.error || 'Config available'}`);
+            } catch (error) {
+                addTestResult('api-tests', 'VAPI Config API responds', false, error.message);
+            }
+        }
+
+        // Voice Tests
+        async function runVoiceTests() {
+            const container = document.getElementById('voice-tests');
+            container.innerHTML = '';
+
+            // Test speech synthesis
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance('Test speech synthesis');
+                utterance.onend = () => {
+                    addTestResult('voice-tests', 'Speech synthesis works', true);
+                };
+                utterance.onerror = () => {
+                    addTestResult('voice-tests', 'Speech synthesis works', false, 'Speech synthesis failed');
+                };
+                speechSynthesis.speak(utterance);
+            } else {
+                addTestResult('voice-tests', 'Speech synthesis works', false, 'Speech synthesis not supported');
+            }
+
+            // Test speech recognition
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                addTestResult('voice-tests', 'Speech recognition supported', true);
+            } else {
+                addTestResult('voice-tests', 'Speech recognition supported', false, 'Speech recognition not supported');
+            }
+
+            // Test audio recording
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                if ('MediaRecorder' in window) {
+                    addTestResult('voice-tests', 'Audio recording supported', true);
+                } else {
+                    addTestResult('voice-tests', 'Audio recording supported', false, 'MediaRecorder not supported');
+                }
+                stream.getTracks().forEach(track => track.stop());
+            } catch (error) {
+                addTestResult('voice-tests', 'Audio recording supported', false, error.message);
+            }
+        }
+
+        // Voice functionality
+        async function startListening() {
+            if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+                alert('Speech recognition not supported in this browser');
+                return;
+            }
+
+            try {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                recognition = new SpeechRecognition();
+                recognition.continuous = false;
+                recognition.interimResults = false;
+                recognition.lang = 'en-US';
+
+                recognition.onstart = () => {
+                    isListening = true;
+                    updateVoiceStatus('Listening...', 'listening');
+                    document.getElementById('startListening').disabled = true;
+                    document.getElementById('stopVoice').disabled = false;
+                };
+
+                recognition.onresult = async (event) => {
+                    const transcript = event.results[0][0].transcript;
+                    addMessage('user', transcript);
+                    await processUserInput(transcript);
+                };
+
+                recognition.onerror = (event) => {
+                    addMessage('assistant', `Error: ${event.error}`);
+                    stopVoice();
+                };
+
+                recognition.onend = () => {
+                    stopVoice();
+                };
+
+                recognition.start();
+            } catch (error) {
+                alert(`Error starting speech recognition: ${error.message}`);
+            }
+        }
+
+        async function startRecording() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                mediaRecorder = new MediaRecorder(stream, {
+                    mimeType: 'audio/webm;codecs=opus'
+                });
+
+                audioChunks = [];
+                mediaRecorder.ondataavailable = (event) => {
+                    if (event.data.size > 0) {
+                        audioChunks.push(event.data);
+                    }
+                };
+
+                mediaRecorder.onstop = async () => {
+                    const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                    await processAudioInput(audioBlob);
+                    stream.getTracks().forEach(track => track.stop());
+                };
+
+                mediaRecorder.start();
+                isRecording = true;
+                updateVoiceStatus('Recording...', 'recording');
+                document.getElementById('startRecording').disabled = true;
+                document.getElementById('stopVoice').disabled = false;
+
+                // Simulate audio level
+                simulateAudioLevel();
+            } catch (error) {
+                alert(`Error starting recording: ${error.message}`);
+            }
+        }
+
+        function stopVoice() {
+            if (mediaRecorder && isRecording) {
+                mediaRecorder.stop();
+            }
+            if (recognition && isListening) {
+                recognition.stop();
+            }
+            
+            isRecording = false;
+            isListening = false;
+            updateVoiceStatus('', '');
+            document.getElementById('startListening').disabled = false;
+            document.getElementById('startRecording').disabled = false;
+            document.getElementById('stopVoice').disabled = true;
+        }
+
+        function updateVoiceStatus(message, type) {
+            const statusDiv = document.getElementById('voiceStatus');
+            if (message) {
+                statusDiv.textContent = message;
+                statusDiv.className = `status ${type}`;
+                statusDiv.style.display = 'block';
+            } else {
+                statusDiv.style.display = 'none';
+            }
+        }
+
+        function simulateAudioLevel() {
+            if (!isRecording) return;
+            
+            const level = Math.random() * 100;
+            document.getElementById('audioLevel').style.width = `${level}%`;
+            
+            setTimeout(simulateAudioLevel, 100);
+        }
+
+        async function processUserInput(transcript) {
+            updateVoiceStatus('Processing...', 'processing');
+            
+            try {
+                const response = await fetch(`${TEST_CONFIG.baseUrl}/api/openai-chat`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        message: transcript,
+                        systemMessage: 'You are a helpful AI assistant for testing. Keep responses short and friendly.',
+                        userId: TEST_CONFIG.testUserId,
+                        dreamId: TEST_CONFIG.testDreamId
+                    })
+                });
+
+                const data = await response.json();
+                if (data.response) {
+                    addMessage('assistant', data.response);
+                    speakResponse(data.response);
+                } else {
+                    addMessage('assistant', 'Sorry, I could not process your request.');
+                }
+            } catch (error) {
+                addMessage('assistant', `Error: ${error.message}`);
+            }
+            
+            updateVoiceStatus('', '');
+        }
+
+        async function processAudioInput(audioBlob) {
+            updateVoiceStatus('Processing audio...', 'processing');
+            
+            try {
+                const formData = new FormData();
+                formData.append('audio', audioBlob);
+
+                const response = await fetch(`${TEST_CONFIG.baseUrl}/api/whisper-transcribe`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+                if (data.transcript) {
+                    addMessage('user', `[Audio]: ${data.transcript}`);
+                    await processUserInput(data.transcript);
+                } else {
+                    addMessage('assistant', 'Sorry, I could not understand the audio.');
+                }
+            } catch (error) {
+                addMessage('assistant', `Audio processing error: ${error.message}`);
+            }
+            
+            updateVoiceStatus('', '');
+        }
+
+        function addMessage(role, content) {
+            const conversation = document.getElementById('conversation');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${role}`;
+            messageDiv.innerHTML = `
+                <strong>${role === 'user' ? '👤 You' : '🤖 AI'}:</strong><br>
+                ${content}
+            `;
+            conversation.appendChild(messageDiv);
+            conversation.scrollTop = conversation.scrollHeight;
+        }
+
+        function speakResponse(text) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.rate = 0.9;
+                utterance.pitch = 1;
+                utterance.volume = 0.8;
+                speechSynthesis.speak(utterance);
+            }
+        }
+
+        async function testAIResponse() {
+            addMessage('user', 'Test message');
+            await processUserInput('Hello, this is a test message');
+        }
+
+        function clearConversation() {
+            document.getElementById('conversation').innerHTML = 
+                '<p style="text-align: center; color: #666;">Conversation cleared...</p>';
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            updateSummary();
+        });
+    </script>
+</body>
+</html>

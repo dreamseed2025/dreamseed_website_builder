@@ -1,0 +1,37 @@
+{
+  "type": "end-of-call-report",
+  "callId": "test-personalization-456",
+  "call": {
+    "customer": {
+      "number": "+15559876543"
+    }
+  },
+  "message": {
+    "messages": [
+      {
+        "role": "assistant",
+        "content": "Hi Sarah! Great to speak with you again about QuicTest Solutions. I know you're in Florida and working on your corporation. Since we covered your brand identity last time, let's talk about setting up your business operations."
+      },
+      {
+        "role": "user", 
+        "content": "Yes, I'm ready to set up banking. I'd prefer Chase Bank for business banking."
+      },
+      {
+        "role": "assistant",
+        "content": "Excellent choice! Chase has great business banking options. What about accounting software?"
+      },
+      {
+        "role": "user",
+        "content": "I think QuickBooks would work well for my needs. I expect medium volume - maybe 30-40 transactions per month."
+      },
+      {
+        "role": "assistant",
+        "content": "Perfect! For tax structure, since you're forming a corporation, would you like S-Corp election for tax savings?"
+      },
+      {
+        "role": "user",
+        "content": "Yes, S-Corp status makes sense. I want to minimize taxes while growing the business."
+      }
+    ]
+  }
+}

@@ -151,7 +151,8 @@ function parseScriptOutput(output: string): DomainResult[] {
         confidence: jsonResult.confidence,
         price: jsonResult.price,
         currency: jsonResult.currency,
-        error: jsonResult.error
+        error: jsonResult.error,
+        suggestions: jsonResult.suggestions
       })
     } catch (e) {
       // If not JSON, try to parse as plain text output
