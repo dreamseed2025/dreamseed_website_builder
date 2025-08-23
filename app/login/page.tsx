@@ -42,7 +42,7 @@ export default function LoginPage() {
             }
           }}
           providers={['google']}
-          redirectTo={`${window.location.origin}/auth/callback`}
+          redirectTo={typeof window !== 'undefined' ? `${window.location.origin}/auth/callback` : '/auth/callback'}
         />
 
         <div className="mt-6 text-center">
