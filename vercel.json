@@ -1,4 +1,7 @@
 {
   "version": 2,
-  "name": "dreamseed-platform"
+  "name": "dreamseed-platform",
+  "env": {
+    "NODE_VERSION": "20"
+  }
 }
