@@ -19,7 +19,7 @@ export default function RootLayout({
               <li><Link href="/">Home</Link></li>
               <li><Link href="#services">Services</Link></li>
               <li><Link href="/domain-checker">Domain Checker</Link></li>
-              <li><Link href="/dashboard">Dashboard</Link></li>
+              <li><Link href="/customer-portal">Portal</Link></li>
               <li><Link href="#contact">Contact</Link></li>
             </ul>
           </nav>
