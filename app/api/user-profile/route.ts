@@ -17,6 +17,28 @@ interface UserProfile {
     services_offered?: string
     industry_keywords?: string[]
   }
+  dream_dna_truth?: {
+    id?: string
+    business_name?: string
+    what_problem?: string
+    who_serves?: string
+    how_different?: string
+    primary_service?: string
+    target_revenue?: number
+    business_model?: string
+    unique_value_proposition?: string
+    competitive_advantage?: string
+    brand_personality?: string
+    business_stage?: string
+    industry_category?: string
+    geographic_focus?: string
+    timeline_to_launch?: number
+    confidence_score?: number
+    extraction_source?: string
+    validated_by_user?: boolean
+    created_at?: string
+    updated_at?: string
+  }
 }
 
 export async function GET(request: NextRequest) {
@@ -43,7 +65,9 @@ export async function GET(request: NextRequest) {
 
     // Fetch dream DNA data if user exists
     let dreamDnaData = null
+    let dreamDnaTruthData = null
     if (userData && !userError) {
+      // Fetch legacy dream_dna data
       const { data: dreamData } = await supabase
         .from('dream_dna')
         .select('*')
@@ -51,6 +75,17 @@ export async function GET(request: NextRequest) {
         .single()
       
       dreamDnaData = dreamData
+
+      // Fetch new dream_dna_truth data
+      const { data: dreamTruthData } = await supabase
+        .from('dream_dna_truth')
+        .select('*')
+        .eq('user_id', userData.id)
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .single()
+      
+      dreamDnaTruthData = dreamTruthData
     }
 
     // If no profile exists, create a basic one
@@ -116,7 +151,8 @@ export async function GET(request: NextRequest) {
         target_customers: dreamDnaData.target_customers,
         services_offered: dreamDnaData.services_offered,
         industry_keywords: industryKeywords
-      } : null
+      } : null,
+      dream_dna_truth: dreamDnaTruthData
     }
 
     return NextResponse.json({

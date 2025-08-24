@@ -111,7 +111,7 @@ export default function Dashboard() {
       description: "Essential tools for building your business",
       tools: [
         { name: "Domain Checker", url: "/domain-checker", description: "Check domain availability with multiple methods and get pricing info" },
-        { name: "Voice Domain Assistant", url: "/voice-domain-assistant", description: "Find domains using voice commands - just speak what you're looking for" },
+
         { name: "VAPI Dashboard", url: "/vapi-dashboard", description: "Interactive voice assistant interface with transcript and controls" }
       ]
     },

@@ -200,10 +200,7 @@ After clicking sign up, you'll see:
    - **Function:** Talk with AI business formation coach
    - **URL:** `/optimized-voice-demo`
 
-3. **🎤 Voice Assistant**
-   - **Hover Effect:** Blue border and light blue background  
-   - **Function:** Find domains using voice commands
-   - **URL:** `/voice-domain-assistant`
+
 
 4. **📞 Schedule Call**
    - **Visual:** Gray background (non-clickable)
@@ -319,14 +316,7 @@ After clicking sign up, you'll see:
 - Multiple TLD options (.com, .net, .org, etc.)
 - Integration with business formation process
 
-### 🎤 Voice Domain Assistant
-**URL:** `/voice-domain-assistant`
-**Purpose:** Use voice commands to search for domains
-**Access:** Customer Portal → Quick Tools → Voice Assistant
-**Features:**
-- Voice-activated domain searching
-- Hands-free business planning
-- Integration with main business coach system
+
 
 ### 📞 Phone Support
 **Primary Contact:** +1 (555) DREAM-BIZ
@@ -438,7 +428,7 @@ Before starting your business formation:
 
 ### Tools & Features
 - **Domain Checker:** `/domain-checker`
-- **Voice Domain Assistant:** `/voice-domain-assistant`
+
 - **Business Assessment:** `/business-assessment`
 
 ### System Pages

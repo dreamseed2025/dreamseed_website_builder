@@ -1,46 +1,31 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import OpenAI from 'openai'
+import TranscriptIntelligencePredictor from '../../../transcript-intelligence-predictor.js'
 
 const supabaseUrl = process.env.SUPABASE_URL!
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
-const openAIKey = process.env.OPENAI_API_KEY!
+const openaiKey = process.env.OPENAI_API_KEY!
 
-// Initialize OpenAI for vector generation
-const openai = new OpenAI({
-  apiKey: openAIKey
-})
+const supabase = createClient(supabaseUrl, supabaseServiceKey)
+const openai = new OpenAI({ apiKey: openaiKey })
 
-// Enhanced transcript processor with vector generation
 class EnhancedTranscriptProcessor {
   private supabase: any
-  
+  private predictor: TranscriptIntelligencePredictor
+
   constructor() {
-    this.supabase = createClient(supabaseUrl, supabaseServiceKey)
+    this.supabase = supabase
+    this.predictor = new TranscriptIntelligencePredictor()
   }
-  
+
   async processCallWebhook(webhookData: any) {
     try {
-      console.log('🔍 Processing call webhook with vector generation...')
-      console.log('Webhook data keys:', Object.keys(webhookData))
-      
-      // Extract basic info from webhook
-      const callId = webhookData.callId || webhookData.call?.id || 'unknown'
-      const callType = webhookData.type || webhookData.event_type || 'unknown'
+      const callId = webhookData.call?.id || webhookData.callId || 'unknown'
+      const callType = webhookData.type || webhookData.event || 'unknown'
       const timestamp = new Date().toISOString()
       
-      // Only process call completion events
-      if (callType !== 'call-end' && callType !== 'end-of-call-report') {
-        console.log(`⏭️ Skipping non-completion event: ${callType}`)
-        return {
-          success: true,
-          callId,
-          eventType: callType,
-          message: 'Event processed (not a call completion)'
-        }
-      }
-      
-      // Extract transcript and messages
+      // Extract transcript data
       let fullTranscript = ''
       let userMessages: string[] = []
       let assistantMessages: string[] = []
@@ -50,7 +35,6 @@ class EnhancedTranscriptProcessor {
           .map((msg: any) => `${msg.role}: ${msg.content || msg.message || ''}`)
           .join('\n')
         
-        // Separate user and assistant messages
         userMessages = webhookData.artifact.messages
           .filter((msg: any) => msg.role === 'user')
           .map((msg: any) => msg.content || msg.message || '')
@@ -125,6 +109,10 @@ class EnhancedTranscriptProcessor {
       // Update user record
       await this.updateUserRecord(customerPhone || customerEmail, extractedData, fullTranscript)
       
+      // 🔥 NEW: AUTOMATIC TRANSCRIPT INTELLIGENCE PREDICTIONS
+      console.log('🧠 Starting automatic transcript intelligence predictions...')
+      await this.triggerAutomaticPredictions(customerPhone || customerEmail)
+      
       console.log(`✅ Processed call completion for ${callId}`)
       console.log(`📊 Extracted ${Object.keys(extractedData).length} data points`)
       console.log(`🧠 Generated ${Object.keys(vectors).length} vector embeddings`)
@@ -136,7 +124,8 @@ class EnhancedTranscriptProcessor {
         callStage,
         extractedFields: Object.keys(extractedData).length,
         vectorsGenerated: Object.keys(vectors).length,
-        transcriptLength: fullTranscript.length
+        transcriptLength: fullTranscript.length,
+        predictionsTriggered: true
       }
       
     } catch (error) {
@@ -145,6 +134,104 @@ class EnhancedTranscriptProcessor {
         success: false,
         error: error.message
       }
+    }
+  }
+
+  // 🔥 NEW: Automatic prediction trigger
+  async triggerAutomaticPredictions(customerIdentifier: string) {
+    try {
+      console.log(`🤖 Triggering automatic predictions for: ${customerIdentifier}`)
+      
+      // Get user ID from customer identifier
+      const userId = await this.getUserIdFromIdentifier(customerIdentifier)
+      if (!userId) {
+        console.log('❌ Could not find user ID for automatic predictions')
+        return
+      }
+      
+      // Check if we have enough transcript data for predictions
+      const hasTranscripts = await this.checkTranscriptAvailability(userId)
+      if (!hasTranscripts) {
+        console.log('⚠️ No transcripts available for predictions yet')
+        return
+      }
+      
+      // Trigger predictions for all missing fields
+      console.log('🚀 Starting comprehensive field prediction...')
+      const predictions = await this.predictor.predictAllMissingFields(userId)
+      
+      if (predictions && predictions.length > 0) {
+        console.log(`✅ Generated ${predictions.length} automatic predictions:`)
+        predictions.forEach(prediction => {
+          console.log(`  - ${prediction.field_name}: "${prediction.value}" (${prediction.confidence} confidence)`)
+        })
+      } else {
+        console.log('ℹ️ No new predictions generated (all fields may already be filled)')
+      }
+      
+      // Get prediction analytics
+      const analytics = await this.predictor.getPredictionAnalytics(userId)
+      if (analytics) {
+        console.log(`📊 Prediction Analytics: ${analytics.total_predictions} total, ${analytics.average_confidence.toFixed(3)} avg confidence`)
+      }
+      
+    } catch (error) {
+      console.error('❌ Automatic prediction error:', error)
+      // Don't fail the webhook if predictions fail
+    }
+  }
+
+  async getUserIdFromIdentifier(customerIdentifier: string): Promise<string | null> {
+    try {
+      let user = null
+      
+      if (customerIdentifier.includes('@')) {
+        const { data } = await this.supabase
+          .from('users')
+          .select('id')
+          .eq('customer_email', customerIdentifier)
+          .single()
+        user = data
+      } else {
+        const { data } = await this.supabase
+          .from('users')
+          .select('id')
+          .eq('customer_phone', customerIdentifier)
+          .single()
+        user = data
+      }
+      
+      return user?.id || null
+    } catch (error) {
+      console.error('Error getting user ID:', error)
+      return null
+    }
+  }
+
+  async checkTranscriptAvailability(userId: string): Promise<boolean> {
+    try {
+      // Check if we have any transcripts for this user
+      const { data: transcripts, error } = await this.supabase
+        .from('transcripts_vectorized')
+        .select('id')
+        .eq('user_id', userId)
+        .limit(1)
+      
+      if (error || !transcripts || transcripts.length === 0) {
+        // Fallback to legacy table
+        const { data: legacyTranscripts, error: legacyError } = await this.supabase
+          .from('call_transcripts')
+          .select('id')
+          .eq('user_id', userId)
+          .limit(1)
+        
+        return !legacyError && legacyTranscripts && legacyTranscripts.length > 0
+      }
+      
+      return true
+    } catch (error) {
+      console.error('Error checking transcript availability:', error)
+      return false
     }
   }
   
@@ -332,7 +419,7 @@ class EnhancedTranscriptProcessor {
 
   async saveTranscriptWithVectors(customerIdentifier: string, callId: string, callStage: number, data: any) {
     try {
-      console.log('💾 Saving transcript and vectors to database...')
+      console.log('💾 Saving transcript to new database schema...')
       
       // First, get or create user ID
       let user = null
@@ -357,9 +444,88 @@ class EnhancedTranscriptProcessor {
         console.log('❌ User not found for transcript save')
         return
       }
+
+      // Save to transcripts_raw table
+      const rawTranscriptRecord = {
+        user_id: user.id,
+        call_session_id: callId,
+        call_number: callStage,
+        transcript_text: data.fullTranscript,
+        audio_file_url: null, // Will be populated if audio is stored
+        speaker_segments: JSON.stringify({
+          user: data.userMessages,
+          assistant: data.assistantMessages
+        }),
+        call_quality: 'high',
+        duration: null, // Will be populated from VAPI data
+        vapi_integration: true,
+        created_at: new Date().toISOString()
+      }
+
+      const { error: rawError } = await this.supabase
+        .from('transcripts_raw')
+        .insert(rawTranscriptRecord)
       
-      // Create transcript record with vectors
-      const transcriptRecord = {
+      if (rawError) {
+        console.log('❌ Raw transcript save error:', rawError.message)
+      } else {
+        console.log(`✅ Saved raw transcript for call ${callId} to transcripts_raw table.`)
+      }
+
+      // Save to transcripts_vectorized table
+      const vectorizedRecord = {
+        user_id: user.id,
+        call_session_id: callId,
+        content_summary: data.vectors.summary_text || null,
+        key_topics: JSON.stringify(data.extractedData?.topics || []),
+        business_insights: JSON.stringify(data.extractedData?.businessInsights || []),
+        sentiment_score: data.extractedData?.sentiment || 0,
+        vector_embeddings: data.vectors.full_transcript || null,
+        ai_model_version: 'text-embedding-3-small',
+        processing_metadata: JSON.stringify({
+          call_stage: callStage,
+          extracted_data: data.extractedData,
+          user_messages_vector: data.vectors.user_messages,
+          semantic_summary_vector: data.vectors.semantic_summary
+        }),
+        created_at: new Date().toISOString()
+      }
+
+      const { error: vectorError } = await this.supabase
+        .from('transcripts_vectorized')
+        .insert(vectorizedRecord)
+      
+      if (vectorError) {
+        console.log('❌ Vectorized transcript save error:', vectorError.message)
+      } else {
+        console.log(`✅ Saved vectorized transcript for call ${callId} to transcripts_vectorized table.`)
+      }
+
+      // Update conversation_sessions table
+      const sessionRecord = {
+        user_id: user.id,
+        session_id: callId,
+        call_number: callStage,
+        completion_status: callStage === 4 ? 'completed' : 'in_progress',
+        scheduled_at: new Date().toISOString(),
+        completed_at: callStage === 4 ? new Date().toISOString() : null,
+        created_at: new Date().toISOString()
+      }
+
+      const { error: sessionError } = await this.supabase
+        .from('conversation_sessions')
+        .upsert(sessionRecord, {
+          onConflict: 'user_id,session_id'
+        })
+      
+      if (sessionError) {
+        console.log('❌ Conversation session update error:', sessionError.message)
+      } else {
+        console.log(`✅ Updated conversation session for call ${callId}.`)
+      }
+
+      // Also save to legacy call_transcripts table for backward compatibility
+      const legacyRecord = {
         user_id: user.id,
         call_id: callId,
         call_stage: callStage,
@@ -367,29 +533,23 @@ class EnhancedTranscriptProcessor {
         user_messages: data.userMessages,
         assistant_messages: data.assistantMessages,
         extracted_data: data.extractedData,
-        
-        // Vector embeddings
         full_transcript_vector: data.vectors.full_transcript || null,
         user_messages_vector: data.vectors.user_messages || null,
         semantic_summary_vector: data.vectors.semantic_summary || null,
         semantic_summary: data.vectors.summary_text || null,
-        
-        // Metadata
         vector_model: 'text-embedding-3-small',
         processed_at: new Date().toISOString(),
         created_at: new Date().toISOString()
       }
       
-      // Insert transcript record
-      const { error } = await this.supabase
+      const { error: legacyError } = await this.supabase
         .from('call_transcripts')
-        .insert(transcriptRecord)
+        .insert(legacyRecord)
       
-      if (error) {
-        console.log('❌ Transcript save error:', error.message)
+      if (legacyError) {
+        console.log('❌ Legacy transcript save error:', legacyError.message)
       } else {
-        console.log(`✅ Saved Call ${callStage} transcript with vectors for ${customerIdentifier}`)
-        console.log(`📊 Vectors saved: ${Object.keys(data.vectors).length} embeddings`)
+        console.log(`✅ Saved legacy transcript for backward compatibility.`)
       }
       
     } catch (error) {
@@ -558,7 +718,7 @@ export async function GET() {
     ],
     environment: {
       supabase: !!supabaseUrl,
-      openai: !!openAIKey
+      openai: !!openaiKey
     }
   })
 }

@@ -1,6 +1,6 @@
 # 🗄️ DreamSeed Database Specification
 
-**Version:** 1.0  
+**Version:** 2.0  
 **Last Updated:** August 24, 2025  
 **Database:** Supabase PostgreSQL  
 
@@ -8,7 +8,7 @@
 
 ## 📊 Overview
 
-DreamSeed uses a Supabase PostgreSQL database to manage business formation workflows, user data, AI-powered voice consultations, and domain selection processes. The system is designed around a progressive 4-call consultation model with AI analysis and dream DNA profiling.
+DreamSeed uses a Supabase PostgreSQL database to manage business formation workflows, AI-powered voice consultations, transcript processing, file management, and automated website generation. The system is designed around a progressive 4-call consultation model with multi-layered Dream DNA analysis, vectorized transcript processing, and AI-driven website creation.
 
 ---
 
@@ -38,34 +38,88 @@ DreamSeed uses a Supabase PostgreSQL database to manage business formation workf
 
 ---
 
-### 2. `dream_dna`
-**Status:** ✅ ACTIVE (1+ records, growing)  
-**Purpose:** AI-powered business DNA truth table for personalized recommendations
+### 2. **Dream DNA System v2.0** (Multi-layered AI Analysis)
+**Status:** ✅ ACTIVE (Growing rapidly with new schema)  
+**Purpose:** Advanced AI-powered business DNA system with probability analysis and business type classification
 
-#### Schema (12 columns):
-- **Primary Key:** `id` (UUID)
-- **Business Context:** `business_id` (links to users table)
-- **Core DNA Fields:**
-  - `what_problem` - Business problem being solved
-  - `who_serves` - Target customer segments  
-  - `how_different` - Unique value proposition
-  - `primary_service` - Main business offering
-- **Brand Positioning:**
-  - `brand_vibe` - professional | bold | friendly | elegant
-  - `color_preference` - cool | vibrant | minimal
-  - `price_level` - budget | mid-market | premium
-- **Metadata:** `version`, `created_at`, `updated_at`
+#### `dream_dna_truth` - Core Business Facts
+- **Enhanced Schema (20+ columns):**
+  - `user_id`, `business_name`, `what_problem`, `who_serves`, `how_different`, `primary_service`
+  - `target_revenue`, `business_model`, `business_stage`, `industry_category`
+  - `confidence_score`, `extraction_source`, `validated_by_user`
+- **AI Confidence:** Multi-level confidence scoring for extracted data
+- **Source Tracking:** Links to voice calls, domain selection, or manual input
 
-#### Key Features:
-- **AI Analysis Integration:** Populated by voice call transcript analysis
-- **Domain Selection:** Connected to domain checker for business formation
-- **Personalization Engine:** Used for customized business recommendations
-- **Growth Potential:** Expected to scale significantly with user adoption
+#### `dream_dna_probability` - AI Confidence & Alternatives  
+- **Purpose:** Multiple interpretations with confidence scores
+- **Schema:** Primary + 3 alternative interpretations per field
+- **Validation:** User confirmation/rejection tracking
+- **AI Reasoning:** Detailed explanations for interpretations
+
+#### `dream_dna_type` - Business Classification
+- **Purpose:** Business archetype and personality classification
+- **Schema:** `business_archetype`, `industry_vertical`, `business_model_type`
+- **Template Matching:** Links to website template categories
+- **Personality Scoring:** Risk tolerance, innovation level, scale ambition
+
+### 3. **Conversation & Analysis Pipeline**
+**Status:** ✅ ACTIVE (New transcript processing system)
+
+#### `transcripts_raw` - Original Voice Data
+- **Purpose:** Store complete voice conversation transcripts  
+- **Schema:** `transcript_text`, `call_session_id`, `call_number`, `audio_file_url`
+- **Metadata:** Speaker segments, call quality, duration, VAPI integration
+
+#### `transcripts_vectorized` - AI-Processed Analysis
+- **Purpose:** Searchable vector embeddings with business insights
+- **Schema:** `content_summary`, `key_topics`, `business_insights`, `sentiment_score`
+- **Vector Search:** OpenAI embeddings for semantic search across conversations
+- **AI Model Tracking:** Version control and processing metadata
+
+#### `conversation_sessions` - Journey Management  
+- **Purpose:** Track multi-call business formation sessions
+- **Schema:** Session progress, completion status, scheduling
+- **Integration:** Links to users and transcripts for complete journey tracking
+
+### 4. **File Management System**
+**Status:** ✅ ACTIVE (Media & document management)
+
+#### `file_buckets` - Universal File Storage
+- **Purpose:** Store all user-uploaded files with metadata
+- **Schema:** File details, storage paths, processing status, AI descriptions
+- **Integration:** Supabase storage buckets by file type
+- **AI Processing:** Automated content analysis and tagging
+
+#### `media_assets` - Organized Media Library  
+- **Purpose:** Curated media for website generation
+- **Schema:** Asset categories, optimization status, color palettes
+- **Website Integration:** Direct connection to website template system
 
 ---
 
-### 3. `auth.users` (Supabase System Table)
-**Status:** ✅ ACTIVE (11 registered users)  
+### 5. **Website Generation System**
+**Status:** ✅ ACTIVE (AI-powered website creation)
+
+#### `website_templates` - Template Library
+- **Purpose:** Structured templates with extractable sections
+- **Schema:** Template code, required sections, customization options
+- **Business Matching:** Links to dream_dna_type for automatic template selection
+- **Performance Tracking:** SEO scores, mobile optimization, loading speed
+
+#### `website_sections` - Dynamic Content Generation
+- **Purpose:** AI-generated content sections from Dream DNA data
+- **Schema:** Section type, generated content, AI confidence scores
+- **Personalization:** Custom content based on business archetype and industry
+- **User Approval:** Revision tracking and user validation workflow
+
+#### `generated_websites` - Live Website Management
+- **Purpose:** Complete website records with deployment tracking
+- **Schema:** Site structure, custom branding, SEO metadata, deployment URLs
+- **Integration:** Connects Dream DNA + media assets + templates = live website
+- **Performance:** Analytics, deployment status, public/private controls
+
+### 6. `auth.users` (Supabase System Table)
+**Status:** ✅ ACTIVE (Growing user base)  
 **Purpose:** Supabase authentication system
 
 #### Features:
@@ -76,57 +130,50 @@ DreamSeed uses a Supabase PostgreSQL database to manage business formation workf
 
 ---
 
-## ⚪ **DEFINED BUT EMPTY TABLES** (Future Use)
+## 🚀 **NEW API ENDPOINTS** (Schema v2.0)
 
-### Voice & Communication System
+### Transcript Processing
+- **`/api/transcript-processor`** - Process voice call transcripts into structured Dream DNA data
+- **Features:** AI extraction, sentiment analysis, business insights, vectorization
+- **Integration:** Saves to `transcripts_raw` + `transcripts_vectorized` + updates `dream_dna_truth`
 
-#### `conversations`
-**Purpose:** Track multi-turn conversations across voice calls  
-**Status:** Defined structure, awaiting voice system expansion
+### File Management  
+- **`/api/file-upload`** - Handle user file uploads with AI processing
+- **Features:** Multi-format support, automatic categorization, media asset creation
+- **Integration:** Saves to `file_buckets` + `media_assets` with Supabase storage
 
-#### `transcripts` 
-**Purpose:** Store voice call transcripts for AI analysis  
-**Status:** Infrastructure ready, will populate as voice calls increase
+### Website Generation
+- **`/api/website-generator`** - Generate complete websites from Dream DNA data
+- **Features:** Template selection, content generation, media integration, SEO optimization
+- **Integration:** Uses `dream_dna_truth` + `media_assets` → creates `generated_websites`
 
-#### `webhook_logs`
-**Purpose:** Log all VAPI webhook calls for debugging and analytics  
-**Status:** Monitoring system prepared for production voice workflows
+### Enhanced Domain Selection  
+- **`/api/save-domain`** (Updated) - Now uses new schema with fallbacks
+- **Features:** Tries `dream_dna_truth` first, falls back to legacy `dream_dna`
+- **Integration:** Creates business type classifications and probability records
 
-#### `call_sessions`
-**Purpose:** Manage active and historical voice call sessions  
-**Status:** Session management framework ready for voice system scaling
+---
 
-#### `vapi_calls` & `voice_calls`
-**Purpose:** Voice call management and VAPI integration tracking  
-**Status:** Voice system infrastructure prepared for production
+## ⚪ **LEGACY TABLES** (Maintained for Compatibility)
 
-### Business Intelligence & Analytics
+### Legacy Dream DNA
+#### `dream_dna` 
+**Purpose:** Original Dream DNA table (now legacy)  
+**Status:** Maintained for backward compatibility, new data goes to `dream_dna_truth`
+**Migration:** Existing data preserved, new schema provides enhanced capabilities
 
-#### `business_assessment`
-**Purpose:** Store structured business assessment form responses  
-**Status:** Assessment system designed, awaiting form implementation
+### Future Expansion Tables
+#### `business_assessment`, `assessment_responses`
+**Purpose:** Structured business assessment forms (not yet implemented)
+**Status:** Schema ready for detailed questionnaire system expansion
 
-#### `assessment_responses` 
-**Purpose:** Individual question responses from business assessments  
-**Status:** Granular response tracking system prepared
+#### `user_sessions`, `domain_searches` 
+**Purpose:** User behavior analytics and search tracking
+**Status:** Infrastructure prepared for advanced analytics implementation
 
-#### `business_formation_data`
-**Purpose:** Additional business formation details beyond core user data  
-**Status:** Extended business data system ready for complex formation needs
-
-#### `ai_analysis`
-**Purpose:** Store AI analysis results from voice calls and assessments  
-**Status:** AI analytics framework prepared for machine learning integration
-
-### User Experience & Tracking
-
-#### `user_sessions`
-**Purpose:** Track user session data for analytics and user experience  
-**Status:** Session analytics system designed
-
-#### `domain_searches` 
-**Purpose:** Track domain search history and preferences  
-**Status:** Domain analytics system ready (complements active dream_dna integration)
+#### Legacy voice tables: `conversations`, `webhooks_logs`, etc.
+**Purpose:** Original voice system design  
+**Status:** Superseded by new `transcripts_raw` + `transcripts_vectorized` system
 
 ---
 

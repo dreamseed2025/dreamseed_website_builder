@@ -6,7 +6,8 @@
       "Bash(kill:*)",
       "Bash(ngrok:*)",
       "Bash(node:*)",
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
+      "Bash(npm run dev:*)"
     ],
     "defaultMode": "acceptEdits"
   }

@@ -17,9 +17,11 @@ export default function RootLayout({
             <div className="logo">🌱 Dream Seed</div>
             <ul className="nav-links">
               <li><Link href="/">Home</Link></li>
-              <li><Link href="#services">Services</Link></li>
+              <li><Link href="/dream-dna-setup" className="cta-button">Create Dream</Link></li>
+              <li><Link href="/dream-dna-overview">Dream DNA</Link></li>
               <li><Link href="/domain-checker">Domain Checker</Link></li>
               <li><Link href="/customer-portal">Portal</Link></li>
+              <li><Link href="/onboarding">Onboarding</Link></li>
               <li><Link href="#contact">Contact</Link></li>
             </ul>
           </nav>

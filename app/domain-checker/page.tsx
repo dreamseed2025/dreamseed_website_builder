@@ -1,7 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import { createSupabaseClient } from '@/lib/supabase'
 
 interface DomainResult {
   domain: string
@@ -26,7 +27,36 @@ export default function DomainChecker() {
   const [generateKeywords, setGenerateKeywords] = useState('')
   const [availableDomains, setAvailableDomains] = useState<DomainResult[]>([])
   const [generating, setGenerating] = useState(false)
+  const [selectedDomain, setSelectedDomain] = useState<string | null>(null)
+  const [savingDomain, setSavingDomain] = useState(false)
+  const [user, setUser] = useState<any>(null)
+  const [authLoading, setAuthLoading] = useState(true)
   const router = useRouter()
+  const supabase = createSupabaseClient()
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const { data: { user }, error } = await supabase.auth.getUser()
+        
+        if (error || !user) {
+          console.log('❌ User not authenticated, redirecting to login...')
+          router.push('/login')
+          return
+        }
+
+        console.log('✅ User authenticated:', user.email)
+        setUser(user)
+      } catch (error) {
+        console.error('Auth check error:', error)
+        router.push('/login')
+      } finally {
+        setAuthLoading(false)
+      }
+    }
+
+    checkAuth()
+  }, [supabase, router])
 
   const checkDomain = async () => {
     if (!domain.trim()) {
@@ -131,6 +161,53 @@ export default function DomainChecker() {
     return Array.from(variations).slice(0, 50) // Limit to 50 variations
   }
 
+  const selectDomain = async (domainName: string, price?: number, currency?: string) => {
+    if (!user) {
+      alert('❌ Please sign in to save domains')
+      return
+    }
+
+    setSavingDomain(true)
+    
+    try {
+      // Get the current session to include auth token
+      const { data: { session } } = await supabase.auth.getSession()
+      
+      const headers: any = {
+        'Content-Type': 'application/json',
+      }
+      
+      // Add authorization header if we have a session
+      if (session?.access_token) {
+        headers['Authorization'] = `Bearer ${session.access_token}`
+      }
+      
+      const response = await fetch('/api/save-domain', {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({
+          domain: domainName,
+          price: price,
+          currency: currency
+        }),
+      })
+
+      const data = await response.json()
+      
+      if (response.ok && data.success) {
+        setSelectedDomain(domainName)
+        alert(`✅ Domain ${domainName} has been saved to your profile!`)
+      } else {
+        alert(`❌ Failed to save domain: ${data.error || 'Unknown error'}`)
+      }
+    } catch (error) {
+      console.error('Error saving domain:', error)
+      alert('❌ Error saving domain. Please try again.')
+    } finally {
+      setSavingDomain(false)
+    }
+  }
+
   const generateAvailableDomains = async () => {
     if (!generateKeywords.trim()) {
       alert('Please enter keywords for domain generation')
@@ -198,6 +275,44 @@ export default function DomainChecker() {
     } finally {
       setGenerating(false)
     }
+  }
+
+  // Show loading while checking authentication
+  if (authLoading) {
+    return (
+      <div className="container" style={{ textAlign: 'center', paddingTop: '4rem' }}>
+        <div style={{ fontSize: '48px', marginBottom: '1rem' }}>🌐</div>
+        <h2>Loading Domain Checker...</h2>
+        <p>Verifying authentication...</p>
+        <div className="spinner" style={{ margin: '2rem auto' }}></div>
+      </div>
+    )
+  }
+
+  // Show auth message if user not authenticated
+  if (!user) {
+    return (
+      <div className="container" style={{ textAlign: 'center', paddingTop: '4rem' }}>
+        <div style={{ fontSize: '48px', marginBottom: '1rem' }}>🔒</div>
+        <h2>Authentication Required</h2>
+        <p>Please sign in to access the domain checker.</p>
+        <button 
+          onClick={() => router.push('/login')}
+          style={{
+            background: 'linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)',
+            color: 'white',
+            border: 'none',
+            padding: '12px 24px',
+            borderRadius: '8px',
+            fontSize: '16px',
+            cursor: 'pointer',
+            marginTop: '1rem'
+          }}
+        >
+          Sign In
+        </button>
+      </div>
+    )
   }
 
   return (
@@ -293,6 +408,22 @@ export default function DomainChecker() {
                   {domain.currency && ` ${domain.currency}`}
                 </div>
                 <div className="available-domain-method">via {domain.method}</div>
+                <button
+                  onClick={() => selectDomain(domain.domain, domain.price, domain.currency)}
+                  disabled={savingDomain || selectedDomain === domain.domain}
+                  className={`select-domain-btn ${selectedDomain === domain.domain ? 'selected' : ''}`}
+                >
+                  {savingDomain && selectedDomain !== domain.domain ? (
+                    <>
+                      <div className="spinner-small"></div>
+                      Saving...
+                    </>
+                  ) : selectedDomain === domain.domain ? (
+                    '✅ Selected'
+                  ) : (
+                    '🎯 Select This Domain'
+                  )}
+                </button>
               </div>
             ))}
           </div>
@@ -323,6 +454,22 @@ export default function DomainChecker() {
                   {result.currency && ` ${result.currency}`}
                 </p>
                 <p className="subtext">This domain is ready for purchase</p>
+                <button
+                  onClick={() => selectDomain(result.domain, result.price, result.currency)}
+                  disabled={savingDomain || selectedDomain === result.domain}
+                  className={`select-domain-btn main-select ${selectedDomain === result.domain ? 'selected' : ''}`}
+                >
+                  {savingDomain && selectedDomain !== result.domain ? (
+                    <>
+                      <div className="spinner-small"></div>
+                      Saving...
+                    </>
+                  ) : selectedDomain === result.domain ? (
+                    '✅ Domain Selected'
+                  ) : (
+                    '🎯 Select This Domain'
+                  )}
+                </button>
               </div>
             </div>
           ) : (
@@ -748,6 +895,58 @@ export default function DomainChecker() {
           color: #16a34a;
           font-weight: 500;
           font-size: 14px;
+        }
+        
+        .select-domain-btn {
+          background: linear-gradient(135deg, #16a34a 0%, #22c55e 100%);
+          color: white;
+          border: none;
+          padding: 12px 20px;
+          border-radius: 8px;
+          font-size: 14px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.2s;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          margin-top: 12px;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          box-shadow: 0 2px 8px rgba(22, 163, 74, 0.3);
+        }
+        
+        .select-domain-btn:hover:not(:disabled) {
+          background: linear-gradient(135deg, #15803d 0%, #16a34a 100%);
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(22, 163, 74, 0.4);
+        }
+        
+        .select-domain-btn:disabled {
+          opacity: 0.7;
+          cursor: not-allowed;
+          transform: none;
+        }
+        
+        .select-domain-btn.selected {
+          background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+          box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4);
+        }
+        
+        .select-domain-btn.main-select {
+          font-size: 16px;
+          padding: 16px 24px;
+          margin-top: 16px;
+        }
+        
+        .spinner-small {
+          width: 12px;
+          height: 12px;
+          border: 2px solid #ffffff33;
+          border-top: 2px solid #ffffff;
+          border-radius: 50%;
+          animation: spin 1s linear infinite;
         }
         
         @media (max-width: 768px) {

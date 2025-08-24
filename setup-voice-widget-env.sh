@@ -96,3 +96,4 @@ echo ""
 
 echo "🎯 Then test the voice widget at:"
 echo "   http://localhost:3000/voice-widget-demo"
+

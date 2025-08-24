@@ -107,3 +107,4 @@ To get the full system working with real APIs:
 - **Configuration Panel**: Easy-to-use form for testing different scenarios
 
 This demo gives you a complete picture of how the voice widget will work in production, with all the dynamic features and personalization you requested!
+

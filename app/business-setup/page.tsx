@@ -40,9 +40,9 @@ export default function BusinessSetup() {
       const source = urlParams.get('source')
       
       if (source === 'dream-dna') {
-        router.push('/voice-domain-assistant?onboarding=complete')
+        router.push('/user-profile?onboarding=complete')
       } else {
-        router.push('/voice-domain-assistant?onboarding=true')
+        router.push('/user-profile?onboarding=true')
       }
     }
   }

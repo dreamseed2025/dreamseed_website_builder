@@ -224,3 +224,4 @@ The optimized voice assistant now provides:
 While it may not match VAPI's native performance exactly (due to infrastructure differences), it now provides a much more responsive and efficient user experience that's suitable for production use.
 
 **Try it now**: `http://localhost:3000/optimized-voice-demo`
+

@@ -1,0 +1,300 @@
+'use client'
+import React from 'react'
+
+export default function VAPIHostedWidgetSimple() {
+  return (
+    <>
+      {/* VAPI Script */}
+      <script 
+        src="https://unpkg.com/@vapi-ai/client-sdk-react/dist/embed/widget.umd.js" 
+        async 
+        type="text/javascript"
+      ></script>
+      
+      <div style={{
+      background: 'linear-gradient(135deg, #000000 0%, #1a0000 50%, #000000 100%)',
+      minHeight: '100vh',
+      padding: '2rem',
+      color: 'white',
+      fontFamily: 'Inter, sans-serif'
+    }}>
+      {/* Background pattern */}
+      <div style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundImage: 'url("https://kxldodhrhqbwyvgyuqfd.supabase.co/storage/v1/object/public/webimages/dream_seed_1.png")',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        opacity: 0.1
+      }} />
+
+      <div style={{
+        maxWidth: '1200px',
+        margin: '0 auto',
+        position: 'relative',
+        zIndex: 10
+      }}>
+        {/* Header */}
+        <div style={{
+          textAlign: 'center',
+          marginBottom: '3rem'
+        }}>
+          <h1 style={{
+            fontSize: '48px',
+            fontWeight: 'bold',
+            marginBottom: '16px',
+            background: 'linear-gradient(135deg, #ffffff 0%, #cccccc 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent'
+          }}>
+            🎤 VAPI Voice Widget
+          </h1>
+          <p style={{
+            fontSize: '20px',
+            color: '#cccccc',
+            marginBottom: '8px'
+          }}>
+            The Fantastic AI Voice Assistant
+          </p>
+          <p style={{
+            fontSize: '16px',
+            color: '#999999'
+          }}>
+            Powered by VAPI • Elliot Voice • Real-time Conversation
+          </p>
+        </div>
+
+        {/* Status Cards */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+          gap: '2rem',
+          marginBottom: '3rem'
+        }}>
+          <div style={{
+            background: 'linear-gradient(145deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)',
+            padding: '2rem',
+            borderRadius: '20px',
+            border: '1px solid rgba(255, 255, 255, 0.2)',
+            backdropFilter: 'blur(10px)'
+          }}>
+            <h3 style={{ margin: '0 0 16px 0', color: '#56b978' }}>✅ Ready to Use</h3>
+            <p style={{ margin: 0, color: '#cccccc' }}>
+              The VAPI voice widget is loaded and ready. Look for the voice button in the bottom-right corner.
+            </p>
+          </div>
+
+          <div style={{
+            background: 'linear-gradient(145deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)',
+            padding: '2rem',
+            borderRadius: '20px',
+            border: '1px solid rgba(255, 255, 255, 0.2)',
+            backdropFilter: 'blur(10px)'
+          }}>
+            <h3 style={{ margin: '0 0 16px 0', color: '#56b978' }}>🎤 Elliot Voice</h3>
+            <p style={{ margin: 0, color: '#cccccc' }}>
+              High-quality, natural voice powered by VAPI's Elliot voice model.
+            </p>
+          </div>
+
+          <div style={{
+            background: 'linear-gradient(145deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)',
+            padding: '2rem',
+            borderRadius: '20px',
+            border: '1px solid rgba(255, 255, 255, 0.2)',
+            backdropFilter: 'blur(10px)'
+          }}>
+            <h3 style={{ margin: '0 0 16px 0', color: '#56b978' }}>🧠 AI Powered</h3>
+            <p style={{ margin: 0, color: '#cccccc' }}>
+              Advanced AI with business formation expertise and personalized responses.
+            </p>
+          </div>
+        </div>
+
+        {/* Instructions */}
+        <div style={{
+          background: 'linear-gradient(145deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)',
+          padding: '2rem',
+          borderRadius: '20px',
+          border: '1px solid rgba(255, 255, 255, 0.2)',
+          backdropFilter: 'blur(10px)',
+          marginBottom: '3rem'
+        }}>
+          <h3 style={{ margin: '0 0 16px 0', color: '#56b978' }}>🎯 How to Use</h3>
+          <ol style={{ margin: 0, paddingLeft: '20px', color: '#cccccc' }}>
+            <li>Look for the voice widget in the bottom-right corner of the page</li>
+            <li>Click the "Start" button to begin a conversation</li>
+            <li>Elliot will greet you and ask how he can help</li>
+            <li>Ask any business formation questions - he's an expert!</li>
+            <li>Have a natural conversation about your business goals</li>
+            <li>Click "End Call" when you're finished</li>
+          </ol>
+        </div>
+
+        {/* VAPI Widget */}
+        <div style={{
+          background: 'linear-gradient(145deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)',
+          padding: '2rem',
+          borderRadius: '20px',
+          border: '1px solid rgba(255, 255, 255, 0.2)',
+          backdropFilter: 'blur(10px)',
+          marginBottom: '3rem'
+        }}>
+          <h3 style={{ margin: '0 0 16px 0', color: '#56b978' }}>🎤 VAPI Voice Widget</h3>
+          <p style={{ margin: '0 0 20px 0', color: '#cccccc' }}>
+            The voice widget will appear in the bottom-right corner. This is the official VAPI hosted widget with Elliot's voice.
+          </p>
+          
+          {/* VAPI Widget with Enhanced Positioning */}
+          <div style={{
+            position: 'fixed',
+            bottom: '20px',
+            right: '20px',
+            zIndex: 9999,
+            width: '60px',
+            height: '60px',
+            background: 'linear-gradient(135deg, #56b978 0%, #45a367 100%)',
+            borderRadius: '50%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer',
+            boxShadow: '0 4px 20px rgba(86, 185, 120, 0.4)',
+            border: '2px solid white'
+          }}>
+            <span style={{ fontSize: '24px' }}>🎤</span>
+          </div>
+          
+          <vapi-widget
+            assistant-id="af397e88-c286-416f-9f74-e7665401bdb7"
+            public-key="360c27df-9f83-4b80-bd33-e17dbcbf4971"
+            voice="elliot"
+            mode="voice"
+            theme="dark"
+            base-bg-color="#000000"
+            accent-color="#76001b"
+            cta-button-color="#000000"
+            cta-button-text-color="#ffffff"
+            border-radius="large"
+            size="full"
+            position="bottom-right"
+            title="Business Coach"
+            start-button-text="Start"
+            end-button-text="End Call"
+            chat-first-message="Hey there! I'm Elliot, your business formation coach. How can I help you today?"
+            chat-placeholder="Type your message..."
+            voice-show-transcript="true"
+            consent-required="true"
+            consent-title="Terms and conditions"
+            consent-content="By clicking 'Agree,' and each time I interact with this AI agent, I consent to the recording, storage, and sharing of my communications with third-party service providers, and as otherwise described in our Terms of Service."
+            consent-storage-key="vapi_widget_consent"
+            style={{
+              position: 'fixed',
+              bottom: '20px',
+              right: '20px',
+              zIndex: 10000
+            }}
+          ></vapi-widget>
+          
+          {/* Debug Info */}
+          <div style={{
+            marginTop: '20px',
+            padding: '12px',
+            background: 'rgba(255, 255, 255, 0.1)',
+            borderRadius: '8px',
+            fontSize: '12px',
+            color: '#cccccc'
+          }}>
+            <strong>Debug Info:</strong><br/>
+            • VAPI Widget should appear in bottom-right corner<br/>
+            • If not visible, check browser console for errors<br/>
+            • Make sure JavaScript is enabled<br/>
+            • Try refreshing the page
+          </div>
+          
+          {/* Manual Voice Button (Fallback) */}
+          <div style={{
+            marginTop: '20px',
+            padding: '16px',
+            background: 'linear-gradient(135deg, #56b978 0%, #45a367 100%)',
+            borderRadius: '12px',
+            textAlign: 'center'
+          }}>
+            <h4 style={{ margin: '0 0 12px 0', color: 'white' }}>🎤 Manual Voice Button</h4>
+            <p style={{ margin: '0 0 16px 0', color: 'white', fontSize: '14px' }}>
+              If the VAPI widget doesn't appear, click this button to start a voice conversation:
+            </p>
+            <button 
+              onClick={() => {
+                // Try to trigger VAPI widget manually
+                const vapiWidget = document.querySelector('vapi-widget') as any;
+                if (vapiWidget && vapiWidget.startCall) {
+                  vapiWidget.startCall();
+                } else {
+                  alert('VAPI widget not found. Please refresh the page or check your browser console.');
+                }
+              }}
+              style={{
+                background: 'white',
+                color: '#56b978',
+                border: 'none',
+                padding: '12px 24px',
+                borderRadius: '8px',
+                fontSize: '16px',
+                fontWeight: 'bold',
+                cursor: 'pointer'
+              }}
+            >
+              🎤 Start Voice Conversation
+            </button>
+          </div>
+        </div>
+
+        {/* Features */}
+        <div style={{
+          background: 'linear-gradient(145deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)',
+          padding: '2rem',
+          borderRadius: '20px',
+          border: '1px solid rgba(255, 255, 255, 0.2)',
+          backdropFilter: 'blur(10px)',
+          marginBottom: '3rem'
+        }}>
+          <h3 style={{ margin: '0 0 16px 0', color: '#56b978' }}>✨ Features</h3>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '16px' }}>
+            <div style={{ padding: '12px', background: 'rgba(255, 255, 255, 0.1)', borderRadius: '8px' }}>
+              <strong style={{ color: '#56b978' }}>🎤 Natural Voice</strong><br/>
+              <span style={{ color: '#cccccc' }}>High-quality Elliot voice with natural conversation flow</span>
+            </div>
+            <div style={{ padding: '12px', background: 'rgba(255, 255, 255, 0.1)', borderRadius: '8px' }}>
+              <strong style={{ color: '#56b978' }}>🧠 AI Expertise</strong><br/>
+              <span style={{ color: '#cccccc' }}>Business formation knowledge and personalized advice</span>
+            </div>
+            <div style={{ padding: '12px', background: 'rgba(255, 255, 255, 0.1)', borderRadius: '8px' }}>
+              <strong style={{ color: '#56b978' }}>💬 Real-time Chat</strong><br/>
+              <span style={{ color: '#cccccc' }}>Instant responses and natural conversation</span>
+            </div>
+            <div style={{ padding: '12px', background: 'rgba(255, 255, 255, 0.1)', borderRadius: '8px' }}>
+              <strong style={{ color: '#56b978' }}>📱 Mobile Ready</strong><br/>
+              <span style={{ color: '#cccccc' }}>Works perfectly on desktop and mobile devices</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div style={{
+          textAlign: 'center',
+          padding: '2rem',
+          borderTop: '1px solid rgba(255, 255, 255, 0.2)',
+          color: '#999999',
+          fontSize: '14px'
+        }}>
+          <p style={{ margin: '0 0 8px 0' }}>Powered by <strong style={{ color: '#56b978' }}>VAPI</strong> • Built for <strong style={{ color: '#56b978' }}>DreamSeed</strong></p>
+          <p style={{ margin: 0 }}>The fantastic AI voice widget you loved!</p>
+        </div>
+      </div>
+    </>
+  )
+}

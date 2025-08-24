@@ -96,3 +96,4 @@ Even without the API keys, your voice widget can:
 - ✅ Show audio visualization
 
 **The system is fully functional and ready to use!** 🚀
+

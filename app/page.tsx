@@ -9,9 +9,17 @@ export default function Home() {
       <section className="hero">
         <div className="container">
           <div className="hero-content">
-            <h1>Launch Your Dream Business With One Click</h1>
-            <p>Skip the paperwork and get started today with our AI-powered business builder.</p>
-            <Link href="/login" className="cta-button">Create Account & Get Started</Link>
+            <h1>🌱 Create Your Dream Business</h1>
+            <p>Tell us about your business idea and let our AI coach help you build it from the ground up.</p>
+            <div className="hero-buttons">
+              <Link href="/dream-dna-setup" className="cta-button primary">Start Creating Your Dream</Link>
+              <Link href="/login" className="cta-button secondary">Sign In</Link>
+            </div>
+            <div className="hero-features">
+              <span>🎯 AI-Powered Coaching</span>
+              <span>💬 Voice-First Experience</span>
+              <span>⚡ 5-Minute Setup</span>
+            </div>
           </div>
         </div>
       </section>
@@ -145,12 +153,13 @@ export default function Home() {
       <style jsx>{`
         /* Hero Section */
         .hero {
-          background: linear-gradient(135deg, #141416 0%, #3348a8 100%);
+          background: linear-gradient(135deg, #000000 0%, #1a0000 50%, #000000 100%);
           color: white;
           padding: 8rem 0 4rem;
           text-align: center;
           position: relative;
           overflow: hidden;
+          border-bottom: 3px solid #8B0000;
         }
 
         .hero::before {
@@ -187,23 +196,27 @@ export default function Home() {
         }
 
         .cta-button {
-          background: #56b978;
+          background: linear-gradient(135deg, #8B0000 0%, #CC0000 100%);
           color: white;
           padding: 1rem 2.5rem;
           font-size: 1.1rem;
-          border: none;
+          border: 2px solid #8B0000;
           border-radius: 50px;
           cursor: pointer;
           transition: all 0.3s ease;
           text-decoration: none;
           display: inline-block;
           font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+          box-shadow: 0 0 20px rgba(139, 0, 0, 0.4);
         }
 
         .cta-button:hover {
-          background: #4a9d66;
-          transform: translateY(-2px);
-          box-shadow: 0 10px 20px rgba(86, 185, 120, 0.3);
+          background: linear-gradient(135deg, #CC0000 0%, #FF0000 100%);
+          border-color: #CC0000;
+          transform: translateY(-3px);
+          box-shadow: 0 15px 30px rgba(139, 0, 0, 0.6), 0 0 30px rgba(139, 0, 0, 0.4);
         }
 
         /* Features Section */
@@ -240,9 +253,11 @@ export default function Home() {
         }
 
         .feature-card h3 {
-          color: #3348a8;
+          color: #8B0000;
           margin-bottom: 1rem;
           font-size: 1.3rem;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
         }
 
         /* Services Section */

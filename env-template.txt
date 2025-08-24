@@ -26,3 +26,4 @@ VAPI_WEBHOOK_SECRET=your_actual_webhook_secret_here
 
 # Server Configuration
 PORT=3000
+

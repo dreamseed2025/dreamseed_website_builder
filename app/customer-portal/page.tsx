@@ -21,75 +21,137 @@ export default function CustomerPortal() {
   const [user, setUser] = useState<User | null>(null)
   const [assessmentData, setAssessmentData] = useState<AssessmentData | null>(null)
   const [loading, setLoading] = useState(true)
+  const [showVoiceWidget, setShowVoiceWidget] = useState(false)
+  const [widgetReady, setWidgetReady] = useState(false)
+  const [loadingError, setLoadingError] = useState<string | null>(null)
   const supabase = createSupabaseClient()
   const router = useRouter()
 
   useEffect(() => {
     const initializeCustomerPortal = async () => {
-      const roleCheck = await checkUserRole()
-      
-      if (!roleCheck.isAuthenticated) {
-        router.push('/login')
-        return
-      }
-
-      if (roleCheck.isAdmin) {
-        router.push('/admin-dashboard')
-        return
-      }
-
-      setUser(roleCheck.user)
-      
-      // Load assessment data from localStorage or database
-      const storedAssessment = localStorage.getItem('assessmentData')
-      if (storedAssessment) {
-        try {
-          const parsedData = JSON.parse(storedAssessment)
-          setAssessmentData(parsedData)
-        } catch (error) {
-          console.error('Error parsing assessment data:', error)
+      try {
+        const roleCheck = await checkUserRole()
+        
+        if (!roleCheck.isAuthenticated) {
+          router.push('/login')
+          return
         }
-      }
-      
-      // Also try to load from database if available
-      if (roleCheck.user?.email) {
-        try {
-          const { data: dbAssessment } = await supabase
-            .from('business_assessments')
-            .select('*')
-            .eq('email', roleCheck.user.email)
-            .order('created_at', { ascending: false })
-            .limit(1)
-            .single()
-            
-          if (dbAssessment) {
-            const formattedData: AssessmentData = {
-              businessIdea: dbAssessment.business_idea,
-              businessType: dbAssessment.business_type,
-              fullName: dbAssessment.full_name,
-              email: dbAssessment.email,
-              phone: dbAssessment.phone,
-              timeline: dbAssessment.timeline,
-              experience: dbAssessment.experience,
-              mainGoal: dbAssessment.main_goal
-            }
-            setAssessmentData(formattedData)
+
+        if (roleCheck.isAdmin) {
+          router.push('/admin-dashboard')
+          return
+        }
+
+        setUser(roleCheck.user)
+        
+        // Load assessment data from localStorage or database
+        const storedAssessment = localStorage.getItem('assessmentData')
+        if (storedAssessment) {
+          try {
+            const parsedData = JSON.parse(storedAssessment)
+            setAssessmentData(parsedData)
+          } catch (error) {
+            console.error('Error parsing assessment data:', error)
           }
-        } catch (error) {
-          console.error('Error loading assessment from database:', error)
         }
+        
+        // Also try to load from database if available (optional)
+        if (roleCheck.user?.email) {
+          try {
+            // Check if business_assessments table exists first
+            const { data: dbAssessment, error: assessmentError } = await supabase
+              .from('business_assessments')
+              .select('*')
+              .eq('email', roleCheck.user.email)
+              .order('created_at', { ascending: false })
+              .limit(1)
+              .single()
+              
+            if (dbAssessment && !assessmentError) {
+              const formattedData: AssessmentData = {
+                businessIdea: dbAssessment.business_idea,
+                businessType: dbAssessment.business_type,
+                fullName: dbAssessment.full_name,
+                email: dbAssessment.email,
+                phone: dbAssessment.phone,
+                timeline: dbAssessment.timeline,
+                experience: dbAssessment.experience,
+                mainGoal: dbAssessment.main_goal
+              }
+              setAssessmentData(formattedData)
+            } else {
+              console.log('No assessment data found or table does not exist')
+            }
+          } catch (error) {
+            console.error('Error loading assessment from database:', error)
+            // Don't fail the whole page for assessment loading errors
+          }
+        }
+        
+        setLoading(false)
+      } catch (error) {
+        console.error('Customer portal initialization error:', error)
+        // Even if there's an error, try to show the basic portal
+        setLoadingError('Some data could not be loaded, but you can still use the portal.')
+        setLoading(false)
       }
-      
-      setLoading(false)
     }
 
+    // Set a timeout to prevent infinite loading
+    const timeout = setTimeout(() => {
+      if (loading) {
+        console.warn('Customer portal loading timeout')
+        setLoadingError('Loading timeout. Please refresh the page.')
+        setLoading(false)
+      }
+    }, 10000) // 10 second timeout
+
     initializeCustomerPortal()
-  }, [supabase, router])
+
+    return () => clearTimeout(timeout)
+  }, [supabase, router, loading])
 
   const handleSignOut = async () => {
     await supabase.auth.signOut()
     router.push('/login')
   }
+
+  const initializePersonalizedWidget = async () => {
+    if (!user || !assessmentData) return
+    
+    try {
+      // Personalize the VAPI assistant with user context
+      const personalizeResponse = await fetch('/api/vapi-personalize', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId: user.id,
+          phone: assessmentData.phone,
+          email: user.email,
+          assessmentData: assessmentData
+        })
+      })
+      
+      const personalizeResult = await personalizeResponse.json()
+      
+      if (personalizeResult.success) {
+        console.log('✅ Assistant personalized for customer portal')
+        setWidgetReady(true)
+      } else {
+        console.warn('⚠️ Personalization failed:', personalizeResult)
+        setWidgetReady(true) // Still show widget
+      }
+    } catch (error) {
+      console.error('❌ Widget personalization error:', error)
+      setWidgetReady(true) // Show widget anyway
+    }
+  }
+
+  useEffect(() => {
+    if (showVoiceWidget && user && assessmentData) {
+      initializePersonalizedWidget()
+    }
+  }, [showVoiceWidget, user, assessmentData])
 
   if (loading) {
     return (
@@ -97,6 +159,17 @@ export default function CustomerPortal() {
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
           <p>Loading your business portal...</p>
+          {loadingError && (
+            <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+              <p className="text-red-600 text-sm">{loadingError}</p>
+              <button 
+                onClick={() => window.location.reload()}
+                className="mt-2 bg-red-600 text-white px-3 py-1 rounded text-sm hover:bg-red-700"
+              >
+                Refresh Page
+              </button>
+            </div>
+          )}
         </div>
       </div>
     )
@@ -225,22 +298,20 @@ export default function CustomerPortal() {
               <h3 className="font-semibold">Domain Checker</h3>
               <p className="text-sm text-gray-600">Find the perfect domain for your business</p>
             </a>
-            <a 
-              href="/optimized-voice-demo"
-              className="block p-4 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition"
+            <div 
+              className="block p-4 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition cursor-pointer"
+              onClick={() => setShowVoiceWidget(!showVoiceWidget)}
             >
               <div className="text-2xl mb-2">🤖</div>
               <h3 className="font-semibold">AI Business Coach</h3>
               <p className="text-sm text-gray-600">Talk with your AI business formation coach</p>
-            </a>
-            <a 
-              href="/voice-domain-assistant"
-              className="block p-4 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition"
-            >
-              <div className="text-2xl mb-2">🎤</div>
-              <h3 className="font-semibold">Voice Assistant</h3>
-              <p className="text-sm text-gray-600">Find domains using voice commands</p>
-            </a>
+              {showVoiceWidget && (
+                <div className="mt-2 text-xs text-blue-600">
+                  Click to {showVoiceWidget ? 'hide' : 'show'} voice widget
+                </div>
+              )}
+            </div>
+
             <div className="p-4 border border-gray-200 rounded-lg bg-gray-50">
               <div className="text-2xl mb-2">📞</div>
               <h3 className="font-semibold">Schedule Call</h3>
@@ -248,7 +319,59 @@ export default function CustomerPortal() {
             </div>
           </div>
         </div>
+
+        {/* Embedded Personalized Voice Widget */}
+        {showVoiceWidget && (
+          <div className="bg-white rounded-lg shadow-sm p-6 mt-6">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xl font-bold text-gray-900">🎤 Your Personalized AI Business Coach</h2>
+              <button
+                onClick={() => setShowVoiceWidget(false)}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                ✕ Close
+              </button>
+            </div>
+            
+            {widgetReady ? (
+              <div className="text-center">
+                <div className="mb-4">
+                  <div className="text-4xl mb-2">🎯</div>
+                  <p className="text-gray-600">Your personalized assistant is ready!</p>
+                  <p className="text-sm text-gray-500 mt-1">
+                    Assistant knows: <strong>{assessmentData?.businessIdea || 'Your business'}</strong>
+                  </p>
+                </div>
+                
+                {/* VAPI Widget */}
+                <div id="vapi-widget-container" className="mt-6">
+                  <vapi-widget 
+                    assistant-id="af397e88-c286-416f-9f74-e7665401bdb7"
+                    public-key="360c27df-9f83-4b80-bd33-e17dbcbf4971"
+                    voice="elliot"
+                  ></vapi-widget>
+                </div>
+                
+                <div className="mt-4 text-sm text-gray-500">
+                  <p>💡 The AI assistant has been personalized with your business assessment data</p>
+                </div>
+              </div>
+            ) : (
+              <div className="text-center py-8">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
+                <p className="text-gray-600">Personalizing your AI assistant...</p>
+              </div>
+            )}
+          </div>
+        )}
       </div>
+
+      {/* VAPI Widget Script */}
+      <script 
+        src="https://unpkg.com/@vapi-ai/client-sdk-react/dist/embed/widget.umd.js" 
+        async 
+        type="text/javascript"
+      ></script>
     </div>
   )
 }

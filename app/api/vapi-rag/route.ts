@@ -191,23 +191,78 @@ async function retrieveRelevantTranscripts(queryEmbedding: number[], userId: str
       }
     }
     
-    // Enhanced transcript retrieval with vector similarity and semantic search
-    let { data: transcripts, error } = await supabase
-      .from('call_transcripts')
-      .select(`
-        id,
-        call_id,
-        call_stage,
-        full_transcript,
-        semantic_summary,
-        extracted_data,
-        created_at,
-        full_transcript_vector,
-        semantic_summary_vector
-      `)
-      .eq('user_id', resolvedUserId)
-      .order('created_at', { ascending: false })
-      .limit(5)
+    // Try new transcripts_vectorized table first
+    let transcripts = []
+    let error = null
+    
+    try {
+      const { data: vectorizedTranscripts, error: vectorizedError } = await supabase
+        .from('transcripts_vectorized')
+        .select(`
+          id,
+          call_session_id,
+          content_summary,
+          key_topics,
+          business_insights,
+          sentiment_score,
+          vector_embeddings,
+          processing_metadata,
+          created_at
+        `)
+        .eq('user_id', resolvedUserId)
+        .order('created_at', { ascending: false })
+        .limit(5)
+
+      if (!vectorizedError && vectorizedTranscripts) {
+        // Transform to match expected format
+        transcripts = vectorizedTranscripts.map(t => ({
+          id: t.id,
+          call_id: t.call_session_id,
+          call_stage: JSON.parse(t.processing_metadata || '{}').call_stage || 1,
+          full_transcript: null, // Not stored in vectorized table
+          semantic_summary: t.content_summary,
+          extracted_data: JSON.parse(t.processing_metadata || '{}').extracted_data || {},
+          created_at: t.created_at,
+          full_transcript_vector: t.vector_embeddings,
+          semantic_summary_vector: null,
+          key_topics: JSON.parse(t.key_topics || '[]'),
+          business_insights: JSON.parse(t.business_insights || '[]'),
+          sentiment_score: t.sentiment_score
+        }))
+        console.log('✅ Retrieved transcripts from new vectorized table')
+      } else {
+        error = vectorizedError
+      }
+    } catch (newTableError) {
+      console.log('⚠️ New transcripts table not available, falling back to legacy')
+    }
+
+    // Fallback to legacy call_transcripts table
+    if (transcripts.length === 0) {
+      const { data: legacyTranscripts, error: legacyError } = await supabase
+        .from('call_transcripts')
+        .select(`
+          id,
+          call_id,
+          call_stage,
+          full_transcript,
+          semantic_summary,
+          extracted_data,
+          created_at,
+          full_transcript_vector,
+          semantic_summary_vector
+        `)
+        .eq('user_id', resolvedUserId)
+        .order('created_at', { ascending: false })
+        .limit(5)
+
+      if (!legacyError && legacyTranscripts) {
+        transcripts = legacyTranscripts
+        console.log('✅ Retrieved transcripts from legacy table')
+      } else {
+        error = legacyError
+      }
+    }
 
     if (error) {
       console.error('Transcript retrieval error:', error)
@@ -215,6 +270,7 @@ async function retrieveRelevantTranscripts(queryEmbedding: number[], userId: str
     }
 
     if (!transcripts || transcripts.length === 0) {
+      console.log('⚠️ No transcripts found for user')
       return []
     }
 
@@ -301,10 +357,13 @@ async function retrieveUserDreamDNA(userId: string) {
       }
     }
     
+    // For now, use the user ID directly as business ID (simplified approach)
+    let businessId = resolvedUserId
+    
     const { data: dreamDNA, error } = await supabase
       .from('dream_dna')
       .select('*')
-      .eq('user_id', resolvedUserId)
+      .eq('business_id', businessId)
       .single()
 
     if (error) {

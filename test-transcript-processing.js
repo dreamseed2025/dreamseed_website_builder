@@ -74,3 +74,4 @@ async function testTranscriptProcessing() {
 
 // Run the test
 testTranscriptProcessing();
+
