@@ -216,7 +216,7 @@ export default function CustomerPortal() {
 
         <div className="bg-white rounded-lg shadow-sm p-6">
           <h2 className="text-xl font-bold text-gray-900 mb-4">🛠️ Quick Tools</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <a 
               href="/domain-checker"
               className="block p-4 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition"
@@ -226,12 +226,20 @@ export default function CustomerPortal() {
               <p className="text-sm text-gray-600">Find the perfect domain for your business</p>
             </a>
             <a 
+              href="/optimized-voice-demo"
+              className="block p-4 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition"
+            >
+              <div className="text-2xl mb-2">🤖</div>
+              <h3 className="font-semibold">AI Business Coach</h3>
+              <p className="text-sm text-gray-600">Talk with your AI business formation coach</p>
+            </a>
+            <a 
               href="/voice-domain-assistant"
               className="block p-4 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition"
             >
               <div className="text-2xl mb-2">🎤</div>
               <h3 className="font-semibold">Voice Assistant</h3>
-              <p className="text-sm text-gray-600">Get help using voice commands</p>
+              <p className="text-sm text-gray-600">Find domains using voice commands</p>
             </a>
             <div className="p-4 border border-gray-200 rounded-lg bg-gray-50">
               <div className="text-2xl mb-2">📞</div>

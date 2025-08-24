@@ -24,7 +24,8 @@ export async function POST(request: NextRequest) {
       businessName, 
       businessType,
       callStage = 1, // Default to stage 1
-      useVAPI = true // Whether to use VAPI or fallback to OpenAI
+      useVAPI = true, // Whether to use VAPI or fallback to OpenAI
+      voiceId = 'elliot' // Voice ID for VAPI (default to Elliot)
     } = await request.json()
 
     if (!message) {
@@ -39,7 +40,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Use VAPI integration
-    return await handleVAPIIntegration(message, userId, dreamId, businessName, businessType, callStage)
+    return await handleVAPIIntegration(message, userId, dreamId, businessName, businessType, callStage, voiceId)
 
   } catch (error) {
     console.error('VAPI Integration error:', error)
@@ -56,7 +57,8 @@ async function handleVAPIIntegration(
   dreamId: string, 
   businessName: string, 
   businessType: string,
-  callStage: number
+  callStage: number,
+  voiceId: string = 'elliot'
 ) {
   try {
     // Get the appropriate assistant ID for the call stage
@@ -75,8 +77,8 @@ async function handleVAPIIntegration(
       callStage
     )
 
-    // Update VAPI assistant with personalized prompt
-    await updateVAPIAssistant(assistantId, systemMessage)
+    // Update VAPI assistant with personalized prompt and Harry voice
+    await updateVAPIAssistant(assistantId, systemMessage, voiceId)
 
     // VAPI is designed for phone calls, not web interactions
     // For web-based voice widget, we'll use the assistant's system message
@@ -133,8 +135,9 @@ async function handleVAPIIntegration(
       response: aiResponse,
       callStage,
       assistantId,
+      voiceId,
       success: true,
-      source: 'vapi-enhanced-openai'
+      source: 'vapi-11labs-elliot'
     })
 
   } catch (error) {
@@ -186,7 +189,7 @@ async function handleOpenAIFallback(
   }
 }
 
-async function updateVAPIAssistant(assistantId: string, systemMessage: string) {
+async function updateVAPIAssistant(assistantId: string, systemMessage: string, voiceId: string) {
   try {
     const response = await fetch(`https://api.vapi.ai/assistant/${assistantId}`, {
       method: 'PATCH',
@@ -203,7 +206,8 @@ async function updateVAPIAssistant(assistantId: string, systemMessage: string) {
             content: systemMessage
           }],
           temperature: 0.7,
-          maxTokens: 1000
+          maxTokens: 1000,
+          voice: voiceId // Add voiceId to the assistant configuration
         }
       })
     })
@@ -211,7 +215,7 @@ async function updateVAPIAssistant(assistantId: string, systemMessage: string) {
     if (!response.ok) {
       console.warn(`Failed to update VAPI assistant ${assistantId}: ${response.statusText}`)
     } else {
-      console.log(`✅ Updated VAPI assistant ${assistantId} with personalized prompt`)
+      console.log(`✅ Updated VAPI assistant ${assistantId} with personalized prompt and voice: ${voiceId}`)
     }
 
   } catch (error) {
@@ -270,8 +274,7 @@ async function processVoiceWidgetInteraction(
       .from('users')
       .update({
         current_call_stage: callStage,
-        last_interaction: new Date().toISOString(),
-        interaction_count: supabase.sql`interaction_count + 1`
+        last_interaction: new Date().toISOString()
       })
       .eq('id', userId)
 

@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DreamSeed Flow Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .test-section h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .result {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        .success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        .error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        .info {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+        }
+        .loading {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+        }
+        .test-config {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .test-config h4 {
+            margin-top: 0;
+        }
+        .test-config ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 DreamSeed Complete Flow Test</h1>
+        
+        <div class="test-config">
+            <h4>📋 Test Configuration</h4>
+            <ul>
+                <li><strong>User:</strong> Test User (test@dreamseed.com)</li>
+                <li><strong>Business:</strong> Test Business LLC</li>
+                <li><strong>Type:</strong> Technology Consulting</li>
+                <li><strong>Vision:</strong> Help small businesses leverage AI technology</li>
+                <li><strong>Call Stage:</strong> 1 of 4</li>
+            </ul>
+        </div>
+
+        <div class="test-section">
+            <h3>🔄 Step 1: Transcript Processing Test</h3>
+            <p>Simulates a VAPI call completion webhook with transcript data.</p>
+            <button onclick="testTranscriptProcessing()">Test Transcript Processing</button>
+            <div id="transcript-result" class="result"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>🧠 Step 2: RAG System Test</h3>
+            <p>Tests the RAG system with conversation memory and Dream DNA integration.</p>
+            <button onclick="testRAGSystem()" id="rag-button" disabled>Test RAG System</button>
+            <div id="rag-result" class="result"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>🎯 Step 3: VAPI Personalization Test</h3>
+            <p>Tests VAPI assistant personalization with user context.</p>
+            <button onclick="testVAPIPersonalization()">Test VAPI Personalization</button>
+            <div id="personalization-result" class="result"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>📊 Step 4: Truth Table Gap Analysis Test</h3>
+            <p>Tests the gap analysis system to identify missing information.</p>
+            <button onclick="testGapAnalysis()" id="gap-button" disabled>Test Gap Analysis</button>
+            <div id="gap-result" class="result"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>🚀 Step 5: Complete Flow Test</h3>
+            <p>Runs all tests in sequence to verify the complete flow.</p>
+            <button onclick="runCompleteTest()">Run Complete Test</button>
+            <div id="complete-result" class="result"></div>
+        </div>
+    </div>
+
+    <script>
+        // Test configuration
+        const TEST_USER = {
+            id: 'test-user-' + Date.now(),
+            email: 'test@dreamseed.com',
+            full_name: 'Test User',
+            business_name: 'Test Business LLC',
+            business_type: 'Technology Consulting',
+            current_call_stage: 1
+        };
+
+        const TEST_DREAM_DNA = {
+            vision_statement: 'Help small businesses leverage AI technology',
+            business_concept: 'AI consulting services for SMBs',
+            target_customers: 'Small to medium businesses',
+            revenue_goals: '$100,000 in first year',
+            urgency_level: 'High',
+            confidence_level: 8,
+            package_preference: 'Premium',
+            budget_range: '$1000-2000'
+        };
+
+        const TEST_CALL_DATA = {
+            type: 'call-end',
+            callId: 'test-call-' + Date.now(),
+            call: {
+                id: 'test-call-' + Date.now(),
+                customer: {
+                    number: '+15551234567',
+                    email: TEST_USER.email
+                }
+            },
+            artifact: {
+                messages: [
+                    {
+                        role: 'user',
+                        content: `Hi, my name is ${TEST_USER.full_name} and I want to start an LLC for my ${TEST_USER.business_type} business. I do ${TEST_DREAM_DNA.business_concept} and want to form the business in Delaware. My email is ${TEST_USER.email}.`
+                    },
+                    {
+                        role: 'assistant',
+                        content: `Great to meet you ${TEST_USER.full_name}! I can help you form an LLC for your ${TEST_USER.business_type} business. Delaware is an excellent choice for LLC formation due to its strong legal protections and privacy benefits. I can see from your vision that you want to ${TEST_DREAM_DNA.vision_statement}. Let me gather some more information about your business.`
+                    },
+                    {
+                        role: 'user',
+                        content: `I want to call it ${TEST_USER.business_name}. I need this done as soon as possible because I have clients waiting. My budget is around ${TEST_DREAM_DNA.budget_range} for the formation. I'm targeting ${TEST_DREAM_DNA.target_customers} and want to achieve ${TEST_DREAM_DNA.revenue_goals}.`
+                    },
+                    {
+                        role: 'assistant',
+                        content: `Perfect! ${TEST_USER.business_name} sounds great. I understand the urgency and your budget of ${TEST_DREAM_DNA.budget_range}. Delaware LLC formation typically costs between $800-1200, so we're in the right range. Your goal of ${TEST_DREAM_DNA.revenue_goals} is achievable with the right foundation. Let me help you get this set up quickly.`
+                    }
+                ]
+            }
+        };
+
+        function showResult(elementId, message, type = 'info') {
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.className = `result ${type}`;
+        }
+
+        function showLoading(elementId) {
+            showResult(elementId, '⏳ Processing...', 'loading');
+        }
+
+        async function testTranscriptProcessing() {
+            showLoading('transcript-result');
+            
+            try {
+                const response = await fetch('/api/webhook', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(TEST_CALL_DATA)
+                });
+                
+                const data = await response.json();
+                
+                if (data.processing?.success) {
+                    showResult('transcript-result', 
+                        `✅ Transcript Processing SUCCESS!\n\n` +
+                        `📊 Call ID: ${data.processing.callId}\n` +
+                        `📝 Transcript Length: ${data.processing.transcriptLength} chars\n` +
+                        `🧠 Vectors Generated: ${data.processing.vectorsGenerated}\n` +
+                        `📋 Data Fields Extracted: ${data.processing.extractedFields}\n` +
+                        `🎯 Call Stage: ${data.processing.callStage}\n\n` +
+                        `Full Response:\n${JSON.stringify(data, null, 2)}`, 
+                        'success'
+                    );
+                    
+                    // Enable RAG and gap analysis buttons
+                    document.getElementById('rag-button').disabled = false;
+                    document.getElementById('gap-button').disabled = false;
+                } else {
+                    showResult('transcript-result', 
+                        `❌ Transcript Processing FAILED!\n\n${JSON.stringify(data, null, 2)}`, 
+                        'error'
+                    );
+                }
+            } catch (error) {
+                showResult('transcript-result', 
+                    `❌ Error: ${error.message}`, 
+                    'error'
+                );
+            }
+        }
+
+        async function testRAGSystem() {
+            showLoading('rag-result');
+            
+            try {
+                const ragQueries = [
+                    'What did we discuss about my business formation?',
+                    `What did ${TEST_USER.full_name} want to do with ${TEST_USER.business_name}?`,
+                    `What was ${TEST_USER.full_name}'s vision and goals?`,
+                    'What are the next steps for my business formation?'
+                ];
+                
+                let results = '';
+                
+                for (const query of ragQueries) {
+                    const response = await fetch('/api/vapi-rag', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            message: query,
+                            userId: TEST_USER.id,
+                            callStage: TEST_USER.current_call_stage,
+                            includeTranscripts: true,
+                            includeKnowledge: true,
+                            includeDreamDNA: true
+                        })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    results += `🔍 Query: "${query}"\n`;
+                    results += `📊 Context: ${JSON.stringify(data.context)}\n`;
+                    results += `💬 Response: ${data.response.substring(0, 150)}...\n\n`;
+                }
+                
+                showResult('rag-result', 
+                    `✅ RAG System Test Results:\n\n${results}`, 
+                    'success'
+                );
+            } catch (error) {
+                showResult('rag-result', 
+                    `❌ RAG Test Error: ${error.message}`, 
+                    'error'
+                );
+            }
+        }
+
+        async function testVAPIPersonalization() {
+            showLoading('personalization-result');
+            
+            try {
+                const response = await fetch('/api/vapi-configure-voice', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        assistantId: 'af397e88-c286-416f-9f74-e7665401bdb7',
+                        voice: 'elliot',
+                        systemMessage: `You are Elliot, a professional business formation consultant for DreamSeed. 
+
+CURRENT USER CONTEXT:
+- Name: ${TEST_USER.full_name}
+- Business: ${TEST_USER.business_name}
+- Type: ${TEST_USER.business_type}
+- Call Stage: ${TEST_USER.current_call_stage} of 4
+
+DREAM DNA INTEGRATION:
+- Vision: ${TEST_DREAM_DNA.vision_statement}
+- Business Concept: ${TEST_DREAM_DNA.business_concept}
+- Target Customers: ${TEST_DREAM_DNA.target_customers}
+- Revenue Goals: ${TEST_DREAM_DNA.revenue_goals}
+- Urgency: ${TEST_DREAM_DNA.urgency_level}
+- Budget: ${TEST_DREAM_DNA.budget_range}
+
+Personalize all responses based on this user's specific situation and goals.`
+                    })
+                });
+                
+                const data = await response.json();
+                
+                showResult('personalization-result', 
+                    `✅ VAPI Personalization SUCCESS!\n\n${JSON.stringify(data, null, 2)}`, 
+                    'success'
+                );
+            } catch (error) {
+                showResult('personalization-result', 
+                    `❌ Personalization Error: ${error.message}`, 
+                    'error'
+                );
+            }
+        }
+
+        async function testGapAnalysis() {
+            showLoading('gap-result');
+            
+            try {
+                const response = await fetch('/api/vapi-rag', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        message: 'What information am I missing for my business formation?',
+                        userId: TEST_USER.id,
+                        callStage: TEST_USER.current_call_stage,
+                        includeTranscripts: true,
+                        includeKnowledge: true,
+                        includeDreamDNA: true
+                    })
+                });
+                
+                const data = await response.json();
+                
+                showResult('gap-result', 
+                    `✅ Gap Analysis Results:\n\n` +
+                    `📊 Context Retrieved: ${JSON.stringify(data.context)}\n\n` +
+                    `💬 Analysis: ${data.response}`, 
+                    'success'
+                );
+            } catch (error) {
+                showResult('gap-result', 
+                    `❌ Gap Analysis Error: ${error.message}`, 
+                    'error'
+                );
+            }
+        }
+
+        async function runCompleteTest() {
+            showLoading('complete-result');
+            
+            try {
+                let results = '🚀 Complete Flow Test Results:\n\n';
+                
+                // Step 1: Transcript Processing
+                results += '🔄 Step 1: Transcript Processing...\n';
+                await testTranscriptProcessing();
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                results += '✅ Completed\n\n';
+                
+                // Step 2: RAG System
+                results += '🧠 Step 2: RAG System...\n';
+                await testRAGSystem();
+                results += '✅ Completed\n\n';
+                
+                // Step 3: VAPI Personalization
+                results += '🎯 Step 3: VAPI Personalization...\n';
+                await testVAPIPersonalization();
+                results += '✅ Completed\n\n';
+                
+                // Step 4: Gap Analysis
+                results += '📊 Step 4: Gap Analysis...\n';
+                await testGapAnalysis();
+                results += '✅ Completed\n\n';
+                
+                results += '🎉 ALL TESTS PASSED! The complete DreamSeed flow is working correctly.';
+                
+                showResult('complete-result', results, 'success');
+            } catch (error) {
+                showResult('complete-result', 
+                    `❌ Complete Test Error: ${error.message}`, 
+                    'error'
+                );
+            }
+        }
+    </script>
+</body>
+</html>

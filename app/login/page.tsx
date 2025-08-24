@@ -58,6 +58,7 @@ export default function LoginPage() {
             }
           }}
           providers={['google']}
+          showLinks={true}
           redirectTo={typeof window !== 'undefined' ? `${window.location.origin}/auth/callback` : '/auth/callback'}
         />
 

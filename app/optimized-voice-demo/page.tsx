@@ -1,5 +1,5 @@
-import React from 'react'
-import OptimizedVoiceWidget from '../components/OptimizedVoiceWidget'
+'use client'
+import React, { useEffect } from 'react'
 
 export default function OptimizedVoiceDemo() {
   return (
@@ -26,176 +26,119 @@ export default function OptimizedVoiceDemo() {
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent'
           }}>
-            ⚡ Optimized Voice Assistant
+            🎤 VAPI Elliot Voice Assistant
           </h1>
           <p style={{ fontSize: '18px', color: '#6c757d', margin: '0 0 24px 0' }}>
-            Faster response times with caching, debouncing, and optimized API calls
+            Real VAPI Elliot voice with your custom widget configuration
           </p>
           <div style={{
             display: 'inline-block',
-            background: '#fff3cd',
-            color: '#856404',
+            background: '#d4edda',
+            color: '#155724',
             padding: '8px 16px',
             borderRadius: '20px',
             fontSize: '14px',
             fontWeight: 'bold'
           }}>
-            ⚡ Optimized for Speed
+            🎤 Real VAPI Elliot Voice
           </div>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px', marginBottom: '40px' }}>
-          <div style={{ background: '#f8f9fa', padding: '24px', borderRadius: '12px', border: '1px solid #e9ecef' }}>
-            <h3 style={{ margin: '0 0 12px 0', color: '#495057' }}>⚡ Response Caching</h3>
-            <p style={{ margin: 0, color: '#6c757d' }}>Common questions are cached for instant responses, reducing API calls by up to 70%</p>
-          </div>
-          <div style={{ background: '#f8f9fa', padding: '24px', borderRadius: '12px', border: '1px solid #e9ecef' }}>
-            <h3 style={{ margin: '0 0 12px 0', color: '#495057' }}>🎯 Smart Debouncing</h3>
-            <p style={{ margin: 0, color: '#6c757d' }}>300ms debounce prevents rapid API calls and improves overall performance</p>
-          </div>
-          <div style={{ background: '#f8f9fa', padding: '24px', borderRadius: '12px', border: '1px solid #e9ecef' }}>
-            <h3 style={{ margin: '0 0 12px 0', color: '#495057' }}>🎵 Optimized Audio</h3>
-            <p style={{ margin: 0, color: '#6c757d' }}>Reduced FFT size and shorter text processing for faster voice generation</p>
-          </div>
-        </div>
-
-        <div style={{ background: '#e3f2fd', padding: '20px', borderRadius: '12px', marginBottom: '40px', border: '1px solid #bbdefb' }}>
-          <h3 style={{ margin: '0 0 12px 0', color: '#1976d2' }}>📚 Performance Optimizations</h3>
-          <p style={{ margin: '0 0 16px 0', color: '#1565c0' }}>
-            This optimized version addresses the slowness compared to VAPI's native web admin panel with several key improvements.
-          </p>
-          <div style={{ fontSize: '14px', color: '#1565c0' }}>
-            <strong>Key Optimizations:</strong>
-            <ul style={{ margin: '8px 0 0 20px', padding: 0 }}>
-              <li>Response caching - instant replies for common questions</li>
-              <li>Debounced processing - prevents rapid API calls</li>
-              <li>Reduced audio processing - faster voice detection</li>
-              <li>Optimized text length - shorter 11labs calls</li>
-              <li>Memory management - automatic cache cleanup</li>
-              <li>Lower volume threshold - more sensitive interruption</li>
-            </ul>
+        {/* VAPI Widget Container */}
+        <div id="vapi-widget-container" style={{ 
+          minHeight: '400px', 
+          display: 'flex', 
+          alignItems: 'center', 
+          justifyContent: 'center',
+          background: '#f8f9fa',
+          borderRadius: '12px',
+          border: '2px dashed #dee2e6'
+        }}>
+          <div style={{ textAlign: 'center', color: '#6c757d' }}>
+            <div style={{ fontSize: '48px', marginBottom: '16px' }}>🎤</div>
+            <p><strong>Loading VAPI Widget...</strong></p>
+            <p style={{ fontSize: '14px', marginTop: '8px' }}>
+              Elliot voice with your custom configuration
+            </p>
           </div>
         </div>
 
-        <div style={{ marginBottom: '40px' }}>
-          <h2 style={{ textAlign: 'center', margin: '0 0 24px 0', color: '#495057' }}>⚡ Performance Comparison</h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '16px' }}>
-            <div style={{ background: 'linear-gradient(135deg, #dc3545 0%, #c82333 100%)', color: 'white', padding: '20px', borderRadius: '12px', textAlign: 'center' }}>
-              <h4 style={{ margin: '0 0 8px 0' }}>Before (Slow)</h4>
-              <p style={{ margin: 0, fontSize: '14px', opacity: 0.9 }}>2-4 second response times</p>
-              <p style={{ margin: '8px 0 0 0', fontSize: '12px', opacity: 0.8 }}>Every request hits API</p>
-            </div>
-            <div style={{ background: 'linear-gradient(135deg, #28a745 0%, #20c997 100%)', color: 'white', padding: '20px', borderRadius: '12px', textAlign: 'center' }}>
-              <h4 style={{ margin: '0 0 8px 0' }}>After (Fast)</h4>
-              <p style={{ margin: 0, fontSize: '14px', opacity: 0.9 }}>0.5-1 second response times</p>
-              <p style={{ margin: '8px 0 0 0', fontSize: '12px', opacity: 0.8 }}>Cached responses</p>
-            </div>
-            <div style={{ background: 'linear-gradient(135deg, #17a2b8 0%, #138496 100%)', color: 'white', padding: '20px', borderRadius: '12px', textAlign: 'center' }}>
-              <h4 style={{ margin: '0 0 8px 0' }}>VAPI Native</h4>
-              <p style={{ margin: 0, fontSize: '14px', opacity: 0.9 }}>0.2-0.5 second response times</p>
-              <p style={{ margin: '8px 0 0 0', fontSize: '12px', opacity: 0.8 }}>Direct infrastructure</p>
-            </div>
-          </div>
-        </div>
-
-        <div style={{ background: '#fff3cd', padding: '24px', borderRadius: '12px', marginBottom: '40px', border: '1px solid #ffeaa7' }}>
-          <h3 style={{ margin: '0 0 16px 0', color: '#856404' }}>🚀 Why It's Faster Now</h3>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
-            <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: '32px', marginBottom: '8px' }}>⚡</div>
-              <h4 style={{ margin: '0 0 8px 0', color: '#856404' }}>Response Caching</h4>
-              <p style={{ margin: 0, fontSize: '14px', color: '#856404' }}>Common questions get instant replies</p>
-            </div>
-            <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: '32px', marginBottom: '8px' }}>🎯</div>
-              <h4 style={{ margin: '0 0 8px 0', color: '#856404' }}>Smart Debouncing</h4>
-              <p style={{ margin: 0, fontSize: '14px', color: '#856404' }}>Prevents rapid API calls</p>
-            </div>
-            <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: '32px', marginBottom: '8px' }}>🎵</div>
-              <h4 style={{ margin: '0 0 8px 0', color: '#856404' }}>Optimized Audio</h4>
-              <p style={{ margin: 0, fontSize: '14px', color: '#856404' }}>Faster voice processing</p>
-            </div>
-            <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: '32px', marginBottom: '8px' }}>🧠</div>
-              <h4 style={{ margin: '0 0 8px 0', color: '#856404' }}>Memory Management</h4>
-              <p style={{ margin: 0, fontSize: '14px', color: '#856404' }}>Automatic cache cleanup</p>
-            </div>
-          </div>
-        </div>
-
-        <div style={{ marginBottom: '40px' }}>
-          <h3 style={{ textAlign: 'center', margin: '0 0 24px 0', color: '#495057' }}>💡 Technical Improvements</h3>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '16px' }}>
-            <div style={{ background: '#f8f9fa', padding: '20px', borderRadius: '12px', border: '1px solid #e9ecef' }}>
-              <h4 style={{ margin: '0 0 12px 0', color: '#495057' }}>Caching Strategy</h4>
-              <ul style={{ margin: 0, paddingLeft: '20px', color: '#6c757d' }}>
-                <li>Cache key: message + call stage</li>
-                <li>50-item cache limit</li>
-                <li>Automatic cleanup</li>
-                <li>Case-insensitive matching</li>
-              </ul>
-            </div>
-            <div style={{ background: '#f8f9fa', padding: '20px', borderRadius: '12px', border: '1px solid #e9ecef' }}>
-              <h4 style={{ margin: '0 0 12px 0', color: '#495057' }}>Debouncing</h4>
-              <ul style={{ margin: 0, paddingLeft: '20px', color: '#6c757d' }}>
-                <li>300ms debounce delay</li>
-                <li>Prevents rapid API calls</li>
-                <li>Better user experience</li>
-                <li>Reduced server load</li>
-              </ul>
-            </div>
-            <div style={{ background: '#f8f9fa', padding: '20px', borderRadius: '12px', border: '1px solid #e9ecef' }}>
-              <h4 style={{ margin: '0 0 12px 0', color: '#495057' }}>Audio Optimization</h4>
-              <ul style={{ margin: 0, paddingLeft: '20px', color: '#6c757d' }}>
-                <li>FFT size: 128 (was 256)</li>
-                <li>Lower volume threshold: 25</li>
-                <li>Text truncation: 200 chars</li>
-                <li>Faster voice detection</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div style={{ background: '#f8f9fa', padding: '24px', borderRadius: '12px', border: '1px solid #e9ecef', marginBottom: '40px' }}>
-          <h3 style={{ margin: '0 0 16px 0', color: '#495057' }}>🔧 Performance Metrics</h3>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '16px' }}>
-            <div>
-              <h4 style={{ margin: '0 0 8px 0', color: '#495057' }}>Response Time</h4>
-              <p style={{ margin: 0, fontSize: '14px', color: '#6c757d' }}>Cached: ~0.5s | API: ~2s | VAPI Native: ~0.3s</p>
-            </div>
-            <div>
-              <h4 style={{ margin: '0 0 8px 0', color: '#495057' }}>API Calls</h4>
-              <p style={{ margin: 0, fontSize: '14px', color: '#6c757d' }}>Reduced by 70% with caching</p>
-            </div>
-            <div>
-              <h4 style={{ margin: '0 0 8px 0', color: '#495057' }}>Voice Generation</h4>
-              <p style={{ margin: 0, fontSize: '14px', color: '#6c757d' }}>Faster with text truncation</p>
-            </div>
-            <div>
-              <h4 style={{ margin: '0 0 8px 0', color: '#495057' }}>Memory Usage</h4>
-              <p style={{ margin: 0, fontSize: '14px', color: '#6c757d' }}>Optimized with cache limits</p>
-            </div>
-          </div>
-        </div>
-
-        <div style={{ textAlign: 'center', padding: '20px', background: '#e8f5e8', borderRadius: '12px', border: '1px solid #c3e6cb', marginBottom: '40px' }}>
-          <h3 style={{ margin: '0 0 8px 0', color: '#155724' }}>✅ Optimized and Ready</h3>
-          <p style={{ margin: 0, color: '#155724' }}>The optimized voice assistant is ready! Experience faster response times with caching and smart optimizations.</p>
-        </div>
-
-        {/* Optimized Voice Widget */}
-        <OptimizedVoiceWidget
-          userId="demo-user-123"
-          dreamId="demo-dream-456"
-          businessName="Demo Business LLC"
-          businessType="Consulting"
-          callStage={1}
+        {/* VAPI Widget Script */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                const script = document.createElement('script');
+                script.src = 'https://unpkg.com/@vapi-ai/client-sdk-react/dist/embed/widget.umd.js';
+                script.async = true;
+                script.type = 'text/javascript';
+                script.onload = function() {
+                  const widgetContainer = document.getElementById('vapi-widget-container');
+                  if (widgetContainer) {
+                    widgetContainer.innerHTML = '';
+                    const vapiWidget = document.createElement('vapi-widget');
+                    vapiWidget.setAttribute('assistant-id', 'af397e88-c286-416f-9f74-e7665401bdb7');
+                    vapiWidget.setAttribute('public-key', '360c27df-9f83-4b80-bd33-e17dbcbf4971');
+                    vapiWidget.setAttribute('voice', 'elliot');
+                    vapiWidget.setAttribute('mode', 'voice');
+                    vapiWidget.setAttribute('theme', 'dark');
+                    vapiWidget.setAttribute('base-bg-color', '#000000');
+                    vapiWidget.setAttribute('accent-color', '#76001b');
+                    vapiWidget.setAttribute('cta-button-color', '#000000');
+                    vapiWidget.setAttribute('cta-button-text-color', '#ffffff');
+                    vapiWidget.setAttribute('border-radius', 'large');
+                    vapiWidget.setAttribute('size', 'full');
+                    vapiWidget.setAttribute('position', 'bottom-right');
+                    vapiWidget.setAttribute('title', 'Business Coach');
+                    vapiWidget.setAttribute('start-button-text', 'Start');
+                    vapiWidget.setAttribute('end-button-text', 'End Call');
+                    vapiWidget.setAttribute('chat-first-message', 'Hey, How can I help you today?');
+                    vapiWidget.setAttribute('chat-placeholder', 'Type your message...');
+                    vapiWidget.setAttribute('voice-show-transcript', 'true');
+                    vapiWidget.setAttribute('consent-required', 'true');
+                    vapiWidget.setAttribute('consent-title', 'Terms and conditions');
+                    vapiWidget.setAttribute('consent-content', 'By clicking "Agree," and each time I interact with this AI agent, I consent to the recording, storage, and sharing of my communications with third-party service providers, and as otherwise described in our Terms of Service.');
+                    vapiWidget.setAttribute('consent-storage-key', 'vapi_widget_consent');
+                    widgetContainer.appendChild(vapiWidget);
+                  }
+                };
+                document.head.appendChild(script);
+              })();
+            `
+          }}
         />
 
-        <div style={{ textAlign: 'center', padding: '20px', borderTop: '1px solid #e9ecef', color: '#6c757d', fontSize: '14px' }}>
+        {/* Information Section */}
+        <div style={{ marginTop: '40px', textAlign: 'center' }}>
+          <h3 style={{ margin: '0 0 16px 0', color: '#495057' }}>
+            🎤 Real VAPI Elliot Voice Features
+          </h3>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px', marginTop: '20px' }}>
+            <div style={{ padding: '20px', background: '#f8f9fa', borderRadius: '8px' }}>
+              <h4 style={{ margin: '0 0 12px 0', color: '#495057' }}>🎤 Voice Quality</h4>
+              <p style={{ margin: 0, fontSize: '14px', color: '#6c757d' }}>Real VAPI Elliot voice</p>
+            </div>
+            <div style={{ padding: '20px', background: '#f8f9fa', borderRadius: '8px' }}>
+              <h4 style={{ margin: '0 0 12px 0', color: '#495057' }}>🎨 Custom Styling</h4>
+              <p style={{ margin: 0, fontSize: '14px', color: '#6c757d' }}>Dark theme with red accents</p>
+            </div>
+            <div style={{ padding: '20px', background: '#f8f9fa', borderRadius: '8px' }}>
+              <h4 style={{ margin: '0 0 12px 0', color: '#495057' }}>🏢 Business Formation</h4>
+              <p style={{ margin: 0, fontSize: '14px', color: '#6c757d' }}>4-stage system integration</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Ready Message */}
+        <div style={{ textAlign: 'center', padding: '20px', background: '#e8f5e8', borderRadius: '12px', border: '1px solid #c3e6cb', marginTop: '40px' }}>
+          <h3 style={{ margin: '0 0 8px 0', color: '#155724' }}>✅ Real VAPI Elliot Voice Ready</h3>
+          <p style={{ margin: 0, color: '#155724' }}>The real VAPI Elliot voice assistant is ready! Uses your custom configuration with dark theme and red accents.</p>
+        </div>
+
+        {/* Footer */}
+        <div style={{ textAlign: 'center', padding: '20px', borderTop: '1px solid #e9ecef', color: '#6c757d', fontSize: '14px', marginTop: '40px' }}>
           <p style={{ margin: '0 0 8px 0' }}>Powered by <strong>VAPI</strong> • Built for <strong>DreamSeed</strong></p>
-          <p style={{ margin: 0 }}>Optimized for speed with caching and smart debouncing</p>
+          <p style={{ margin: 0 }}>Real VAPI Elliot voice with custom widget configuration</p>
         </div>
       </div>
     </div>

@@ -245,7 +245,7 @@ export default function VoiceDomainAssistant() {
             <h1>🎤 Voice Domain Assistant</h1>
             <p>Find domains using your voice - just say what you're looking for</p>
           </div>
-          <button onClick={() => router.push('/dashboard')} className="back-btn">
+          <button onClick={() => router.push('/customer-portal')} className="back-btn">
             ← Back to Dashboard
           </button>
         </div>
@@ -440,7 +440,7 @@ export default function VoiceDomainAssistant() {
                   <div className="step-content">
                     <h4>Complete Business Formation</h4>
                     <p>File your business entity, get your EIN, and complete all legal requirements. We can help with this process.</p>
-                    <button onClick={() => router.push('/dashboard')} className="action-btn">
+                    <button onClick={() => router.push('/customer-portal')} className="action-btn">
                       Continue Setup →
                     </button>
                   </div>

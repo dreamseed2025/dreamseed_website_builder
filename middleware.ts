@@ -12,7 +12,23 @@ const publicRoutes = [
   '/voice-widget-browser-test',
   '/vapi-web-demo',
   '/optimized-voice-demo',
-  '/auth/callback'
+  '/vapi-elliot-test',
+  '/elliot-test',
+  '/vapi-dashboard-widget',
+  '/vapi-widget-simple',
+  '/test-elliot',
+  '/vapi-elliot-real',
+  '/vapi-elliot-simple',
+  '/configure-elliot-voice',
+  '/widget-configurator',
+  '/apply-widget-config',
+  '/api/vapi-widget-embed',
+  '/api/vapi-rag',
+  '/api/user-lookup',
+  '/api/dream-dna',
+  '/vapi-hosted-widget',
+  '/auth/callback',
+  '/test-manual-flow.html'
 ]
 
 export function middleware(request: NextRequest) {

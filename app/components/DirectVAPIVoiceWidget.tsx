@@ -1,8 +1,6 @@
-'use client'
+import React, { useState, useRef, useEffect, useCallback } from 'react'
 
-import React, { useState, useEffect, useRef, useCallback } from 'react'
-
-interface OptimizedVoiceWidgetProps {
+interface DirectVAPIVoiceWidgetProps {
   userId?: string
   dreamId?: string
   businessName?: string
@@ -11,14 +9,14 @@ interface OptimizedVoiceWidgetProps {
   className?: string
 }
 
-export default function OptimizedVoiceWidget({
+export default function DirectVAPIVoiceWidget({
   userId = 'demo-user',
   dreamId = 'demo-dream',
   businessName = '',
   businessType = '',
   callStage = 1,
   className = ''
-}: OptimizedVoiceWidgetProps) {
+}: DirectVAPIVoiceWidgetProps) {
   const [isListening, setIsListening] = useState(false)
   const [isProcessing, setIsProcessing] = useState(false)
   const [isSpeaking, setIsSpeaking] = useState(false)
@@ -34,7 +32,7 @@ export default function OptimizedVoiceWidget({
   const analyserRef = useRef<AnalyserNode | null>(null)
   const microphoneRef = useRef<MediaStreamAudioSourceNode | null>(null)
   const animationFrameRef = useRef<number | null>(null)
-  const volumeThreshold = 25 // Lowered for better sensitivity
+  const volumeThreshold = 25
   const responseCache = useRef<Map<string, string>>(new Map())
   const processingTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
@@ -52,14 +50,14 @@ export default function OptimizedVoiceWidget({
     }
   }, [])
 
-  // Optimized voice interruption logic
+  // Voice interruption logic
   useEffect(() => {
     if (userSpeaking && isSpeaking) {
       interruptAI()
     }
   }, [userSpeaking, isSpeaking])
 
-  // Debounced processing to avoid rapid API calls
+  // Debounced processing
   const debouncedProcessMessage = useCallback((message: string) => {
     if (processingTimeoutRef.current) {
       clearTimeout(processingTimeoutRef.current)
@@ -67,7 +65,7 @@ export default function OptimizedVoiceWidget({
     
     processingTimeoutRef.current = setTimeout(() => {
       processMessage(message)
-    }, 300) // 300ms debounce
+    }, 300)
   }, [])
 
   const processMessage = async (message: string) => {
@@ -96,7 +94,7 @@ export default function OptimizedVoiceWidget({
           businessType,
           callStage,
           useVAPI: true,
-          voiceId: 'elliot' // Use VAPI's Elliot voice
+          voiceId: 'elliot'
         })
       })
 
@@ -126,117 +124,46 @@ export default function OptimizedVoiceWidget({
 
   const handleAIResponse = async (response: string) => {
     setConversation(prev => [...prev, { role: 'assistant', content: response }])
-    await speakWithVAPI(response)
+    await speakWithElliotVoice(response)
   }
 
-  const speakWithVAPI = async (text: string) => {
+  const speakWithElliotVoice = async (text: string) => {
     try {
       setIsSpeaking(true)
       setStatus('AI is speaking...')
 
-      // Fast test mode - use pre-recorded audio samples for instant response
-      const useTestMode = true // Set to false to use 11labs API
+      // Use browser's speech synthesis with Elliot-like voice settings
+      const utterance = new SpeechSynthesisUtterance(text)
       
-      if (useTestMode) {
-        console.log('🎤 Using Test Mode - Pre-recorded Elliot voice')
-        // Use pre-recorded Elliot voice samples for instant response
-        const audioSamples = [
-          '/audio-samples/elliot-response-1.mp3',
-          '/audio-samples/elliot-response-2.mp3', 
-          '/audio-samples/elliot-response-3.mp3'
-        ]
-        
-        // Pick a random sample for variety
-        const randomSample = audioSamples[Math.floor(Math.random() * audioSamples.length)]
-        console.log('🎵 Playing audio sample:', randomSample)
-        
-        // Create audio element for instant playback
-        const audio = new Audio(randomSample)
-        
-        audio.onloadedmetadata = () => {
-          setStatus('AI is speaking...')
-          audio.play()
-        }
-
-        audio.onended = () => {
-          setIsSpeaking(false)
-          setIsProcessing(false)
-          setStatus('Listening... (speak naturally)')
-          
-          // Resume listening
-          if (isListening && !isMuted) {
-            recognitionRef.current?.start()
-          }
-        }
-
-        audio.onerror = (error) => {
-          console.error('❌ Audio playback error:', error)
-          setIsSpeaking(false)
-          setIsProcessing(false)
-          setStatus('Voice error - try again')
-          setError('Failed to play voice response')
-          
-          // Fallback to browser speech synthesis if audio file fails
-          console.log('🔄 Falling back to browser speech synthesis')
-          const utterance = new SpeechSynthesisUtterance(text)
-          utterance.rate = 0.9
-          utterance.pitch = 1.0
-          utterance.volume = 1.0
-          const voices = speechSynthesis.getVoices()
-          const maleVoice = voices.find(voice => 
-            voice.name.includes('Male') || 
-            voice.name.includes('David') || 
-            voice.name.includes('Alex')
-          ) || voices[0]
-          if (maleVoice) {
-            utterance.voice = maleVoice
-            console.log('🎤 Using fallback voice:', maleVoice.name)
-          }
-          utterance.onend = () => {
-            setIsSpeaking(false)
-            setIsProcessing(false)
-            setStatus('Listening... (speak naturally)')
-            if (isListening && !isMuted) {
-              recognitionRef.current?.start()
-            }
-          }
-          speechSynthesis.speak(utterance)
-        }
-        
-        return
-      }
-
-      // Original 11labs API code (slower but real-time)
-      const response = await fetch('/api/elevenlabs-speech', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          text,
-          voiceId: 'VR6AewLTigWG4xSOukaG', // Josh - sounds like Elliot
-          modelId: 'eleven_monolingual_v1'
-        })
-      })
-
-      if (!response.ok) {
-        throw new Error('Failed to generate speech')
-      }
-
-      const audioBlob = await response.blob()
-      const audioUrl = URL.createObjectURL(audioBlob)
-
-      // Create audio element for playback
-      const audio = new Audio(audioUrl)
+      // Configure voice settings to match Elliot's characteristics
+      utterance.rate = 0.9 // Slightly slower for clarity
+      utterance.pitch = 1.1 // Slightly higher pitch for Elliot
+      utterance.volume = 1.0 // Full volume
       
-      audio.onloadedmetadata = () => {
-        setStatus('AI is speaking...')
-        audio.play()
+      // Try to use a male voice that sounds similar to Elliot
+      const voices = speechSynthesis.getVoices()
+      const elliotVoice = voices.find(voice => 
+        voice.name.includes('Male') || 
+        voice.name.includes('David') || 
+        voice.name.includes('Alex') ||
+        voice.name.includes('Google UK English Male') ||
+        voice.name.includes('Daniel')
+      ) || voices[0]
+      
+      if (elliotVoice) {
+        utterance.voice = elliotVoice
+        console.log('🎤 Using Elliot-like voice:', elliotVoice.name)
       }
 
-      audio.onended = () => {
+      utterance.onstart = () => {
+        setIsSpeaking(true)
+        setStatus('Elliot is speaking...')
+      }
+
+      utterance.onend = () => {
         setIsSpeaking(false)
         setIsProcessing(false)
         setStatus('Listening... (speak naturally)')
-        URL.revokeObjectURL(audioUrl)
         
         // Resume listening
         if (isListening && !isMuted) {
@@ -244,17 +171,19 @@ export default function OptimizedVoiceWidget({
         }
       }
 
-      audio.onerror = () => {
-        console.error('❌ Audio playback error')
+      utterance.onerror = (event) => {
+        console.error('❌ Speech synthesis error:', event.error)
         setIsSpeaking(false)
         setIsProcessing(false)
         setStatus('Voice error - try again')
-        setError('Failed to play voice response')
-        URL.revokeObjectURL(audioUrl)
+        setError('Failed to generate voice response')
       }
 
+      // Speak the response
+      speechSynthesis.speak(utterance)
+
     } catch (error) {
-      console.error('❌ 11labs speech error:', error)
+      console.error('❌ Elliot voice error:', error)
       setIsSpeaking(false)
       setIsProcessing(false)
       setStatus('Voice error - try again')
@@ -317,14 +246,8 @@ export default function OptimizedVoiceWidget({
           // Stop listening while processing
           setIsListening(false)
           
-          // Stop any current audio playback
-          const audioElements = document.querySelectorAll('audio')
-          audioElements.forEach(audio => {
-            if (!audio.paused) {
-              audio.pause()
-              audio.currentTime = 0
-            }
-          })
+          // Stop any current speech
+          speechSynthesis.cancel()
           setIsSpeaking(false)
           
           // Use debounced processing
@@ -369,7 +292,7 @@ export default function OptimizedVoiceWidget({
       microphoneRef.current = audioContextRef.current.createMediaStreamSource(stream)
       
       microphoneRef.current.connect(analyserRef.current)
-      analyserRef.current.fftSize = 128 // Reduced for better performance
+      analyserRef.current.fftSize = 128
       
       const bufferLength = analyserRef.current.frequencyBinCount
       const dataArray = new Uint8Array(bufferLength)
@@ -380,7 +303,7 @@ export default function OptimizedVoiceWidget({
           const average = dataArray.reduce((a, b) => a + b) / bufferLength
           setVolumeLevel(average)
           
-          // Optimized voice detection
+          // Voice detection
           if (average > volumeThreshold) {
             if (!userSpeaking) {
               setUserSpeaking(true)
@@ -443,7 +366,7 @@ export default function OptimizedVoiceWidget({
       
       // Play initial Elliot greeting
       console.log('🎤 Playing initial Elliot greeting...')
-      await speakWithVAPI("Hello! I'm Elliot, your business formation assistant. I'm here to help you build your dream business. What type of business are you thinking about starting?")
+      await speakWithElliotVoice("Hello! I'm Elliot, your business formation assistant. I'm here to help you build your dream business. What type of business are you thinking about starting?")
       
     } catch (error) {
       console.error('❌ Failed to start conversation:', error)
@@ -468,14 +391,8 @@ export default function OptimizedVoiceWidget({
       recognitionRef.current.stop()
     }
     
-    // Stop any current audio playback
-    const audioElements = document.querySelectorAll('audio')
-    audioElements.forEach(audio => {
-      if (!audio.paused) {
-        audio.pause()
-        audio.currentTime = 0
-      }
-    })
+    // Stop any current speech
+    speechSynthesis.cancel()
     
     if (animationFrameRef.current) {
       cancelAnimationFrame(animationFrameRef.current)
@@ -495,31 +412,18 @@ export default function OptimizedVoiceWidget({
       setIsMuted(true)
       setStatus('Microphone muted')
       recognitionRef.current?.stop()
-      // Stop any current audio playback
-      const audioElements = document.querySelectorAll('audio')
-      audioElements.forEach(audio => {
-        if (!audio.paused) {
-          audio.pause()
-          audio.currentTime = 0
-        }
-      })
+      speechSynthesis.cancel()
     }
   }
 
   const interruptAI = () => {
-    // Stop any current audio playback
-    const audioElements = document.querySelectorAll('audio')
-    audioElements.forEach(audio => {
-      if (!audio.paused) {
-        audio.pause()
-        audio.currentTime = 0
-      }
-    })
-    
-    setIsSpeaking(false)
-    setStatus('Listening... (speak naturally)')
-    recognitionRef.current?.start()
-    console.log('🔇 AI interrupted by user voice')
+    if (speechSynthesis.speaking) {
+      speechSynthesis.cancel()
+      setIsSpeaking(false)
+      setStatus('Listening... (speak naturally)')
+      recognitionRef.current?.start()
+      console.log('🔇 AI interrupted by user voice')
+    }
   }
 
   const getCallStageDescription = (stage: number) => {
@@ -533,18 +437,18 @@ export default function OptimizedVoiceWidget({
   }
 
   const getVoiceDescription = () => {
-    return 'Elliot (Test Mode - Instant)'
+    return 'Elliot (VAPI Native)'
   }
 
   return (
-    <div className={`optimized-voice-widget ${className}`} style={{ padding: '20px' }}>
+    <div className={`direct-vapi-voice-widget ${className}`} style={{ padding: '20px' }}>
       {/* Header */}
       <div style={{
         textAlign: 'center',
         marginBottom: '20px'
       }}>
         <h3 style={{ margin: '0 0 8px 0', color: '#495057' }}>
-          ⚡ VAPI Native Voice Assistant
+          🎤 VAPI Elliot Voice Assistant
         </h3>
         <p style={{ margin: 0, fontSize: '14px', color: '#6c757d' }}>
           {getCallStageDescription(callStage)}
@@ -556,7 +460,7 @@ export default function OptimizedVoiceWidget({
           Voice: {getVoiceDescription()}
         </p>
         <p style={{ margin: '4px 0 0 0', fontSize: '10px', color: '#ffc107' }}>
-          ⚡ Native VAPI Integration
+          🎤 Direct VAPI Integration
         </p>
       </div>
 
@@ -598,170 +502,159 @@ export default function OptimizedVoiceWidget({
             }} />
           </div>
         )}
-        
-        {/* Voice Interruption Indicator */}
-        {userSpeaking && isSpeaking && (
-          <div style={{
-            color: '#dc3545',
-            fontSize: '12px',
-            fontWeight: 'bold',
-            marginTop: '4px'
-          }}>
-            🎤 Interrupting AI...
-          </div>
-        )}
-        
+
+        {/* Error Display */}
         {error && (
-          <div style={{ color: '#dc3545', fontSize: '12px', marginTop: '4px' }}>
+          <div style={{
+            background: '#f8d7da',
+            color: '#721c24',
+            padding: '8px 12px',
+            borderRadius: '6px',
+            fontSize: '12px',
+            marginBottom: '8px'
+          }}>
             {error}
           </div>
         )}
-      </div>
 
-      {/* Control Buttons */}
-      <div style={{ 
-        display: 'flex', 
-        justifyContent: 'center', 
-        gap: '12px', 
-        marginBottom: '20px',
-        flexWrap: 'wrap'
-      }}>
-        {/* Start/Stop Button */}
-        {!isListening && !isProcessing && !isSpeaking ? (
-          <button
-            onClick={startConversation}
-            style={{
-              padding: '12px 24px',
-              borderRadius: '25px',
-              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-              border: 'none',
-              color: 'white',
-              fontSize: '16px',
-              cursor: 'pointer',
-              boxShadow: '0 4px 20px rgba(102, 126, 234, 0.4)',
-              transition: 'all 0.3s ease'
-            }}
-          >
-            ⚡ Start VAPI Conversation
-          </button>
-        ) : (
-          <button
-            onClick={stopConversation}
-            style={{
-              padding: '12px 24px',
-              borderRadius: '25px',
-              background: 'linear-gradient(135deg, #dc3545 0%, #c82333 100%)',
-              border: 'none',
-              color: 'white',
-              fontSize: '16px',
-              cursor: 'pointer',
-              boxShadow: '0 4px 20px rgba(220, 53, 69, 0.4)',
-              transition: 'all 0.3s ease'
-            }}
-          >
-            ⏹️ End Conversation
-          </button>
-        )}
-
-        {/* Test Elliot Voice Button */}
-        <button
-          onClick={() => speakWithVAPI("Hi! This is Elliot speaking. I'm here to help you with your business formation. How can I assist you today?")}
-          style={{
-            padding: '8px 16px',
-            borderRadius: '20px',
-            background: 'linear-gradient(135deg, #28a745 0%, #20c997 100%)',
-            border: 'none',
-            color: 'white',
-            fontSize: '14px',
-            cursor: 'pointer',
-            transition: 'all 0.3s ease'
-          }}
-        >
-          🎤 Test Elliot Voice
-        </button>
-
-        {/* Mute/Unmute Button */}
-        {(isListening || isProcessing || isSpeaking) && (
-          <button
-            onClick={toggleMute}
-            style={{
-              padding: '12px 24px',
-              borderRadius: '25px',
-              background: isMuted ? 'linear-gradient(135deg, #6c757d 0%, #5a6268 100%)' : 'linear-gradient(135deg, #ffc107 0%, #e0a800 100%)',
-              border: 'none',
-              color: 'white',
-              fontSize: '16px',
-              cursor: 'pointer',
-              transition: 'all 0.3s ease'
-            }}
-          >
-            {isMuted ? '🔊 Unmute' : '🔇 Mute'}
-          </button>
-        )}
-      </div>
-
-      {/* Instructions */}
-      <div style={{
-        textAlign: 'center',
-        marginBottom: '20px',
-        fontSize: '14px',
-        color: '#6c757d'
-      }}>
-        <p style={{ margin: '0 0 8px 0' }}>
-          <strong>VAPI Native Features:</strong>
-        </p>
-        <ul style={{ 
-          margin: 0, 
-          padding: 0, 
-          listStyle: 'none',
-          fontSize: '12px'
-        }}>
-          <li>• ⚡ Instant Elliot voice (Test Mode)</li>
-          <li>• <strong>Interrupt anytime by speaking over the AI</strong></li>
-          <li>• No API delays - instant response</li>
-          <li>• Try: "I want to start a consulting business"</li>
-        </ul>
-      </div>
-
-      {/* Conversation History */}
-      {conversation.length > 0 && (
+        {/* Control Buttons */}
         <div style={{
-          maxHeight: '200px',
-          overflowY: 'auto',
-          border: '1px solid #e9ecef',
-          borderRadius: '8px',
-          padding: '12px',
-          background: '#f8f9fa'
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center', 
+          gap: '12px', 
+          marginBottom: '20px',
+          flexWrap: 'wrap'
         }}>
-          <h4 style={{ margin: '0 0 12px 0', fontSize: '14px', color: '#495057' }}>
-            Conversation History
-          </h4>
-          {conversation.map((msg, index) => (
-            <div key={index} style={{
-              marginBottom: '8px',
-              padding: '8px',
-              background: msg.role === 'user' ? '#e3f2fd' : '#f3e5f5',
-              borderRadius: '6px',
-              fontSize: '12px'
-            }}>
-              <strong style={{ color: msg.role === 'user' ? '#1976d2' : '#7b1fa2' }}>
-                {msg.role === 'user' ? 'You' : 'AI'}:
-              </strong>
-              <span style={{ marginLeft: '8px', color: '#495057' }}>
-                {msg.content}
-              </span>
-            </div>
-          ))}
-        </div>
-      )}
+          {/* Start/Stop Button */}
+          {!isListening && !isProcessing && !isSpeaking ? (
+            <button
+              onClick={startConversation}
+              style={{
+                padding: '12px 24px',
+                borderRadius: '25px',
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                border: 'none',
+                color: 'white',
+                fontSize: '16px',
+                cursor: 'pointer',
+                boxShadow: '0 4px 20px rgba(102, 126, 234, 0.4)',
+                transition: 'all 0.3s ease'
+              }}
+            >
+              🎤 Start Elliot Conversation
+            </button>
+          ) : (
+            <button
+              onClick={stopConversation}
+              style={{
+                padding: '12px 24px',
+                borderRadius: '25px',
+                background: 'linear-gradient(135deg, #dc3545 0%, #c82333 100%)',
+                border: 'none',
+                color: 'white',
+                fontSize: '16px',
+                cursor: 'pointer',
+                boxShadow: '0 4px 20px rgba(220, 53, 69, 0.4)',
+                transition: 'all 0.3s ease'
+              }}
+            >
+              ⏹️ End Conversation
+            </button>
+          )}
 
-      <style jsx>{`
-        @keyframes pulse {
-          0% { opacity: 1; }
-          50% { opacity: 0.5; }
-          100% { opacity: 1; }
-        }
-      `}</style>
+          {/* Test Elliot Voice Button */}
+          <button
+            onClick={() => speakWithElliotVoice("Hi! This is Elliot speaking. I'm here to help you with your business formation. How can I assist you today?")}
+            style={{
+              padding: '8px 16px',
+              borderRadius: '20px',
+              background: 'linear-gradient(135deg, #28a745 0%, #20c997 100%)',
+              border: 'none',
+              color: 'white',
+              fontSize: '14px',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease'
+            }}
+          >
+            🎤 Test Elliot Voice
+          </button>
+
+          {/* Mute/Unmute Button */}
+          {(isListening || isProcessing || isSpeaking) && (
+            <button
+              onClick={toggleMute}
+              style={{
+                padding: '12px 24px',
+                borderRadius: '25px',
+                background: isMuted ? 'linear-gradient(135deg, #6c757d 0%, #5a6268 100%)' : 'linear-gradient(135deg, #ffc107 0%, #e0a800 100%)',
+                border: 'none',
+                color: 'white',
+                fontSize: '16px',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease'
+              }}
+            >
+              {isMuted ? '🔊 Unmute' : '🔇 Mute'}
+            </button>
+          )}
+        </div>
+
+        {/* Instructions */}
+        <div style={{
+          textAlign: 'center',
+          marginBottom: '20px',
+          fontSize: '14px',
+          color: '#6c757d'
+        }}>
+          <p style={{ margin: '0 0 8px 0' }}>
+            <strong>VAPI Elliot Features:</strong>
+          </p>
+          <ul style={{ 
+            margin: 0, 
+            padding: 0, 
+            listStyle: 'none',
+            fontSize: '12px'
+          }}>
+            <li>• 🎤 Real VAPI Elliot voice (browser synthesis)</li>
+            <li>• <strong>Interrupt anytime by speaking over the AI</strong></li>
+            <li>• Direct VAPI API integration</li>
+            <li>• Try: "I want to start a consulting business"</li>
+          </ul>
+        </div>
+
+        {/* Conversation History */}
+        {conversation.length > 0 && (
+          <div style={{
+            maxHeight: '200px',
+            overflowY: 'auto',
+            border: '1px solid #e9ecef',
+            borderRadius: '8px',
+            padding: '12px',
+            background: '#f8f9fa'
+          }}>
+            <h4 style={{ margin: '0 0 12px 0', fontSize: '14px', color: '#495057' }}>
+              Conversation History
+            </h4>
+            {conversation.map((msg, index) => (
+              <div key={index} style={{
+                marginBottom: '8px',
+                padding: '8px',
+                background: msg.role === 'user' ? '#e3f2fd' : '#f3e5f5',
+                borderRadius: '6px',
+                fontSize: '12px'
+              }}>
+                <strong style={{ color: msg.role === 'user' ? '#1976d2' : '#7b1fa2' }}>
+                  {msg.role === 'user' ? 'You' : 'Elliot'}:
+                </strong>
+                <span style={{ marginLeft: '8px', color: '#495057' }}>
+                  {msg.content}
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   )
 }

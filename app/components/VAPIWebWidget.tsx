@@ -85,8 +85,9 @@ export default function VAPIWebWidget({
       vapiWidget.setAttribute('voice-enabled', 'true')
       vapiWidget.setAttribute('call-type', 'web')
       vapiWidget.setAttribute('audio-enabled', 'true')
-      vapiWidget.setAttribute('button-label', '🎤 Start Business Consultation')
+      vapiWidget.setAttribute('button-label', '🎤 Start Business Consultation with Elliot')
       vapiWidget.setAttribute('show-widget-assistant-id', 'false')
+      vapiWidget.setAttribute('voice', 'elliot')
       
       // Add custom styling
       vapiWidget.style.cssText = `
