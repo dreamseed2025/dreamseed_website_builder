@@ -28,7 +28,8 @@ The previous voice widget was too rigid - like a walkie-talkie where you had to 
 
 ## 📱 **How to Use**
 
-1. **Visit**: `http://localhost:3000/vapi-web-demo`
+1. **Visit**: `
+http://localhost:3000/vapi-web-demo`
 2. **Click**: "Start Conversation" 
 3. **Speak**: Naturally - no buttons needed
 4. **Interrupt**: Talk over the AI anytime
@@ -116,3 +117,4 @@ The natural voice conversation system is now live at:
 **`http://localhost:3000/vapi-web-demo`**
 
 Try it out and experience the difference between rigid button-pressing and natural, fluid conversation!
+
